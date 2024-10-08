@@ -1,0 +1,17 @@
+@import '../../styles/_var';
+.input {
+  background-color: #fff;
+  border-bottom: 1px solid $secondary;
+  color: $primary-darken;
+  line-height: 1.8;
+  outline: none;
+  width: 280px;
+
+  &-wrapper {
+    width: 280px;
+    &__label {
+      color: $light-grey;
+      font-size: 12px;
+    }
+  }
+}

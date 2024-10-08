@@ -1,0 +1,33 @@
+@import '../../styles/_var';
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+.modal-container {
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 550px;
+  box-shadow: 0px 0px 6px 1px $secondary;
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 12px;
+  gap: 25px;
+
+  > :first-child {
+    margin-top: 50px;
+  }
+  > :nth-child(2) {
+    flex-grow: 2;
+  }
+  > :nth-child(3) {
+    flex-grow: 2;
+  }
+}

@@ -3,5 +3,13 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "none",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": "*.hbs",
+      "options": {
+        "parser": "glimmer"
+      }
+    }
+  ]
 }

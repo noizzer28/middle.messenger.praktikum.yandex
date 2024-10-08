@@ -23,7 +23,13 @@ export default [
       ecmaVersion: 12,
       sourceType: 'module'
     },
-
+    plugins: ['handlebars'],
+    overrides: [
+      {
+        files: ['**/*.hbs'],
+        processor: 'handlebars/handlebars'
+      }
+    ],
     rules: {
       'prettier/prettier': [
         'error',
@@ -36,8 +42,7 @@ export default [
         }
       ],
 
-      'no-console': 'warn',
-      'no-unused-vars': 'warn'
+      'no-console': 'warn'
     }
   }
 ];

@@ -1,0 +1,26 @@
+@import '../../styles/_var';
+
+.button {
+  width: 280px;
+  height: 37px;
+  border-radius: 8px;
+  opacity: 0px;
+  background-color: $primary;
+  color: #fff;
+  &:hover {
+    background-color: $primary-darken;
+  }
+  &:active {
+    background-color: #156bb6;
+  }
+  &-secondary {
+    width: 280px;
+    height: 37px;
+    background-color: #fff;
+    border-radius: 8px;
+    color: $secondary;
+    &:hover {
+      color: $secondary-darken;
+    }
+  }
+}
