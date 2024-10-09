@@ -11,7 +11,7 @@
     background-color: $primary-darken;
   }
   &:active {
-    background-color: #156bb6;
+    background-color: mix(black, $primary, 30%);
   }
   &-secondary {
     width: 280px;

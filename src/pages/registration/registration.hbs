@@ -1,0 +1,21 @@
+{{#> Container}}
+{{#> ModalContainer class='pb-30'}}
+<form class="flex-column-form">
+  <div class="headers-text">Регистрация</div>
+  <div class="flex-column">
+    {{> Input type='email' label='Почта' name='form' }}
+    {{> Input type='input' label='Логин' name='form' }}
+    {{> Input type='text' label='Имя' name='name'  }}
+    {{> Input type='text' label='Фамилия' name='last-name'  }}
+    {{> Input type='number' label='Телефон' name='phone'  }}
+    {{> Input type='password' label='Пароль' name='password'  }}
+    {{> Input type='password' label='Повторите пароль' name='rep-password' }}
+  </div>
+  <div class="flex-column mt-30">
+    {{> Button text='Войти' }}
+    {{> SecondButton text='Уже есть аккаунт?'  page="login-page"}}
+  </div>
+</form>
+
+{{/ ModalContainer}}
+{{/ Container}}

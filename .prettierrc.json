@@ -6,9 +6,9 @@
   "endOfLine": "auto",
   "overrides": [
     {
-      "files": "*.hbs",
+      "files": "**/*.hbs",
       "options": {
-        "parser": "glimmer"
+        "parser": "angular"
       }
     }
   ]

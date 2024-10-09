@@ -1,11 +1,14 @@
-import globals from 'globals';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import js from '@eslint/js';
+import globals from 'globals';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import eslintPluginHandlebars from 'eslint-plugin-hbs';
 import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -14,35 +17,37 @@ const compat = new FlatCompat({
 
 export default [
   ...compat.extends('eslint:recommended', 'plugin:prettier/recommended'),
+
   {
+    files: ['**/*.js', '**/*.ts'],
     languageOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
       globals: {
         ...globals.browser
-      },
-
-      ecmaVersion: 12,
-      sourceType: 'module'
-    },
-    plugins: ['handlebars'],
-    overrides: [
-      {
-        files: ['**/*.hbs'],
-        processor: 'handlebars/handlebars'
       }
-    ],
+    },
+    plugins: {
+      prettier: eslintPluginPrettier,
+      handlebars: eslintPluginHandlebars
+    },
     rules: {
-      'prettier/prettier': [
-        'error',
-        {
-          semi: true,
-          singleQuote: true,
-          tabWidth: 2,
-          trailingComma: 'none',
-          endOfLine: 'auto'
-        }
-      ],
-
+      'prettier/prettier': 'error',
       'no-console': 'warn'
+    }
+  },
+
+  {
+    files: ['**/*.hbs'],
+    languageOptions: {
+      parser: 'glimmer'
+    },
+    plugins: {
+      handlebars: eslintPluginHandlebars
+    },
+    processor: 'handlebars/handlebars',
+    rules: {
+      'prettier/prettier': 'off'
     }
   }
 ];

@@ -6,7 +6,9 @@
   line-height: 1.8;
   outline: none;
   width: 280px;
-
+  &::placeholder {
+    color: $light-grey;
+  }
   &-wrapper {
     width: 280px;
     &__label {

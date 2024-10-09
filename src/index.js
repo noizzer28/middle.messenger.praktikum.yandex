@@ -5,7 +5,8 @@ import * as Components from './components/components.js';
 import * as Pages from './pages/pages';
 
 const pages = {
-  'login-page': [Pages.LoginPage]
+  'login-page': [Pages.LoginPage],
+  'registration-page': [Pages.RegPage]
 };
 
 Object.entries(Components).forEach(([name, component]) => {
@@ -13,6 +14,7 @@ Object.entries(Components).forEach(([name, component]) => {
 });
 
 const navigate = (page) => {
+  console.log(pages, page);
   const [src, args] = pages[page];
   const handlebarsFunc = Handlebars.compile(src);
   document.getElementById('app').innerHTML = handlebarsFunc(args);
@@ -26,10 +28,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
       navigate('login-page');
       break;
     }
-    // case '/register': {
-    //   navigate('registrationPage');
-    //   break;
-    // }
+    case '/register': {
+      navigate('registration-page');
+      break;
+    }
     // case '/profile': {
     //   navigate('profilePage');
     //   break;
@@ -50,22 +52,34 @@ document.addEventListener('DOMContentLoaded', (e) => {
     //   navigate('errorPage');
     //   break;
     // }
-    //     case '/': {
-    //       document.getElementById('app').innerHTML = `
-    //   <div>
+    case '/': {
+      document.getElementById('app').innerHTML = `
+      <div class="flex-column mt-30">
+        <h1 class="headers-text" >Добро пожаловать в Yandex Talk</h1>
+        <div>
+        Выберите страницу для перехода:
+        </div>
+        <a href='#' page="login-page">Авторизация</a>
+        <a href='#' page="registration-page">Регистрация</a>
 
-    //     <h1>Добро пожаловать в Yandex Talk</h1>
-    //     <div>
-    //     Выберите страницу для перехода
-    //     </div>
-
-    //   </div>
-    // `;
-    //       break;
-    //     }
+      </div>
+    `;
+      break;
+    }
 
     default: {
       window.location.pathname = '/login';
     }
   }
+
+  document.addEventListener('click', (event) => {
+    const page = event.target.getAttribute('page');
+    console.log(page, event, event.target);
+    if (page) {
+      navigate(page);
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  });
 });
