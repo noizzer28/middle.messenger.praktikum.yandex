@@ -23,3 +23,19 @@
     margin-top: 50px;
   }
 }
+
+.profile-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0px 0px 6px 1px $secondary;
+  z-index: 2;
+  background-color: #fff;
+  height: 100vh;
+  padding: 40px;
+  & > :last-child {
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+}
