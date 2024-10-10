@@ -85,3 +85,11 @@ textarea {
   line-height: 1.15; /* 1 */
   outline: none;
 }
+
+input[type='number'] {
+  &::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

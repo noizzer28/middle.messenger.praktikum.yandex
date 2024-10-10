@@ -9,3 +9,4 @@ export { Avatar } from './avatar/avatar';
 export { ProfileContainer } from './container/profile-container';
 export { ProfileEdit } from './profile/profile-edit';
 export { ButtonBack } from './button/button-back';
+export { NotFound } from './not-found/not-found';

@@ -9,7 +9,8 @@ const pages = {
   registration: [Pages.RegPage],
   profile: [Pages.Profile],
   chat: [Pages.Chat],
-  notfound: [Pages.NotFound]
+  notfound: [Pages.NotFoundPage],
+  error: [Pages.ErrorPage]
 };
 
 Object.entries(Components).forEach(([name, component]) => {
@@ -47,10 +48,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
       navigate('notfound');
       break;
     }
-    // case '/500': {
-    //   navigate('errorPage');
-    //   break;
-    // }
+    case '/500': {
+      navigate('error');
+      break;
+    }
     // case '/': {
     //   document.getElementById('app').innerHTML = `
     //   <div class="flex-column mt-30">
@@ -66,9 +67,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
     //   break;
     // }
 
-    default: {
-      window.location.pathname = '/login';
-    }
+    // default: {
+    //   window.location.pathname = '/login';
+    // }
   }
 
   document.addEventListener('click', (event) => {
