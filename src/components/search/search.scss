@@ -1,12 +1,19 @@
 @import '../../styles/_var';
 .chat-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: $background-color;
+  box-shadow: 0 0 6px 1px $shadow;
+  width: 100%;
   &__link {
+    padding-right: 10px;
     font-size: 14px;
     color: $light-grey;
     display: flex;
     align-items: center;
     justify-content: end;
-    height: 50px;
+    height: 40px;
     p {
       cursor: pointer;
       &:hover {

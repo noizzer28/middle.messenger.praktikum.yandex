@@ -75,13 +75,16 @@
   height: 100vh;
 
   &-aside {
-    overflow-y: scroll;
+    position: relative;
+    overflow: scroll;
     max-width: 450px;
-    padding: 0 10px 0 10px;
     height: 100%;
     box-shadow: 0px 0px 6px 1px $shadow;
     flex-grow: 1;
     z-index: 2;
+    ul {
+      padding: 0 10px 0 10px;
+    }
     &::-webkit-scrollbar {
       display: none;
     }
