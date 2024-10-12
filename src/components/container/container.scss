@@ -15,7 +15,7 @@
   min-height: 500px;
   box-shadow: 0px 0px 6px 1px $secondary;
   z-index: 2;
-  background-color: #fff;
+  background-color: $soft-white;
   border-radius: 12px;
   gap: 25px;
 
@@ -31,7 +31,7 @@
   flex-direction: column;
   box-shadow: 0px 0px 6px 1px $secondary;
   z-index: 2;
-  background-color: #fff;
+  background-color: $soft-white;
   height: 100vh;
   padding: 40px;
   & > :last-child {
