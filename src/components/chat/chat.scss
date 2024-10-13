@@ -31,7 +31,6 @@
       height: 80px;
       object-fit: cover;
       border-radius: 50%;
-      cursor: pointer;
     }
   }
   &__data {
@@ -39,7 +38,7 @@
 
     height: 100%;
     &__chat-name {
-      cursor: pointer;
+      cursor: default;
       color: $text-color;
       font-size: 18px;
     }
@@ -61,6 +60,7 @@
   }
   &__time {
     flex-grow: 1;
+    cursor: default;
     position: absolute;
     top: 10px;
     right: 10px;
