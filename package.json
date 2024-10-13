@@ -1,5 +1,5 @@
 {
-  "name": "yangramm",
+  "name": "yandex-talk",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -26,6 +26,7 @@
   "dependencies": {
     "lodash-es": "^4.17.21",
     "vite-plugin-handlebars": "^2.0.0",
+    "yandex-talk": "file:",
     "yangramm": "file:"
   }
 }

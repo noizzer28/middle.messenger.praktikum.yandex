@@ -12,5 +12,8 @@ export default defineConfig({
       fix: true
     })
   ],
-  assetsInclude: ['**/*.hbs']
+  assetsInclude: ['**/*.hbs'],
+  build: {
+    outDir: 'dist'
+  }
 });
