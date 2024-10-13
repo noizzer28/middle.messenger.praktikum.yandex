@@ -3,6 +3,7 @@ import handlebars from 'vite-plugin-handlebars';
 import eslint from 'vite-plugin-eslint2';
 
 export default defineConfig({
+  base: '/',
   server: {
     port: 3000
   },
