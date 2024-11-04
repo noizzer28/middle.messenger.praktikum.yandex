@@ -1,2 +1,10 @@
+import template from './template';
+import Block from '../../services/Block';
 import './input.scss';
-export { default as Input } from './input.hbs?raw';
+
+class Input extends Block {
+  render() {
+    return this.compile(template);
+  }
+}
+export default Input;

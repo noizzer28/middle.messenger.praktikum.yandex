@@ -21,7 +21,7 @@ export default [
   {
     files: ['**/*.js', '**/*.ts'],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
         ...globals.browser
@@ -33,7 +33,8 @@ export default [
     },
     rules: {
       'prettier/prettier': 'error',
-      'no-console': 'warn'
+      'no-console': 'warn',
+      'no-unused-vars': ['warn', { args: 'none', varsIgnorePattern: '^_' }]
     }
   },
 

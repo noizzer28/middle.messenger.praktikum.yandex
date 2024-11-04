@@ -1,4 +1,4 @@
-<div class="input-wrapper">
+const template = `
   <div class="input-wrapper__label">{{ label }}</div>
   <input
     type="{{ type }}"
@@ -8,4 +8,6 @@
     placeholder="{{ placeholder }}"
     autocomplete="{{ autocomplete }}"
   />
-</div>
+`;
+
+export default template;

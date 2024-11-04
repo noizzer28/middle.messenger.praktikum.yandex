@@ -3,9 +3,10 @@ import './styles/style.scss';
 import Handlebars from 'handlebars';
 import * as Components from './components/components.js';
 import * as Pages from './pages/pages';
+import { renderDOM } from './utils/render.js';
 
 const pages = {
-  login: [Pages.LoginPage],
+  login: [Pages.loginPage],
   registration: [Pages.RegPage],
   profile: [Pages.Profile],
   chat: [Pages.Chat],
@@ -13,72 +14,111 @@ const pages = {
   error: [Pages.ErrorPage]
 };
 
-Object.entries(Components).forEach(([name, component]) => {
-  Handlebars.registerPartial(name, component);
-});
+// Object.entries(Components).forEach(([name, component]) => {
+//   console.log('register partials ', name, component);
+//   Handlebars.registerPartial(name, component);
+// });
 
-const navigate = (page) => {
-  console.log(page);
-  const [src, args] = pages[page];
-  const handlebarsFunc = Handlebars.compile(src);
-  document.getElementById('app').innerHTML = handlebarsFunc(args);
-};
+renderDOM(Pages.loginPage);
 
-document.addEventListener('DOMContentLoaded', (e) => {
-  const path = e.target.location.pathname;
+// const navigate = (page) => {
+//   console.log(page);
+//   const [src, args] = pages[page];
+//   // const handlebarsFunc = Handlebars.compile(src);
+//   document.getElementById('app').appendChild(page);
+// };
 
-  switch (path) {
-    case '/login': {
-      navigate('login');
-      break;
-    }
-    case '/register': {
-      navigate('registration');
-      break;
-    }
-    case '/profile': {
-      navigate('profile');
-      break;
-    }
-    case '/chat': {
-      navigate('chat');
-      break;
-    }
-    case '/404': {
-      navigate('notfound');
-      break;
-    }
-    case '/500': {
-      navigate('error');
-      break;
-    }
-    // case '/': {
-    //   document.getElementById('app').innerHTML = `
-    //   <div class="flex-column mt-30">
-    //     <h1 class="headers-text" >Добро пожаловать в Yandex Talk</h1>
-    //     <div>
-    //     Выберите страницу для перехода:
-    //     </div>
-    //     <a href='#' page="login-page">Авторизация</a>
-    //     <a href='#' page="registration-page">Регистрация</a>
+// document.addEventListener('DOMContentLoaded', (e) => {
+//   const path = e.target.location.pathname;
 
-    //   </div>
-    // `;
-    //   break;
-    // }
+//   switch (path) {
+//     case '/login': {
+//       navigate('login');
+//       break;
+//     }
+//     case '/register': {
+//       navigate('registration');
+//       break;
+//     }
+//     case '/profile': {
+//       navigate('profile');
+//       break;
+//     }
+//     case '/chat': {
+//       navigate('chat');
+//       break;
+//     }
+//     case '/404': {
+//       navigate('notfound');
+//       break;
+//     }
+//     case '/500': {
+//       navigate('error');
+//       break;
+//     }
+//     // case '/': {
+//     //   document.getElementById('app').innerHTML = `
+//     //   <div class="flex-column mt-30">
+//     //     <h1 class="headers-text" >Добро пожаловать в Yandex Talk</h1>
+//     //     <div>
+//     //     Выберите страницу для перехода:
+//     //     </div>
+//     //     <a href='#' page="login-page">Авторизация</a>
+//     //     <a href='#' page="registration-page">Регистрация</a>
 
-    // default: {
-    //   window.location.pathname = '/login';
-    // }
-  }
+//     //   </div>
+//     // `;
+//     //   break;
+//     // }
 
-  document.addEventListener('click', (event) => {
-    const page = event.target.getAttribute('page');
-    if (page) {
-      navigate(page);
+//     default: {
+//       window.location.pathname = '/login';
+//     }
+//   }
 
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-  });
-});
+//   document.addEventListener('click', (event) => {
+//     const page = event.target.getAttribute('page');
+//     if (page) {
+//       navigate(page);
+
+//       event.preventDefault();
+//       event.stopImmediatePropagation();
+//     }
+//   });
+// });
+
+// import Block from './services/Block.js';
+// class Button extends Block {
+//   constructor(props) {
+//     super('button', props);
+//   }
+
+//   render() {
+//     console.log('render in index.js');
+//     return `<div>${this.props.text}</div>`;
+//   }
+// }
+
+// function render(query, block) {
+//   console.log('function render');
+//   // console.log(query, block);
+//   const root = document.getElementById(query);
+//   // console.log(root);
+//   root.appendChild(block.getContent());
+//   return root;
+// }
+
+// const button = new Button({
+//   text: 'Click me'
+// });
+
+// // app — это class дива в корне DOM
+// render('app', button);
+
+// // Через секунду контент изменится сам, достаточно обновить пропсы
+// setTimeout(() => {
+//   console.log('обновление props settimeout');
+//   button.setProps({
+//     text: 'Click me, please'
+//   });
+// }, 2000);

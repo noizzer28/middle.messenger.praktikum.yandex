@@ -1,2 +1,11 @@
+import template from './template';
+import Block from '../../services/Block';
 import './container.scss';
-export { default as Container } from './container.hbs?raw';
+
+class Container extends Block {
+  render() {
+    return this.compile(template);
+  }
+}
+
+export default Container;
