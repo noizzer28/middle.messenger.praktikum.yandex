@@ -1,5 +1,8 @@
-<tr class="table-edit">
+const template = `
   <td class="table-edit__line {{ class }}">
     <a>{{ caption }}</a>
   </td>
-</tr>
+
+`;
+
+export default template;

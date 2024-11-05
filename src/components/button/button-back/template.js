@@ -1,5 +1,5 @@
 const template = `
-<div class="button-back" page="{{ page }}">
+
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="28"
@@ -28,6 +28,5 @@ const template = `
     <path d="M13 19L9 14L13 9" stroke="white" stroke-width="1.6" />
   </svg>
   <p page="{{ page }}">Назад</p>
-</div>
 `;
 export default template;

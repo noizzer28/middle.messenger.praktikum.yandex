@@ -1,11 +1,11 @@
+import './profile-line.scss';
 import template from './template';
 import Block from '../../services/Block';
-import './container.scss';
 
-class Container extends Block {
+class ProfileLine extends Block {
   render() {
     return this.compile(template);
   }
 }
 
-export default Container;
+export default ProfileLine;

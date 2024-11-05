@@ -20,7 +20,7 @@ class Block {
 
   constructor(tagName = 'div', propsAndChilds = {}) {
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    console.log('constructor', children, props, lists, events);
+    // console.log('constructor', children, props, lists, events);
     const eventBus = new EventBus();
     this._children = this._makePropsProxy(children);
     this._id = MakeID();
@@ -72,48 +72,34 @@ class Block {
       }
     });
 
-    // Object.keys(propsWithChilds).forEach((key) => {
-    //   if (propsWithChilds[key] instanceof Block) {
-    //     children[key] = propsWithChilds[key];
-    //   } else if (
-    //     Array.isArray(propsWithChilds[key]) &&
-    //     propsWithChilds[key].every((child) => child instanceof Block)
-    //   ) {
-    //     lists[key] = propsWithChilds[key];
-    //   } else {
-    //     props[key] = propsWithChilds[key];
-    //   }
-    // });
-
     return { children, props, lists, events };
   }
 
-  // @ansnekit-ts зачем этот метод если он нигде не используется? Должен по идее в ф-ции init() использоваться
   createDocumentElement(tag) {
     const element = document.createElement(tag);
-    // @ansnekit-ts тут мы создаем главный элемент родитель. Ему можно установить id element.setAttribute('data-id',this._id)
+    //element.setAttribute('data-id',this._id)
     return element;
   }
 
   compile(template, props) {
-    console.log('TEMPLATE', template);
     if (typeof props === 'undefined') {
       props = this._props;
     }
     const propsAndStubs = { ...props };
 
     Object.entries(this._children).forEach(([key, child]) => {
+      // console.log('Key, CHILD', key, child);
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
     Object.entries(this._lists).forEach(([key, listItem]) => {
       propsAndStubs[key] = listItem.map((listChild) => {
-        return `<div data-id="list-id-${listChild._id}"></div>`;
+        return `<${listChild._meta.tagName} data-id="list-id-${listChild._id}"></${listChild._meta.tagName}>`;
       });
     });
 
     const fragment = this.createDocumentElement('template');
     fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
-    console.log('FRAGMENt', fragment.innerHTML);
+    // console.log('template in compile', fragment.innerHTML);
 
     Object.values(this._children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
@@ -135,6 +121,7 @@ class Block {
     return fragment.content;
   }
   getContent() {
+    // console.log('getcontent', this._element);
     return this._element;
   }
   _render() {
@@ -147,7 +134,6 @@ class Block {
   }
   addAttribute() {
     const { attr = {} } = this._props;
-    console.log('attri', attr);
     Object.entries(attr).forEach(([key, value]) => {
       this._element.setAttribute(key, value);
     });

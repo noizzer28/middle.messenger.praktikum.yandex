@@ -6,7 +6,6 @@ import SecondaryButton from '../../components/button/secondary-button/secondary-
 
 class LoginPage extends Block {
   render() {
-    console.log('loginpage render');
     return this.compile(template);
   }
 }
@@ -15,8 +14,6 @@ export const loginPage = new LoginPage('main', {
   attr: {
     class: 'container'
   },
-  text: 'Enter1',
-  text1: 'ENter2',
   items: [
     new Input('div', {
       type: 'input',
@@ -37,9 +34,4 @@ export const loginPage = new LoginPage('main', {
   ],
   button: new Button('div', { text: 'Войти' }),
   secondButton: new SecondaryButton('div', { text: 'Нет аккаунта?' })
-  //   events: {
-  //     click: (e) => {
-  //       console.log(e.target);
-  //     }
-  //   }
 });

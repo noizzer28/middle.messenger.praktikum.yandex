@@ -1,4 +1,5 @@
-<div class="avatar-wrapper">
+const template = `<div class="avatar-wrapper">
   <img class="avatar" src="{{ src }}" alt="avatar" />
   <h1 class="headers-text pb-30">{{ name }}</h1>
-</div>
+</div>`;
+export default template;

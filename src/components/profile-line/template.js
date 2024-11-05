@@ -1,4 +1,4 @@
-<tr>
+const template = `
   <td class="table-line">{{ caption }}</td>
   <td class="table-line__last">
     <input
@@ -9,4 +9,7 @@
       {{#if readonly}}readonly{{/if}}
     />
   </td>
-</tr>
+
+`;
+
+export default template;
