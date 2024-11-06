@@ -1,24 +1,30 @@
 import './styles/null.scss';
 import './styles/style.scss';
-
-import * as Pages from './pages/pages';
+import Block from './services/Block.ts';
+import * as Pages from './pages/pages.ts';
 import { renderDOM } from './utils/render.js';
+import { PageKeys } from './types.ts';
 
-const pages = {
+const pages: Record<PageKeys, Block | undefined> = {
   login: Pages.loginPage,
-  registration: Pages.RegPage,
+  registration: undefined,
   profile: Pages.profilePage,
-  chat: Pages.Chat,
-  notfound: Pages.NotFoundPage,
-  error: Pages.ErrorPage
+  chat: undefined,
+  notfound: undefined,
+  error: undefined
 };
 
-const navigate = (page) => {
-  renderDOM(pages[page]);
+const navigate = (page: PageKeys) => {
+  const targetPage = pages[page];
+  if (targetPage) {
+    renderDOM(targetPage);
+  } else {
+    console.error(`Page ${page} does not exist`);
+  }
 };
 
-document.addEventListener('DOMContentLoaded', (e) => {
-  const path = e.target.location.pathname;
+document.addEventListener('DOMContentLoaded', (e: Event) => {
+  const path = (e.target as Document).location.pathname;
 
   switch (path) {
     case '/login': {
@@ -65,13 +71,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   }
 
-  document.addEventListener('click', (event) => {
-    const page = event.target.getAttribute('page');
+  document.addEventListener('click', (e: MouseEvent) => {
+    const page = (e.target as HTMLElement).getAttribute('page') as PageKeys;
     if (page) {
       navigate(page);
 
-      event.preventDefault();
-      event.stopImmediatePropagation();
+      e.preventDefault();
+      e.stopImmediatePropagation();
     }
   });
 });

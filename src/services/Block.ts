@@ -1,6 +1,16 @@
 import { v4 as MakeID } from 'uuid';
 import EventBus from './EventBus';
 import Handlebars from 'handlebars';
+import {
+  TCallback,
+  TChildren,
+  TEvents,
+  TIterableObject,
+  TMeta,
+  TProps,
+  Event,
+  TLists
+} from '@/types';
 
 class Block {
   static EVENTS = {
@@ -10,19 +20,21 @@ class Block {
     FLOW_RENDER: 'flow:render'
   };
 
-  _element;
-  _meta;
-  _props;
-  _children;
-  _events;
-  _id;
-  _setUpdate = false;
+  private _element: HTMLElement | undefined;
+  private _meta: TMeta;
+  private _props: TProps;
+  private _children: TChildren;
+  private _events: TEvents;
+  private _id: string;
+  private _setUpdate: boolean;
+  private _eventBus;
+  private _lists: TLists;
 
   constructor(tagName = 'div', propsAndChilds = {}) {
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
     // console.log('constructor', children, props, lists, events);
-    const eventBus = new EventBus();
-    this._children = this._makePropsProxy(children);
+    this._eventBus = new EventBus();
+    this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();
 
     this._meta = {
@@ -30,24 +42,30 @@ class Block {
       props
     };
     this._events = events;
-    this._lists = this._makePropsProxy(lists);
-    this._props = this._makePropsProxy({ ...props });
-    this.eventBus = () => eventBus;
-
-    this._registerEvents(eventBus);
-    eventBus.emit(Block.EVENTS.INIT);
+    this._lists = this._makePropsProxy(lists) as TLists;
+    this._props = this._makePropsProxy({ ...props }) as TProps;
+    // this._element = HTMLElement;
+    this._setUpdate = false;
+    this._registerEvents();
+    this._eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+  _registerEvents() {
+    this._eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    this._eventBus.on(
+      Block.EVENTS.FLOW_CDM,
+      this._componentDidMount.bind(this)
+    );
+    this._eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this._componentDidUpdate.bind(this)
+    );
+    this._eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
   init() {
     this._createResources();
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this._eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
   _createResources() {
@@ -55,14 +73,14 @@ class Block {
     this._element = this.createDocumentElement(tagName);
   }
 
-  getChildren(propsAndChilds) {
-    const children = {};
-    const props = {};
-    const lists = {};
-    const events = {};
+  getChildren(propsAndChilds: TProps) {
+    const children: TChildren = {};
+    const props: TProps = {};
+    const lists: TLists = {};
+    const events: TEvents = {};
     Object.keys(propsAndChilds).forEach((key) => {
       if (key === 'events' && typeof propsAndChilds[key] === 'object') {
-        events[key] = propsAndChilds[key];
+        Object.assign(events, propsAndChilds[key] as TEvents);
       } else if (Array.isArray(propsAndChilds[key])) {
         lists[key] = propsAndChilds[key];
       } else if (propsAndChilds[key] instanceof Block) {
@@ -75,13 +93,13 @@ class Block {
     return { children, props, lists, events };
   }
 
-  createDocumentElement(tag) {
+  createDocumentElement(tag = 'div') {
     const element = document.createElement(tag);
     //element.setAttribute('data-id',this._id)
     return element;
   }
 
-  compile(template, props) {
+  compile(template: string, props?: TProps) {
     if (typeof props === 'undefined') {
       props = this._props;
     }
@@ -97,7 +115,9 @@ class Block {
       });
     });
 
-    const fragment = this.createDocumentElement('template');
+    const fragment = this.createDocumentElement(
+      'template'
+    ) as HTMLTemplateElement;
     fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
     // console.log('template in compile', fragment.innerHTML);
 
@@ -120,43 +140,56 @@ class Block {
 
     return fragment.content;
   }
-  getContent() {
-    // console.log('getcontent', this._element);
+  getContent(): HTMLElement {
+    if (!this._element) {
+      throw new Error('Element is not initialized');
+    }
     return this._element;
   }
+
+  render() {}
+
   _render() {
     const block = this.render();
     this.removeEvents();
-    this._element.innerHTML = '';
-    this._element.appendChild(block);
+    this._element!.innerHTML = '';
+    this._element!.appendChild(block!);
     this.addAttribute();
     this.addEvents();
   }
   addAttribute() {
-    const { attr = {} } = this._props;
+    const { attr = {} } = this._props as TProps;
     Object.entries(attr).forEach(([key, value]) => {
-      this._element.setAttribute(key, value);
+      this._element!.setAttribute(key, value);
     });
   }
   addEvents() {
-    const { events } = this._events;
+    const { events } = this._events as TProps;
     if (events) {
-      Object.keys(events).forEach((event) => {
-        this._element.addEventListener(event, events[event]);
+      Object.keys(events).forEach((event: string) => {
+        const handler = events[event as keyof TEvents];
+        if (handler) {
+          this._element!.addEventListener(event, handler);
+        }
+        // this._element!.addEventListener(event, handler);
       });
     }
   }
 
   removeEvents() {
-    const { events = {} } = this._props;
-
-    Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
-    });
+    const { events } = this._events as TProps;
+    if (events) {
+      Object.keys(events).forEach((event: string) => {
+        const handler = events[event as keyof TEvents];
+        if (handler) {
+          this._element!.removeEventListener(event, handler);
+        }
+      });
+    }
   }
-  render() {}
 
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: TProps, newProps: TProps) {
+    console.log('_CDU', oldProps, newProps);
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -164,7 +197,7 @@ class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: TProps, newProps: TProps) {
     if (newProps === oldProps) {
       return false;
     } else {
@@ -172,16 +205,17 @@ class Block {
     }
   }
 
-  setProps = (newProps) => {
+  setProps = (newProps: TProps) => {
     if (!newProps) {
       return;
     }
-
+    console.log('newprops', newProps);
     this._setUpdate = false;
+
     const oldValue = { ...this._props };
-
-    const { children, props } = this.getChildren(newProps);
-
+    console.log('oldvalue', oldValue);
+    const { children, props, lists } = this.getChildren(newProps);
+    console.log('ch, pr, li', children, props, lists);
     if (Object.values(children).length) {
       Object.assign(this._children, children);
     }
@@ -189,8 +223,12 @@ class Block {
     if (Object.values(props).length) {
       Object.assign(this._props, props);
     }
+    if (Object.values(lists).length) {
+      Object.assign(this._lists, lists);
+    }
+    console.log('value after', children, props, lists);
     if (this._setUpdate) {
-      this._eventBus.emit(Block.EVENT_FLOW_CDU, oldValue, this._props);
+      this._eventBus.emit(Block.EVENTS.FLOW_CDU, oldValue, this._props);
       this._setUpdate = false;
     }
   };
@@ -199,16 +237,20 @@ class Block {
     return this._element;
   }
 
-  _makePropsProxy(props) {
+  _makePropsProxy(props: TChildren | TLists | TProps) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
     return new Proxy(props, {
-      get(target, prop) {
+      get(target, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set(target, prop: string, value) {
+        // console.log('setproxy', target, prop, value);
+        // console.log('setproxy', target[prop], value);
         if (target[prop] !== value) {
-          target.prop = value;
-          this._setUpdate = true;
+          target[prop] = value;
+          self._setUpdate = true;
         }
 
         return true;
@@ -231,10 +273,10 @@ class Block {
     this.componentDidMount();
   }
 
-  componentDidMount(oldProps) {}
+  componentDidMount() {}
 
   dispatchComponentDidMount() {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+    this._eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 }
 

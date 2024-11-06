@@ -2,7 +2,6 @@ const template = `
 <div class="profile-container {{class}}">
 {{{buttonBack}}}
 {{{avatar}}}
-
 <table>
   <tbody>
     {{#each profileLine}}

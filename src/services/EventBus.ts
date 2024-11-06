@@ -1,27 +1,29 @@
+import { TCallback, TEvents } from '@/types';
+
 export default class EventBus {
+  private listeners: TEvents;
+
   constructor() {
     this.listeners = {};
-    // console.log('EventBus constructor', this.listeners);
   }
-  on(event, callback) {
+
+  on(event: string, callback: TCallback): void {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
     this.listeners[event].push(callback);
-    // console.log('EventBus attaching', this.listeners);
   }
 
-  off(event, callback) {
+  off(event: string, callback: TCallback): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
-
     this.listeners[event] = this.listeners[event].filter(
       (listener) => listener !== callback
     );
   }
 
-  emit(event, ...args) {
+  emit(event: string, ...args: unknown[]): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

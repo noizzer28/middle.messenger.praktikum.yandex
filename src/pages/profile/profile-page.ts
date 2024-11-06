@@ -6,12 +6,13 @@ import ProfileLine from '../../components/profile-line/profile-line';
 import ProfileEdit from '../../components/profile-edit/profile-edit';
 
 class ProfilePage extends Block {
-  render() {
+  render(): DocumentFragment {
     return this.compile(template);
   }
 }
 
 export const profilePage = new ProfilePage('div', {
+  name1: 'ololo',
   attr: {
     class: 'container'
   },
@@ -93,5 +94,20 @@ export const profilePage = new ProfilePage('div', {
       caption: 'Выйти из аккаунта',
       class: 'color-red'
     })
-  ]
+  ],
+  events: {
+    click: (e: Event) => {
+      // if (e.target.getAttribute('dataclick') === 'avatar') {
+      //   profilePage.setProps({
+      //     name1: 'ololo'
+      //   });
+      // }
+      console.log(e.target);
+    },
+    blur: (e: Event) => {
+      profilePage.setProps({
+        name1: 'ololo'
+      });
+    }
+  }
 });

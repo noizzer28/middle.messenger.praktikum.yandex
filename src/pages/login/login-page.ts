@@ -4,7 +4,19 @@ import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
 
+interface LoginPageProps {
+  attr: {
+    class: string;
+  };
+  items: Input[];
+  button: Button;
+  secondButton: SecondaryButton;
+}
+
 class LoginPage extends Block {
+  constructor(tagName: string, props: LoginPageProps) {
+    super(tagName, props);
+  }
   render() {
     return this.compile(template);
   }
