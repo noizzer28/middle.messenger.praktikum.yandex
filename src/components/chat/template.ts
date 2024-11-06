@@ -1,4 +1,4 @@
-<li class="chat-list">
+const template = `
   <div class="chat-list__avatar">
     <img src="{{ avatar }}" alt="avatar" />
   </div>
@@ -12,4 +12,6 @@
   <div class="chat-list__time">
     {{ time }}
   </div>
-</li>
+`;
+
+export default template;

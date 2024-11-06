@@ -1,3 +1,4 @@
+const template = `
 <div class="not-found">
   <div>
     <div class="pb-30">
@@ -8,3 +9,8 @@
   </div>
   <img class="non-found-image" src="{{ img }}" alt="none" />
 </div>
+`;
+// const template = `
+// {{> NotFound text="Произошла ошибка на сервере..." img='/error.png'}}
+// `;
+export default template;

@@ -7,11 +7,11 @@ import { PageKeys } from './types.ts';
 
 const pages: Record<PageKeys, Block | undefined> = {
   login: Pages.loginPage,
-  registration: undefined,
+  registration: Pages.registerPage,
   profile: Pages.profilePage,
-  chat: undefined,
-  notfound: undefined,
-  error: undefined
+  chat: Pages.chatPage,
+  notfound: Pages.notFoundPage,
+  error: Pages.errorPage
 };
 
 const navigate = (page: PageKeys) => {

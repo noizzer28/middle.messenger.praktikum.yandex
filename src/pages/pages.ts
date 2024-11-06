@@ -1,8 +1,6 @@
 export { loginPage } from './login/login-page';
 export { profilePage } from './profile/profile-page';
-
-// export { RegPage } from './registration/registration';
-// export { Chat } from './chat/chat';
-
-// export { NotFoundPage } from './not-found/not-found';
-// export { ErrorPage } from './error-page/error-page';
+export { chatPage } from './chat/chat';
+export { registerPage } from './registration/registration';
+export { errorPage } from './error-page/error-page';
+export { notFoundPage } from './error-page/error-page';

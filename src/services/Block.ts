@@ -1,16 +1,7 @@
 import { v4 as MakeID } from 'uuid';
 import EventBus from './EventBus';
 import Handlebars from 'handlebars';
-import {
-  TCallback,
-  TChildren,
-  TEvents,
-  TIterableObject,
-  TMeta,
-  TProps,
-  Event,
-  TLists
-} from '@/types';
+import { TChildren, TEvents, TMeta, TProps, TLists } from '@/types';
 
 class Block {
   static EVENTS = {

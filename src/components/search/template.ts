@@ -1,4 +1,4 @@
-<header class="chat-header">
+const template = `<header class="chat-header">
   <div class="chat-header__link">
     <p page="{{ page }}">Профиль</p>
     <svg
@@ -15,3 +15,6 @@
     <input type="text" placeholder="Поиск" />
   </div>
 </header>
+`;
+
+export default template;

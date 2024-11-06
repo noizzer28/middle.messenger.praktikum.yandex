@@ -108,3 +108,14 @@ body {
     margin-bottom: 20px;
   }
 }
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  img {
+    padding-left: 20px;
+    max-width: 300px;
+  }
+}
