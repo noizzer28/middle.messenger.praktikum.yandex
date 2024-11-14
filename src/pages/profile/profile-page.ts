@@ -19,9 +19,9 @@ export const profilePage = new ProfilePage('div', {
   buttonBack: new ButtonBack('div', {
     attr: {
       class: 'button-back',
-      page: 'login'
+      page: 'chat'
     },
-    page: 'login'
+    page: 'chat'
   }),
   avatar: new Avatar('div', {
     attr: {

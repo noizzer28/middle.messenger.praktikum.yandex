@@ -154,15 +154,28 @@ class Block {
       this._element!.setAttribute(key, value);
     });
   }
+  // addEvents() {
+  //   const events = this._events as TProps;
+  //   console.log('add events', events, this._events);
+  //   if (events) {
+  //     Object.keys(events).forEach((event: string) => {
+  //       const handler = events[event as keyof TEvents];
+  //       if (handler) {
+  //         this._element!.addEventListener(event, handler);
+  //       }
+  //       // this._element!.addEventListener(event, handler);
+  //     });
+  //   }
+  // }
   addEvents() {
-    const { events } = this._events as TProps;
+    const events = this._events as TEvents;
+    console.log('add events', events);
     if (events) {
       Object.keys(events).forEach((event: string) => {
         const handler = events[event as keyof TEvents];
         if (handler) {
           this._element!.addEventListener(event, handler);
         }
-        // this._element!.addEventListener(event, handler);
       });
     }
   }

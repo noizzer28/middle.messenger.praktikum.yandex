@@ -21,9 +21,11 @@
     margin: auto;
   }
   &:hover {
+    background-color: $light-shadow;
+  }
+  &.selected {
     background-color: $shadow;
   }
-
   &__avatar {
     width: 80px;
     img {
