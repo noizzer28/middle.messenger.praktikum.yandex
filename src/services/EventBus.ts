@@ -1,7 +1,7 @@
-import { TCallback, TEvents } from '@/types';
+import { TCallback, TEventsInner } from '@/types';
 
 export default class EventBus {
-  private listeners: TEvents;
+  private listeners: TEventsInner;
 
   constructor() {
     this.listeners = {};

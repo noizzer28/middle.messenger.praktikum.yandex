@@ -7,9 +7,10 @@ import Block from './services/Block';
 // }
 
 // export type TEvents = Record<string, TCallback>;
-// export type TEventsInner = {
-//   [event: string]: TCallback[];
-// };
+
+export type TEventsInner = {
+  [event: string]: TCallback[];
+};
 
 export type TEvents = {
   [K in EventKeys]?: EventHandler<K>;

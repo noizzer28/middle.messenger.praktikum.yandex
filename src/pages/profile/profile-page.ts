@@ -94,20 +94,5 @@ export const profilePage = new ProfilePage('div', {
       caption: 'Выйти из аккаунта',
       class: 'color-red'
     })
-  ],
-  events: {
-    click: (e: Event) => {
-      // if (e.target.getAttribute('dataclick') === 'avatar') {
-      //   profilePage.setProps({
-      //     name1: 'ololo'
-      //   });
-      // }
-      console.log(e.target);
-    },
-    blur: (e: Event) => {
-      profilePage.setProps({
-        name1: 'ololo'
-      });
-    }
-  }
+  ]
 });
