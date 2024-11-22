@@ -8,6 +8,8 @@ const template = `
           </div>
           {{{chatNav}}}
       </div>
+      {{#if modalBlock}} {{modalBlock}} {{/if}}
+      }}}
     </header>
 `;
 

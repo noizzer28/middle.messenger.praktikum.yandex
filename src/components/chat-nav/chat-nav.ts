@@ -14,6 +14,7 @@ export const chatNav = new ChatNav('div', {
   },
   events: {
     click: (e: Event) => {
+      e.stopPropagation();
       const nav = document.getElementById('chat-nav');
       if (nav) {
         nav.classList.add('visible');
@@ -30,9 +31,20 @@ function hideNav(dropdownContainer: HTMLElement) {
 
   function handleClickOutside(event: Event) {
     const target = event.target as HTMLElement;
-    if (!dropdownContainer.contains(target) || target.tagName === 'LI') {
+    if (!dropdownContainer.contains(target)) {
       dropdownContainer.classList.remove('visible');
+      document.removeEventListener('click', handleClickOutside);
     }
-    document.removeEventListener('click', handleClickOutside);
   }
 }
+// function addModal(dropdownContainer: HTMLElement) {
+//   document.addEventListener('click', handleClickOutside);
+
+//   function handleClickOutside(event: Event) {
+//     const target = event.target as HTMLElement;
+//     console.log('addmodal', target.tagName);
+//     if (target.tagName == 'LI') {
+//       console.log('li');
+//     }
+//   }
+// }
