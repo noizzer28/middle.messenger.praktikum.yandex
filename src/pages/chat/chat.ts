@@ -4,6 +4,8 @@ import ChatList from '../../components/chat-aside/chat-list';
 import Search from '../../components/search/search';
 import ChatMain from '../../components/chat-main/chat-main';
 import CHATS from '../../utils/chats';
+import ChatHeader from '../../components/chat-header/chat-header';
+import { chatNav } from '../../components/chat-nav/chat-nav';
 
 class ChatPage extends Block {
   render() {
@@ -15,38 +17,6 @@ export const chatPage = new ChatPage('main', {
   attr: {
     class: 'chat'
   },
-  // chatList: [
-  //   new ChatList('li', {
-  //     attr: {
-  //       class: 'chat-list'
-  //     },
-  //     avatar: '/profile.jpg',
-  //     chatName: 'Lorem ipsum',
-  //     you: 'Вы',
-  //     lastMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-  //     time: '10:49'
-  //   }),
-  //   new ChatList('li', {
-  //     attr: {
-  //       class: 'chat-list'
-  //     },
-  //     avatar: '/profile.jpg',
-  //     chatName: 'Илья',
-  //     you: 'Вы',
-  //     lastMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-  //     time: '10:49'
-  //   }),
-  //   new ChatList('li', {
-  //     attr: {
-  //       class: 'chat-list'
-  //     },
-  //     avatar: '/profile.jpg',
-  //     chatName: 'Lorem ipsum',
-  //     lastMessage:
-  //       'Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-  //     time: '10:49'
-  //   })
-  // ],
   chatList: CHATS.map((chat, index) => {
     return new ChatList('li', {
       attr: {
@@ -87,28 +57,20 @@ export const chatPage = new ChatPage('main', {
     },
     page: 'profile'
   })
-  // events: {
-  //   click: (e: Event) => {
-  //     // if (e.target.getAttribute('dataclick') === 'avatar') {
-  //     //   profilePage.setProps({
-  //     //     name1: 'ololo'
-  //     //   });
-  //     // }
-  //     console.log(e.target);
-  //   }
-  // }
 });
 
 function render(attr: number) {
   const chat = CHATS[attr];
-  console.log(chat);
   chatPage.setProps({
     chosenChat: new ChatMain('section', {
       attr: {
         class: 'chat-main__messages'
       },
-      avatar: chat.avatar,
-      chatName: chat.chatName,
+      header: new ChatHeader('div', {
+        avatar: chat.avatar,
+        chatName: chat.chatName,
+        chatNav: chatNav
+      }),
       you: chat.you || null,
       lastMessage: chat.lastMessage,
       time: chat.time

@@ -1,13 +1,5 @@
 const template = `
-    <header class="chat-main__header" >
-
-      <div class="chat-main__header-wrapper">
-          <div class='chat-main__avatar-wrapper'>
-              <img class="chat-main__avatar" src="{{{avatar}}}" alt="avatar" />
-                  <span>{{{chatName}}}</span>
-          </div>
-      </div>
-    </header>
+    {{{header}}}
         <div class="chat-main">
             <div class="chat-main__date">{{{time}}}</div>
             <div class='chat-main__block {{#if you}} receiver
