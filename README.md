@@ -5,6 +5,9 @@
 Сборка проекта осуществляется по команде: npm run build
 Сборка и запуск: npm run start
 
+Приложение создано на TypeScript , за основу взят компонентный подход с применением MVC шаблона.
+Классовый компонент Block обеспечивает отрисовку каждого компонента с помощью шаблонизатора Handlebars, EventBus осуществляет перерендер частей приложения.
+
 Стартовой страницей является страница логина: https://yandex-talk-noizzer.netlify.app/login
 Страница регистрации: https://yandex-talk-noizzer.netlify.app/register
 Страница профиля: https://yandex-talk-noizzer.netlify.app/profile
