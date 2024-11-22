@@ -1,22 +1,30 @@
 import Block from './services/Block';
 
-export enum Events {
-  CLICK = 'click',
-  BLUR = 'blur',
-  FOCUS = 'focus'
-}
+// export enum Events {
+//   CLICK = 'click',
+//   BLUR = 'blur',
+//   FOCUS = 'focus'
+// }
 
-export type EventKeys = keyof Events;
+// export type TEvents = Record<string, TCallback>;
+// export type TEventsInner = {
+//   [event: string]: TCallback[];
+// };
 
-export type EventsMap = {
-  click: MouseEvent;
-  blur: FocusEvent;
-  focus: FocusEvent;
+export type TEvents = {
+  [K in EventKeys]?: EventHandler<K>;
 };
 
-type EventHandler<K extends EventKeys> = K extends keyof EventsMap
-  ? (event: EventsMap[K]) => void
-  : never;
+export type EventKeys = keyof HTMLElementEventMap;
+
+export type EventsMap = {
+  [K in EventKeys]: HTMLElementEventMap[K];
+};
+
+// type EventHandler<K extends EventKeys> = K extends keyof EventsMap
+//   ? (event: EventsMap[K]) => void
+//   : never;
+type EventHandler<K extends EventKeys> = (event: EventsMap[K]) => void;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TCallback = (...args: any[]) => void;
@@ -49,15 +57,6 @@ export type TChildren = Record<string, Block>;
 export type TMeta = {
   tagName: string;
   props: TProps;
-};
-
-// export type TEvents = Record<string, TCallback>;
-// export type TEventsInner = {
-//   [event: string]: TCallback[];
-// };
-
-export type TEvents = {
-  [K in EventKeys]?: EventHandler<K>;
 };
 
 export type TLists = Record<string, Block[]>;

@@ -1,18 +1,18 @@
 const template = `
 <div class="modal-container pb-30">
-<form class="flex-column-form">
-  <div class="headers-text">Регистрация</div>
-  <div class="flex-column">
-  {{#each inputs}}
-  {{{this}}}
-  {{/each}}
-  </div>
-  <div class="flex-column mt-30">
-{{{button}}}
-{{{secondaryButton}}}
-  </div>
+  <form class="flex-column-form" id="regForm">
+    <div class="headers-text">Регистрация</div>
+    <div class="flex-column">
+      {{#each inputs}}
+      {{{this}}}
+      {{/each}}
+    </div>
+      <div class="flex-column mt-30">
+        {{{button}}}
+        {{{secondaryButton}}}
+      </div>
   </form>
-  </div>
+</div>
   
   
   `;

@@ -1,7 +1,7 @@
 import { v4 as MakeID } from 'uuid';
 import EventBus from './EventBus';
 import Handlebars from 'handlebars';
-import { TChildren, TEvents, TMeta, TProps, TLists } from '@/types';
+import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '@/types';
 
 class Block {
   static EVENTS = {
@@ -154,27 +154,15 @@ class Block {
       this._element!.setAttribute(key, value);
     });
   }
-  // addEvents() {
-  //   const events = this._events as TProps;
-  //   console.log('add events', events, this._events);
-  //   if (events) {
-  //     Object.keys(events).forEach((event: string) => {
-  //       const handler = events[event as keyof TEvents];
-  //       if (handler) {
-  //         this._element!.addEventListener(event, handler);
-  //       }
-  //       // this._element!.addEventListener(event, handler);
-  //     });
-  //   }
-  // }
+
   addEvents() {
     const events = this._events as TEvents;
-    console.log('add events', events);
+    // console.log('add events', events);
     if (events) {
-      Object.keys(events).forEach((event: string) => {
-        const handler = events[event as keyof TEvents];
+      Object.entries(events).forEach(([key, handler]) => {
+        const event = key as EventKeys;
         if (handler) {
-          this._element!.addEventListener(event, handler);
+          this._element?.addEventListener(event, handler as EventListener);
         }
       });
     }
@@ -183,17 +171,17 @@ class Block {
   removeEvents() {
     const { events } = this._events as TProps;
     if (events) {
-      Object.keys(events).forEach((event: string) => {
-        const handler = events[event as keyof TEvents];
+      Object.entries(events).forEach(([key, handler]) => {
+        const event = key as EventKeys;
         if (handler) {
-          this._element!.removeEventListener(event, handler);
+          this._element?.removeEventListener(event, handler as EventListener);
         }
       });
     }
   }
 
   _componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    console.log('_CDU', oldProps, newProps);
+    // console.log('_CDU', oldProps, newProps);
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -213,13 +201,13 @@ class Block {
     if (!newProps) {
       return;
     }
-    console.log('newprops', newProps);
+    // console.log('newprops', newProps);
     this._setUpdate = false;
 
     const oldValue = { ...this._props };
-    console.log('oldvalue', oldValue);
+    // console.log('oldvalue', oldValue);
     const { children, props, lists } = this.getChildren(newProps);
-    console.log('ch, pr, li', children, props, lists);
+    // console.log('ch, pr, li', children, props, lists);
     if (Object.values(children).length) {
       Object.assign(this._children, children);
     }
@@ -230,7 +218,7 @@ class Block {
     if (Object.values(lists).length) {
       Object.assign(this._lists, lists);
     }
-    console.log('value after', children, props, lists);
+    // console.log('value after', children, props, lists);
     if (this._setUpdate) {
       this._eventBus.emit(Block.EVENTS.FLOW_CDU, oldValue, this._props);
       this._setUpdate = false;

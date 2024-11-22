@@ -4,6 +4,7 @@ const template = `
     type="{{ type }}"
     class="input"
     name="{{ name }}"
+    id="{{ name }}"
     value="{{ value }}"
     placeholder="{{ placeholder }}"
     autocomplete="{{ autocomplete }}"
