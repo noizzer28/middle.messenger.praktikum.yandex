@@ -11,6 +11,7 @@ const template = `
                     <li>Удалить пользователя</li>
                 </ul>
              </nav>
+
 `;
 
 export default template;

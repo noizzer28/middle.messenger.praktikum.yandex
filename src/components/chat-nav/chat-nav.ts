@@ -1,11 +1,28 @@
 import Block from '../../services/Block';
 import template from './template';
 import '../chat-header/chat-header.scss';
+import { TProps } from '@/types';
+// import Modal from '../modal/modal';
 
 class ChatNav extends Block {
+  constructor(tagName: string, propsAndChilds: TProps) {
+    super(tagName, propsAndChilds);
+    // this.addDropdownEvents();
+  }
   render() {
     return this.compile(template);
   }
+
+  // addDropdownEvents() {
+  //   const listItems = this.getContent().querySelectorAll('li');
+  //   listItems.forEach((item) => {
+  //     item.addEventListener('click', () => {
+  //       this.setProps({
+  //         modalBlock: new Modal('div')
+  //       });
+  //     });
+  //   });
+  // }
 }
 
 export const chatNav = new ChatNav('div', {
@@ -37,14 +54,3 @@ function hideNav(dropdownContainer: HTMLElement) {
     }
   }
 }
-// function addModal(dropdownContainer: HTMLElement) {
-//   document.addEventListener('click', handleClickOutside);
-
-//   function handleClickOutside(event: Event) {
-//     const target = event.target as HTMLElement;
-//     console.log('addmodal', target.tagName);
-//     if (target.tagName == 'LI') {
-//       console.log('li');
-//     }
-//   }
-// }

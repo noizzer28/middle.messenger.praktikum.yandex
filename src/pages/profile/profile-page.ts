@@ -12,7 +12,6 @@ class ProfilePage extends Block {
 }
 
 export const profilePage = new ProfilePage('div', {
-  name1: 'ololo',
   attr: {
     class: 'container'
   },
