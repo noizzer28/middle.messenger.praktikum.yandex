@@ -33,7 +33,7 @@ export default [
       },
       parser: typescriptParser,
       parserOptions: {
-        project: './tsconfig.json' // Укажите путь к вашему tsconfig
+        project: './tsconfig.json'
       }
     },
     plugins: {
@@ -50,18 +50,4 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off'
     }
   }
-
-  // {
-  //   files: ['**/*.hbs'],
-  //   languageOptions: {
-  //     parser: 'glimmer'
-  //   },
-  //   plugins: {
-  //     handlebars: eslintPluginHandlebars
-  //   },
-  //   processor: 'handlebars/handlebars',
-  //   rules: {
-  //     'prettier/prettier': 'off'
-  //   }
-  // }
 ];

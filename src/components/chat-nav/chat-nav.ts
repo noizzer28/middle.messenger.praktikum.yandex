@@ -7,22 +7,10 @@ import { TProps } from '@/types';
 class ChatNav extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
     super(tagName, propsAndChilds);
-    // this.addDropdownEvents();
   }
   render() {
     return this.compile(template);
   }
-
-  // addDropdownEvents() {
-  //   const listItems = this.getContent().querySelectorAll('li');
-  //   listItems.forEach((item) => {
-  //     item.addEventListener('click', () => {
-  //       this.setProps({
-  //         modalBlock: new Modal('div')
-  //       });
-  //     });
-  //   });
-  // }
 }
 
 export const chatNav = new ChatNav('div', {

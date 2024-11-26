@@ -7,7 +7,25 @@ import Block from './services/Block';
 // }
 
 // export type TEvents = Record<string, TCallback>;
+export type HTTPMethod = <R = unknown>(
+  url: string,
+  options?: RequestOptions
+) => Promise<R>;
 
+export enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE'
+}
+
+export interface RequestOptions {
+  headers?: Record<string, string>;
+  body?: Record<string, unknown>;
+  query?: Record<string, string>;
+  method?: METHODS;
+  timeout?: number;
+}
 export type TEventsInner = {
   [event: string]: TCallback[];
 };

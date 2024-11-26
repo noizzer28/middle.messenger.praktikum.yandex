@@ -9,6 +9,7 @@ const template = `
     placeholder="{{ placeholder }}"
     autocomplete="{{ autocomplete }}"
   />
+  {{#if eye}}{{{eye}}}{{/if}}
 `;
 
 export default template;

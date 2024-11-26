@@ -3,7 +3,7 @@ import Block from '../../services/Block';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
-import * as Validate from '../../utils/regexp';
+import * as Validate from '../../utils/validators';
 
 class LoginPage extends Block {
   render() {

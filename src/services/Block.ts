@@ -3,7 +3,7 @@ import EventBus from './EventBus';
 import Handlebars from 'handlebars';
 import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '@/types';
 
-class Block {
+abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -35,7 +35,6 @@ class Block {
     this._events = events;
     this._lists = this._makePropsProxy(lists) as TLists;
     this._props = this._makePropsProxy({ ...props }) as TProps;
-    // this._element = HTMLElement;
     this._setUpdate = false;
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);

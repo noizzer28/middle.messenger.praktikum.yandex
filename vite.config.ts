@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import handlebars from 'vite-plugin-handlebars';
 import eslint from 'vite-plugin-eslint2';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   base: '/',
@@ -8,10 +8,10 @@ export default defineConfig({
     port: 3000
   },
   plugins: [
-    handlebars(),
     eslint({
       fix: true
-    })
+    }),
+    svgr()
   ],
   assetsInclude: ['**/*.hbs'],
   build: {
