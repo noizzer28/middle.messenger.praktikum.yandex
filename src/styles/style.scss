@@ -119,3 +119,21 @@ body {
     max-width: 300px;
   }
 }
+
+.error {
+  color: red;
+  font-size: 10px;
+}
+.rel {
+  position: relative;
+}
+.input-eye {
+  width: 17px;
+  position: absolute;
+  top: 23px;
+  right: 10px;
+  cursor: pointer;
+  svg {
+    fill: $dark-grey;
+  }
+}

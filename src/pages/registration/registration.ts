@@ -3,7 +3,8 @@ import template from './template';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
-import * as Validate from '../../utils/regexp';
+import { validators, ValidatorMap } from '../../utils/validators';
+import { eyeInput } from '../../components/eye/eye';
 
 class RegPage extends Block {
   render() {
@@ -25,8 +26,10 @@ export const registerPage = new RegPage('main', {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          validateEmail();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
@@ -39,36 +42,42 @@ export const registerPage = new RegPage('main', {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          validateLogin();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
     new Input('div', {
       type: 'text',
       label: 'Имя',
-      name: 'name',
-      autocomplete: 'name',
+      name: 'first-name',
+      autocomplete: 'first-name',
       attr: {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          validateName();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
     new Input('div', {
       type: 'text',
       label: 'Фамилия',
-      name: 'last-name',
-      autocomplete: 'last-name',
+      name: 'second-name',
+      autocomplete: 'second-name',
       attr: {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          validateLastName();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
@@ -81,14 +90,10 @@ export const registerPage = new RegPage('main', {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          // const target = event.target as HTMLInputElement;
-          // if (!Validate.validatePhone(target.value)) {
-          //   target.classList.add('invalid');
-          // } else {
-          //   target.classList.remove('invalid');
-          // }
-          validatePhone();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
@@ -97,12 +102,15 @@ export const registerPage = new RegPage('main', {
       label: 'Пароль',
       name: 'password',
       autocomplete: 'off',
+      eye: eyeInput,
       attr: {
-        class: 'input-wrapper'
+        class: 'input-wrapper rel'
       },
       events: {
-        blur: () => {
-          validatePassword();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     }),
@@ -115,8 +123,10 @@ export const registerPage = new RegPage('main', {
         class: 'input-wrapper'
       },
       events: {
-        blur: () => {
-          validateRepPass();
+        blur: (event) => {
+          if (event.target instanceof HTMLInputElement) {
+            validate(event.target);
+          }
         }
       }
     })
@@ -143,104 +153,45 @@ function validateSubmit() {
   formData.forEach((value, key) => {
     formObject[key] = value.toString();
   });
-  validateEmail();
-  validateLastName();
-  validateLogin();
-  validateName();
-  validatePassword();
-  validateRepPass();
-  validatePhone();
+  const inputElements = document.querySelectorAll('input');
+
+  inputElements.forEach((input) => {
+    validate(input);
+  });
+
   console.log(formObject);
 }
 
-function validateEmail() {
-  const target = document.getElementById('email');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validateEmail(target.value)) {
-      target.classList.add('invalid');
+function validate(target: HTMLInputElement) {
+  const name = target.getAttribute('name') as keyof ValidatorMap;
+  const parent = target.parentElement;
+  const value = target.value;
+  if (name) {
+    const validation = validators[name](value);
+    if (validation) {
+      addError(name, parent!, validation);
     } else {
-      target.classList.remove('invalid');
+      removeError(parent!);
     }
-  } else {
-    throw new Error('Элемент с id="email" не является <input>');
-  }
-}
-function validateName() {
-  const target = document.getElementById('name');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validateName(target.value)) {
-      target.classList.add('invalid');
-    } else {
-      target.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="name" не является <input>');
-  }
-}
-function validateLastName() {
-  const target = document.getElementById('last-name');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validateName(target.value)) {
-      target.classList.add('invalid');
-    } else {
-      target.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="last name" не является <input>');
-  }
-}
-function validatePhone() {
-  const target = document.getElementById('phone');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validatePhone(target.value)) {
-      target.classList.add('invalid');
-    } else {
-      target.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="phone" не является <input>');
-  }
-}
-function validateLogin() {
-  const target = document.getElementById('login');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validateLogin(target.value)) {
-      target.classList.add('invalid');
-    } else {
-      target.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="login" не является <input>');
-  }
-}
-function validatePassword() {
-  const target = document.getElementById('password');
-  if (target instanceof HTMLInputElement) {
-    if (!Validate.validatePassword(target.value)) {
-      target.classList.add('invalid');
-    } else {
-      target.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="password" не является <input>');
-  }
-}
-function validateRepPass() {
-  const repPass = document.getElementById('rep-password');
-  const isEqual = validatePasswords();
-  if (repPass instanceof HTMLInputElement) {
-    if (!Validate.validateEmail(repPass.value) && !isEqual) {
-      repPass.classList.add('invalid');
-    } else {
-      repPass.classList.remove('invalid');
-    }
-  } else {
-    throw new Error('Элемент с id="reppass" не является <input>');
   }
 }
 
-function validatePasswords() {
-  const repPass = document.getElementById('rep-password') as HTMLInputElement;
-  const pass = document.getElementById('password') as HTMLInputElement;
-  return repPass.value === pass.value;
+function addError(name: string, parent: HTMLElement, validation: string) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (!errorChild) {
+    const errorEl = document.createElement('div');
+    errorEl.setAttribute('data-error', `error-${name}`);
+    errorEl.classList.add('error');
+    errorEl.textContent = validation;
+    parent.appendChild(errorEl);
+  } else {
+    errorChild.textContent = validation;
+  }
+}
+
+function removeError(parent: HTMLElement) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (errorChild) {
+    parent.removeChild(errorChild);
+  }
 }

@@ -31,11 +31,11 @@ export const profilePage = new ProfilePage('div', {
   }),
   profileLine: [
     new ProfileLine('tr', {
-      caption: 'Почта',
-      detail: 'email@ya.ru',
-      type: 'email',
+      caption: 'Отображаемое имя',
+      detail: 'noizzer',
+      type: 'text',
       readonly: 'true',
-      name: 'email'
+      name: 'display-name'
     }),
     new ProfileLine('tr', {
       caption: 'Логин',

@@ -7,10 +7,11 @@
   outline: none;
   width: 280px;
   &.invalid {
-    outline: groove red;
-    border-bottom: none;
-    border-radius: 2px;
-    background-color: #f5c1c5;
+    // outline: groove red;
+    // border-bottom: none;
+    // border-radius: 2px;
+    // background-color: #f5c1c5;
+    color: red;
   }
   &::placeholder {
     color: $light-grey;
