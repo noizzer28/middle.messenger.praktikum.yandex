@@ -252,12 +252,20 @@ abstract class Block {
     });
   }
 
-  show() {
-    this.getContent().style.display = 'block';
+  public hide(): void {
+    const componentHtml = this.getContent();
+    if (!componentHtml) {
+      return;
+    }
+    componentHtml.style.display = 'none';
   }
 
-  hide() {
-    this.getContent().style.display = 'none';
+  public show(): void {
+    const componentHtml = this.getContent();
+    if (!componentHtml) {
+      return;
+    }
+    componentHtml.style.display = 'flex';
   }
 
   _componentDidMount() {

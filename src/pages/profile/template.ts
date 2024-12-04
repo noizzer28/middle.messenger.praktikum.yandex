@@ -1,5 +1,5 @@
 const template = `
-<div class="profile-container {{class}}">
+<div class="profile-container {{class}} ">
 {{{buttonBack}}}
 {{{avatar}}}
 <table>

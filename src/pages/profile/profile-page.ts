@@ -4,6 +4,8 @@ import ButtonBack from '../../components/button/button-back/button-back';
 import Avatar from '../../components/avatar/avatar';
 import ProfileLine from '../../components/profile-line/profile-line';
 import ProfileEdit from '../../components/profile-edit/profile-edit';
+import { validate } from '../../utils/validators';
+import Button from '../../components/button/button/button';
 
 class ProfilePage extends Block {
   render(): DocumentFragment {
@@ -11,16 +13,52 @@ class ProfilePage extends Block {
   }
 }
 
+const profileEditLines = [
+  new ProfileEdit('tr', {
+    attr: {
+      class: 'table-edit'
+    },
+    caption: 'Изменить данные',
+    events: {
+      click: (e: Event) => {
+        const target = e.target as HTMLElement;
+        if ((target as HTMLElement).tagName.toLowerCase() === 'a') {
+          const dataContainer = document.getElementById('settings-page');
+          const isEdit = dataContainer?.getAttribute('isedited');
+          if (isEdit === 'false') {
+            toggleToEdit();
+          }
+        }
+      }
+    }
+  }),
+  new ProfileEdit('tr', {
+    attr: {
+      class: 'table-edit'
+    },
+    caption: 'Изменить пароль'
+  }),
+  new ProfileEdit('tr', {
+    attr: {
+      class: 'table-edit'
+    },
+    caption: 'Выйти из аккаунта',
+    class: 'color-red'
+  })
+];
+
 export const profilePage = new ProfilePage('div', {
   attr: {
-    class: 'container'
+    class: 'container',
+    id: 'settings-page',
+    isEdited: false
   },
   buttonBack: new ButtonBack('div', {
     attr: {
       class: 'button-back',
-      page: 'chat'
+      page: '/messenger'
     },
-    page: 'chat'
+    page: '/messenger'
   }),
   avatar: new Avatar('div', {
     attr: {
@@ -31,11 +69,11 @@ export const profilePage = new ProfilePage('div', {
   }),
   profileLine: [
     new ProfileLine('tr', {
-      caption: 'Отображаемое имя',
-      detail: 'noizzer',
-      type: 'text',
+      caption: 'Почта',
+      detail: 'noizzer@noizer.ru',
+      type: 'email',
       readonly: 'true',
-      name: 'display-name'
+      name: 'email'
     }),
     new ProfileLine('tr', {
       caption: 'Логин',
@@ -63,7 +101,7 @@ export const profilePage = new ProfilePage('div', {
       detail: 'noizzer',
       type: 'text',
       readonly: 'true',
-      name: 'login'
+      name: 'display-name'
     }),
     new ProfileLine('tr', {
       caption: 'Телефон',
@@ -73,25 +111,60 @@ export const profilePage = new ProfilePage('div', {
       name: 'phone'
     })
   ],
-  profileEdit: [
-    new ProfileEdit('tr', {
-      attr: {
-        class: 'table-edit'
-      },
-      caption: 'Изменить данные'
-    }),
-    new ProfileEdit('tr', {
-      attr: {
-        class: 'table-edit'
-      },
-      caption: 'Изменить пароль'
-    }),
-    new ProfileEdit('tr', {
-      attr: {
-        class: 'table-edit'
-      },
-      caption: 'Выйти из аккаунта',
-      class: 'color-red'
-    })
-  ]
+  profileEdit: profileEditLines
 });
+
+function toggleToEdit() {
+  const inputElements = document.querySelectorAll('input');
+  inputElements.forEach((input) => {
+    input.removeAttribute('readonly');
+    input.classList.add('changeable');
+    input.addEventListener('blur', () => {
+      validate(input);
+    });
+  });
+  renderToEdit();
+}
+
+function renderToEdit() {
+  profilePage.setProps({
+    attr: {
+      class: 'container',
+      id: 'settings-page',
+      isEdited: true
+    },
+    profileEdit: [
+      new Button('tr', {
+        text: 'Сохранить',
+        events: {
+          click: () => {
+            toggleToProfile();
+          }
+        }
+      })
+    ]
+  });
+}
+
+function toggleToProfile() {
+  const inputElements = document.querySelectorAll('input');
+  inputElements.forEach((input) => {
+    input.setAttribute('readonly', '');
+    input.classList.remove('changeable');
+    input.removeEventListener('blur', () => {
+      validate(input);
+    });
+  });
+  renderToProfile();
+}
+
+function renderToProfile() {
+  profilePage.setProps({
+    attr: {
+      class: 'container',
+      id: 'settings-page',
+      isEdited: false
+    },
+    profileEdit: profileEditLines
+  });
+}

@@ -55,7 +55,7 @@ export const chatPage = new ChatPage('main', {
     attr: {
       class: 'chat-header'
     },
-    page: 'profile'
+    page: '/settings'
   })
 });
 

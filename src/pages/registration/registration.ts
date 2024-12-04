@@ -3,11 +3,12 @@ import template from './template';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
-import { validators, ValidatorMap } from '../../utils/validators';
+import { validate, validateSubmit } from '../../utils/validators';
 import { eyeInput } from '../../components/eye/eye';
 
 class RegPage extends Block {
   render() {
+    // console.log('render registration');
     return this.compile(template);
   }
 }
@@ -136,62 +137,12 @@ export const registerPage = new RegPage('main', {
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        validateSubmit();
+        validateSubmit(`regForm`);
       }
     }
   }),
   secondaryButton: new SecondaryButton('div', {
     text: 'Уже есть аккаунт?',
-    page: 'login'
+    page: '/'
   })
 });
-
-function validateSubmit() {
-  const form = document.getElementById('regForm') as HTMLFormElement;
-  const formData = new FormData(form);
-  const formObject: Record<string, string> = {};
-  formData.forEach((value, key) => {
-    formObject[key] = value.toString();
-  });
-  const inputElements = document.querySelectorAll('input');
-
-  inputElements.forEach((input) => {
-    validate(input);
-  });
-
-  console.log(formObject);
-}
-
-function validate(target: HTMLInputElement) {
-  const name = target.getAttribute('name') as keyof ValidatorMap;
-  const parent = target.parentElement;
-  const value = target.value;
-  if (name) {
-    const validation = validators[name](value);
-    if (validation) {
-      addError(name, parent!, validation);
-    } else {
-      removeError(parent!);
-    }
-  }
-}
-
-function addError(name: string, parent: HTMLElement, validation: string) {
-  const errorChild = parent.querySelector('[data-error]');
-  if (!errorChild) {
-    const errorEl = document.createElement('div');
-    errorEl.setAttribute('data-error', `error-${name}`);
-    errorEl.classList.add('error');
-    errorEl.textContent = validation;
-    parent.appendChild(errorEl);
-  } else {
-    errorChild.textContent = validation;
-  }
-}
-
-function removeError(parent: HTMLElement) {
-  const errorChild = parent.querySelector('[data-error]');
-  if (errorChild) {
-    parent.removeChild(errorChild);
-  }
-}

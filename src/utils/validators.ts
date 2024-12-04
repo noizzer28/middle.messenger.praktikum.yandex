@@ -9,6 +9,7 @@ export type ValidatorMap = {
   phone: Tvalid;
   message: Tvalid;
   'rep-password': Tvalid;
+  'display-name': Tvalid;
 };
 
 const validateName: Tvalid = (name) => {
@@ -73,6 +74,63 @@ const validateMessage: Tvalid = (message) => {
   return null;
 };
 
+export function validateSubmit(id: string) {
+  const form = document.getElementById(id) as HTMLFormElement;
+  const formData = new FormData(form);
+  const formObject: Record<string, string> = {};
+  formData.forEach((value, key) => {
+    formObject[key] = value.toString();
+  });
+  const inputElements = document.querySelectorAll('input');
+  inputElements.forEach((input) => {
+    const result = validate(input);
+    if (!result) {
+      throw new Error('Поля заполнены неверно ');
+    }
+  });
+  console.log(formObject);
+}
+
+export function validate(target: HTMLInputElement) {
+  const name = target.getAttribute('name') as keyof ValidatorMap;
+  const parent = target.parentElement;
+  const value = target.value;
+  if (name) {
+    const validation = validators[name](value);
+    console.log(validation);
+    if (validation) {
+      addError(name, parent!, validation);
+      return false;
+    } else {
+      removeError(parent!);
+      return true;
+    }
+  }
+}
+export function addError(
+  name: string,
+  parent: HTMLElement,
+  validation: string
+) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (!errorChild) {
+    const errorEl = document.createElement('div');
+    errorEl.setAttribute('data-error', `error-${name}`);
+    errorEl.classList.add('error');
+    errorEl.textContent = validation;
+    parent.appendChild(errorEl);
+  } else {
+    errorChild.textContent = validation;
+  }
+}
+
+export function removeError(parent: HTMLElement) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (errorChild) {
+    parent.removeChild(errorChild);
+  }
+}
+
 export const validators: ValidatorMap = {
   'first-name': validateName,
   'second-name': validateName,
@@ -81,5 +139,6 @@ export const validators: ValidatorMap = {
   password: validatePassword,
   phone: validatePhone,
   message: validateMessage,
-  'rep-password': validateRepPassword
+  'rep-password': validateRepPassword,
+  'display-name': validateName
 };
