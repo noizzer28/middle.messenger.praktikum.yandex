@@ -1,9 +1,31 @@
+@import '../../styles/var';
 .avatar {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-
+  margin: 15px;
+  &-shadow {
+    margin: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $soft-white;
+    line-height: 18px;
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
   &-wrapper {
     width: 100%;
     display: flex;

@@ -5,7 +5,8 @@ import Search from '../../components/search/search';
 import ChatMain from '../../components/chat-main/chat-main';
 import CHATS from '../../utils/chats';
 import ChatHeader from '../../components/chat-header/chat-header';
-import { chatNav } from '../../components/chat-nav/chat-nav';
+import chatDropdown from '../../components/chat-dropdown/chat-dropdown';
+import Modal from '../../components/modal/modal';
 
 class ChatPage extends Block {
   render() {
@@ -15,7 +16,7 @@ class ChatPage extends Block {
 
 export const chatPage = new ChatPage('main', {
   attr: {
-    class: 'chat'
+    class: 'chat rel'
   },
   chatList: CHATS.map((chat, index) => {
     return new ChatList('li', {
@@ -69,7 +70,7 @@ function render(attr: number) {
       header: new ChatHeader('div', {
         avatar: chat.avatar,
         chatName: chat.chatName,
-        chatNav: chatNav
+        chatNav: chatDropdown
       }),
       you: chat.you || null,
       lastMessage: chat.lastMessage,

@@ -1,20 +1,20 @@
 const CHATS = [
   {
-    avatar: '/profile.jpg',
+    avatar: '/profile.png',
     chatName: 'Илья',
     you: 'Вы',
     lastMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
     time: '10:49'
   },
   {
-    avatar: '/profile.jpg',
+    avatar: '/profile.png',
     chatName: 'Алексей',
     lastMessage:
       'Esse reprehenderit elit nostrud officia dolore officia occaecat sit amet consectetur dolore. Cillum enim minim dolore commodo elit nulla non. Deserunt magna quis est labore minim mollit aliqua deserunt. Magna nulla amet dolor nostrud aliqua cupidatat irure magna laborum.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaSed do eiusmod tempor incididunt ut labore et dolore magna aliquaSed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     time: '09:30'
   },
   {
-    avatar: '/profile.jpg',
+    avatar: '/profile.png',
     chatName: 'Мария',
     you: 'Вы',
     lastMessage:
@@ -22,7 +22,7 @@ const CHATS = [
     time: '08:15'
   },
   {
-    avatar: '/profile.jpg',
+    avatar: '/profile.png',
     chatName: 'Алексей',
     you: 'Вы',
     lastMessage:
@@ -30,7 +30,7 @@ const CHATS = [
     time: '09:30'
   },
   {
-    avatar: '/profile.jpg',
+    avatar: '/profile.png',
     chatName: 'Мария',
     lastMessage: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco',
     time: '08:15'

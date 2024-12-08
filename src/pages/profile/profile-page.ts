@@ -62,9 +62,9 @@ export const profilePage = new ProfilePage('div', {
   }),
   avatar: new Avatar('div', {
     attr: {
-      class: `avatar-wrapper`
+      class: `avatar-wrapper rel`
     },
-    src: '/profile.jpg',
+    src: '/profile.png',
     name: 'Noizzer'
   }),
   profileLine: [

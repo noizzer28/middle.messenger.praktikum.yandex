@@ -1,6 +1,6 @@
 const template = `
 
-<div class='modal-container'>
+<div class='login-container'>
 <form class="flex-column-form" id="login-form">
   <div class="headers-text">Вход</div>
   <div class="flex-column">

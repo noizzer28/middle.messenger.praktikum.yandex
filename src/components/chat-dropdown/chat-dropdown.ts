@@ -2,18 +2,33 @@ import Block from '../../services/Block';
 import template from './template';
 import '../chat-header/chat-header.scss';
 import { TProps } from '@/types';
-// import Modal from '../modal/modal';
+import Modal from '../modal/modal';
 
-class ChatNav extends Block {
+class ChatDropDown extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
     super(tagName, propsAndChilds);
+    this.addModalEvents();
   }
   render() {
     return this.compile(template);
   }
+  addModalEvents() {
+    const liList = this.getContent().querySelectorAll('li');
+    if (liList) {
+      liList.forEach((li) => {
+        console.log(li.dataset.add);
+        if (li.dataset.add == 'adduser') {
+          li.addEventListener('click', () => {
+            console.log('added');
+            modalAddUser.show();
+          });
+        }
+      });
+    }
+  }
 }
 
-export const chatNav = new ChatNav('div', {
+const chatDropdown = new ChatDropDown('div', {
   attr: {
     class: `chat-main__header-svg`
   },
@@ -42,3 +57,11 @@ function hideNav(dropdownContainer: HTMLElement) {
     }
   }
 }
+export default chatDropdown;
+
+const modalAddUser = new Modal({
+  title: 'Добавить пользователя',
+  text: `<label>Логин</label>
+  <input class="input" type='text'/>`,
+  buttontext: 'Добавить'
+});

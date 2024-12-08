@@ -1,5 +1,5 @@
 const template = `
-<div class="modal-container pb-30">
+<div class="login-container pb-30">
   <form class="flex-column-form" id="regForm">
     <div class="headers-text">Регистрация</div>
     <div class="flex-column">
