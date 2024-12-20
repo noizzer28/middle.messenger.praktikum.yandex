@@ -7,6 +7,25 @@ import Block from './services/Block';
 // }
 
 // export type TEvents = Record<string, TCallback>;
+export type Indexed<T = unknown> = {
+  [key: string]: T;
+};
+export interface UserInterface {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  email: string;
+  avatar: string;
+  phone: string;
+}
+
+export type TStore = {
+  user: UserInterface | null;
+  [key: string]: unknown;
+};
+
 export type HTTPMethod = <R = unknown>(
   url: string,
   options?: RequestOptions
@@ -18,10 +37,24 @@ export enum METHODS {
   PUT = 'PUT',
   DELETE = 'DELETE'
 }
+export enum ROUTES {
+  SETTINGS = '/settings',
+  LOGIN = '/',
+  REGISTER = '/sign-up',
+  ERROR = '/500',
+  CHAT = '/messenger'
+}
+export type PageKeys =
+  | 'login'
+  | 'profile'
+  | 'registration'
+  | 'chat'
+  | 'notfound'
+  | 'error';
 
 export interface RequestOptions {
   headers?: Record<string, string>;
-  body?: Record<string, unknown>;
+  body?: unknown;
   query?: Record<string, string>;
   method?: METHODS;
   timeout?: number;
@@ -40,16 +73,11 @@ export type EventsMap = {
   [K in EventKeys]: HTMLElementEventMap[K];
 };
 
-// type EventHandler<K extends EventKeys> = K extends keyof EventsMap
-//   ? (event: EventsMap[K]) => void
-//   : never;
 type EventHandler<K extends EventKeys> = (event: EventsMap[K]) => void;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TCallback = (...args: any[]) => void;
 export type TCallbackEmpty = () => void;
-
-// export type TPageValues = keyof Record<EPages, string>;
 
 export enum Event {
   INIT = 'init',
@@ -60,9 +88,6 @@ export enum Event {
 
 export type TProps = {
   [key: string]: unknown | TLists;
-  settings?: {
-    withInternalId?: boolean;
-  };
   attr?: object;
   events?: TEvents;
 };
@@ -79,12 +104,3 @@ export type TMeta = {
 };
 
 export type TLists = Record<string, Block[]>;
-// export type TLists = { [id: string]: Block };
-
-export type PageKeys =
-  | 'login'
-  | 'profile'
-  | 'registration'
-  | 'chat'
-  | 'notfound'
-  | 'error';

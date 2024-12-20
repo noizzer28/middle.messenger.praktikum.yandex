@@ -4,6 +4,7 @@ import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
 import { validate, validateSubmit } from '../../utils/validators';
+import loginController from '../../api/auth/loginUserInterface';
 
 class LoginPage extends Block {
   render() {
@@ -20,12 +21,12 @@ export const loginPage = new LoginPage('main', {
       type: 'input',
       label: 'Логин',
       name: 'login',
-      autocomplete: 'login',
+      autocomplete: 'off',
       attr: {
         class: 'input-wrapper'
       },
       events: {
-        blur: (event) => {
+        blur: (event: Event) => {
           if (event.target instanceof HTMLInputElement) {
             validate(event.target);
           }
@@ -40,7 +41,7 @@ export const loginPage = new LoginPage('main', {
         class: 'input-wrapper'
       },
       events: {
-        blur: (event) => {
+        blur: (event: Event) => {
           if (event.target instanceof HTMLInputElement) {
             validate(event.target);
           }
@@ -53,7 +54,8 @@ export const loginPage = new LoginPage('main', {
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        validateSubmit('login-form');
+        // validateSubmit('login-form');
+        loginController.login('login-form');
       }
     }
   }),

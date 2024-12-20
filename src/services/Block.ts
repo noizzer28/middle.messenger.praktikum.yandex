@@ -1,7 +1,7 @@
 import { v4 as MakeID } from 'uuid';
 import EventBus from './EventBus';
 import Handlebars from 'handlebars';
-import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '@/types';
+import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '../types';
 
 abstract class Block {
   static EVENTS = {
@@ -20,10 +20,11 @@ abstract class Block {
   private _setUpdate: boolean;
   private _eventBus;
   private _lists: TLists;
+  // public props: TProps;
 
   constructor(tagName = 'div', propsAndChilds = {}) {
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    // console.log('constructor', children, props, lists, events);
+    // console.log('constructor', children, props);
     this._eventBus = new EventBus();
     this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();
@@ -38,6 +39,7 @@ abstract class Block {
     this._setUpdate = false;
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);
+    // this.props = this._props;
   }
 
   _registerEvents() {
@@ -227,7 +229,9 @@ abstract class Block {
   get element() {
     return this._element;
   }
-
+  getProps() {
+    return this._props;
+  }
   _makePropsProxy(props: TChildren | TLists | TProps) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;

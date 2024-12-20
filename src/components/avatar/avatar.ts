@@ -1,6 +1,7 @@
 import './avatar.scss';
 import template from './template';
 import Block from '../../services/Block';
+import Modal from '../modal/modal';
 
 interface AvatarProps {
   attr: {
@@ -13,9 +14,22 @@ interface AvatarProps {
 class Avatar extends Block {
   constructor(tagName: string = 'div', propsAndChilds: AvatarProps) {
     super(tagName, propsAndChilds);
+    this.addModalEvents();
   }
   render(): DocumentFragment {
     return this.compile(template);
   }
+  addModalEvents() {
+    const avatarOpen = this.getContent().querySelector('.avatar-shadow');
+    avatarOpen?.addEventListener('click', () => {
+      modalAddAvatar.show();
+    });
+  }
 }
 export default Avatar;
+
+const modalAddAvatar = new Modal({
+  title: 'Загрузите файл',
+  text: `<input type="file" accept="image/png, image/jpeg" />`,
+  buttontext: 'Поменять'
+});

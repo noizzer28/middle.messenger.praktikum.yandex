@@ -5,6 +5,7 @@ import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
 import { validate, validateSubmit } from '../../utils/validators';
 import { eyeInput } from '../../components/eye/eye';
+import сreateUserController from '../../api/auth/createUserInterface';
 
 class RegPage extends Block {
   render() {
@@ -53,8 +54,8 @@ export const registerPage = new RegPage('main', {
     new Input('div', {
       type: 'text',
       label: 'Имя',
-      name: 'first-name',
-      autocomplete: 'first-name',
+      name: 'first_name',
+      autocomplete: 'first_name',
       attr: {
         class: 'input-wrapper'
       },
@@ -69,8 +70,8 @@ export const registerPage = new RegPage('main', {
     new Input('div', {
       type: 'text',
       label: 'Фамилия',
-      name: 'second-name',
-      autocomplete: 'second-name',
+      name: 'second_name',
+      autocomplete: 'second_name',
       attr: {
         class: 'input-wrapper'
       },
@@ -137,7 +138,7 @@ export const registerPage = new RegPage('main', {
     events: {
       click: (event: Event) => {
         event.preventDefault();
-        validateSubmit(`regForm`);
+        сreateUserController.login(`regForm`);
       }
     }
   }),

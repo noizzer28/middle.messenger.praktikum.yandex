@@ -1,8 +1,8 @@
 type Tvalid = (value: string) => string | null;
 
 export type ValidatorMap = {
-  'first-name': Tvalid;
-  'second-name': Tvalid;
+  first_name: Tvalid;
+  second_name: Tvalid;
   login: Tvalid;
   email: Tvalid;
   password: Tvalid;
@@ -81,6 +81,7 @@ export function validateSubmit(id: string) {
   formData.forEach((value, key) => {
     formObject[key] = value.toString();
   });
+  // console.log(formData, formObject);
   const inputElements = document.querySelectorAll('input');
   inputElements.forEach((input) => {
     const result = validate(input);
@@ -88,7 +89,18 @@ export function validateSubmit(id: string) {
       throw new Error('Поля заполнены неверно ');
     }
   });
-  console.log(formObject);
+  // return Array.from(inputElements).every((input) => validate(input));
+}
+
+export function validateProfile() {
+  const inputElements = document.querySelectorAll('input');
+  inputElements.forEach((input) => {
+    const result = validate(input);
+    if (!result) {
+      throw new Error('Поля заполнены неверно ');
+    }
+  });
+  return Array.from(inputElements).every((input) => validate(input));
 }
 
 export function validate(target: HTMLInputElement) {
@@ -97,7 +109,6 @@ export function validate(target: HTMLInputElement) {
   const value = target.value;
   if (name) {
     const validation = validators[name](value);
-    console.log(validation);
     if (validation) {
       addError(name, parent!, validation);
       return false;
@@ -132,8 +143,8 @@ export function removeError(parent: HTMLElement) {
 }
 
 export const validators: ValidatorMap = {
-  'first-name': validateName,
-  'second-name': validateName,
+  first_name: validateName,
+  second_name: validateName,
   login: validateLogin,
   email: validateEmail,
   password: validatePassword,

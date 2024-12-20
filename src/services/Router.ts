@@ -1,9 +1,19 @@
 import Block from './Block';
-import { notFoundPage } from '../pages/pages';
+import { loginPage, notFoundPage } from '../pages/pages';
 import { render } from '../utils/render';
+import getUserInfo from '../api/auth/getUserInfo';
+import { ROUTES } from '../types';
+import { LoginUser } from '../utils/useLogin';
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
+}
+
+function isAllowedForGuest(pathname: string): boolean {
+  if (pathname === ROUTES.LOGIN || pathname === ROUTES.REGISTER) {
+    return true;
+  }
+  return false;
 }
 
 type RProps = {
@@ -21,6 +31,7 @@ class Route {
   }
 
   navigate(pathname: string) {
+    console.log('router navigate', pathname);
     if (this.match(pathname)) {
       this._pathname = pathname;
       this.render();
@@ -52,6 +63,7 @@ class Router {
   private history: History = window.history;
   private _currentRoute: Route | null = null;
   private _rootQuery: string = '';
+  private _isLogged: boolean = false;
 
   constructor(rootQuery: string) {
     if (Router.__instance) {
@@ -60,6 +72,15 @@ class Router {
     this._rootQuery = rootQuery;
 
     Router.__instance = this;
+  }
+
+  public async init() {
+    await LoginUser();
+    this.start();
+  }
+
+  public isLoggedIn(state: boolean) {
+    this._isLogged = state;
   }
 
   use(pathname: string, block: Block | undefined): this {
@@ -72,6 +93,7 @@ class Router {
   }
 
   start(): void {
+    console.log('router start', window.location.pathname);
     window.onpopstate = (() => {
       this._onRoute(window.location.pathname);
     }).bind(this);
@@ -81,15 +103,22 @@ class Router {
 
   private _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
-    // console.log('onroute', pathname, route);
+    console.log('onroute', pathname, route, this._isLogged);
     if (!route) {
       const route = new Route('/400', notFoundPage, { rootQuery: '.app' });
       route.render();
       return;
     }
-
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
+    }
+    if (!this._isLogged && !isAllowedForGuest(pathname)) {
+      this.go(ROUTES.LOGIN);
+      return;
+    }
+    if (this._isLogged && isAllowedForGuest(pathname)) {
+      this.go(ROUTES.CHAT);
+      return;
     }
 
     this._currentRoute = route;
@@ -102,6 +131,7 @@ class Router {
   }
 
   back(): void {
+    console.log(this.history);
     this.history.back();
   }
 

@@ -16,11 +16,14 @@ class ChatDropDown extends Block {
     const liList = this.getContent().querySelectorAll('li');
     if (liList) {
       liList.forEach((li) => {
-        console.log(li.dataset.add);
         if (li.dataset.add == 'adduser') {
           li.addEventListener('click', () => {
-            console.log('added');
             modalAddUser.show();
+          });
+        }
+        if (li.dataset.add == 'deleteuser') {
+          li.addEventListener('click', () => {
+            modalDeleteUser.show();
           });
         }
       });
@@ -64,4 +67,10 @@ const modalAddUser = new Modal({
   text: `<label>Логин</label>
   <input class="input" type='text'/>`,
   buttontext: 'Добавить'
+});
+const modalDeleteUser = new Modal({
+  title: 'Удалить пользователя',
+  text: `<label>Логин</label>
+  <input class="input" type='text'/>`,
+  buttontext: 'Удалить'
 });
