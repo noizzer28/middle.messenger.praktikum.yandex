@@ -1,7 +1,7 @@
 import template from './template';
 import Block from '../../services/Block';
 import './input.scss';
-import { TProps, TEvents } from '@/types';
+import { TProps, TEvents } from './../../types';
 
 class Input extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {

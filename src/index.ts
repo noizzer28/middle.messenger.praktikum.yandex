@@ -38,6 +38,7 @@ router
 window.addEventListener('popstate', () => {
   console.log('onpopstate');
   router.init();
+  router.start();
 });
 
 document.addEventListener('click', (e: MouseEvent) => {

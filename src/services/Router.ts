@@ -76,7 +76,6 @@ class Router {
 
   public async init() {
     await LoginUser();
-    this.start();
   }
 
   public isLoggedIn(state: boolean) {
@@ -93,7 +92,7 @@ class Router {
   }
 
   start(): void {
-    console.log('router start', window.location.pathname);
+    // console.log('router start', window.location.pathname);
     window.onpopstate = (() => {
       this._onRoute(window.location.pathname);
     }).bind(this);
@@ -103,7 +102,7 @@ class Router {
 
   private _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
-    console.log('onroute', pathname, route, this._isLogged);
+    // console.log('onroute', pathname, route, this._isLogged);
     if (!route) {
       const route = new Route('/400', notFoundPage, { rootQuery: '.app' });
       route.render();
@@ -131,7 +130,6 @@ class Router {
   }
 
   back(): void {
-    console.log(this.history);
     this.history.back();
   }
 

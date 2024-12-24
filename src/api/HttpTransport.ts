@@ -44,7 +44,6 @@ export class HTTPTransport {
       });
 
       xhr.onload = () => {
-        console.log(xhr);
         let response;
         if (xhr.responseText === 'OK') {
           resolve(xhr.responseText as R);

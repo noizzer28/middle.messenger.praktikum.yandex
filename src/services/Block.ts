@@ -24,7 +24,7 @@ abstract class Block {
 
   constructor(tagName = 'div', propsAndChilds = {}) {
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    // console.log('constructor', children, props);
+    // console.log('constructor', propsAndChilds, props);
     this._eventBus = new EventBus();
     this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();

@@ -8,8 +8,8 @@ export type ValidatorMap = {
   password: Tvalid;
   phone: Tvalid;
   message: Tvalid;
-  'rep-password': Tvalid;
-  'display-name': Tvalid;
+  rep_password: Tvalid;
+  display_name: Tvalid;
 };
 
 const validateName: Tvalid = (name) => {
@@ -150,6 +150,8 @@ export const validators: ValidatorMap = {
   password: validatePassword,
   phone: validatePhone,
   message: validateMessage,
-  'rep-password': validateRepPassword,
-  'display-name': validateName
+  rep_password: validateRepPassword,
+  display_name: validateName
 };
+
+const ValidatorsKeys = Object.keys(validators);

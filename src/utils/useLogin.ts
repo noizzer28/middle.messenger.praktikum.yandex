@@ -7,14 +7,15 @@ export async function LoginUser() {
   console.log('login user');
   try {
     const response = await getUserInfo.getInfo();
-    console.log(response);
+    // console.log(response);
     Store.set({ user: response });
     router.isLoggedIn(true);
   } catch (error) {
     Store.set({ user: null });
     router.isLoggedIn(false);
+    router.go(ROUTES.LOGIN);
     if (error instanceof Error) {
-      console.log(error.message || error);
+      console.error(error.message || error);
     }
   }
 }

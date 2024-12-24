@@ -4,16 +4,18 @@ import Block from '../../services/Block';
 import Modal from '../modal/modal';
 
 interface AvatarProps {
-  attr: {
-    class: string;
-  };
   src: string;
   name: string;
 }
 
 class Avatar extends Block {
   constructor(tagName: string = 'div', propsAndChilds: AvatarProps) {
-    super(tagName, propsAndChilds);
+    super(tagName, {
+      ...propsAndChilds,
+      attr: {
+        class: `avatar-wrapper`
+      }
+    });
     this.addModalEvents();
   }
   render(): DocumentFragment {

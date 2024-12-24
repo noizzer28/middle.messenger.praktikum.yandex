@@ -119,7 +119,7 @@ export const registerPage = new RegPage('main', {
     new Input('div', {
       type: 'password',
       label: 'Повторите пароль',
-      name: 'rep-password',
+      name: 'rep_password',
       autocomplete: 'off',
       attr: {
         class: 'input-wrapper'
