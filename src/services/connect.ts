@@ -3,21 +3,35 @@ import { TProps, TStore, Indexed } from '../types';
 import store, { StoreEvents } from './Store';
 import isEqual from '../utils/isEqual';
 
-// type MapStateToProps<TState, TProps> = (state: TState) => TProps;
-
 export function connect(
   Component: typeof Block,
   mapStateToProps: (state: TStore) => TProps
 ) {
   return class extends Component {
-    constructor(tag: string, props: Record<string, unknown> = {}) {
+    // private onChangeStore: () => void;
+    constructor(tag: string, props: TProps) {
       const mappedProps = mapStateToProps(store.getState());
       super(tag, { ...props, ...mappedProps });
 
       store.on(StoreEvents.Updated, () => {
         const newMappedProps = mapStateToProps(store.getState());
-        this.setProps({ ...newMappedProps });
+        // console.log(
+        //   !isEqual(mappedProps, newMappedProps),
+        //   mappedProps,
+        //   newMappedProps
+        // );
+        if (!isEqual(mappedProps, newMappedProps)) {
+          this.setProps({ ...newMappedProps });
+        }
+        // this.setProps({ ...newMappedProps });
       });
+      // this.onChangeStore = () => {
+      //   const newMappedProps = mapStateToProps(store.getState());
+      //   if (!isEqual(mappedProps, newMappedProps)) {
+      //     this.setProps({ ...newMappedProps });
+      //   }
+      // };
+      // store.on(StoreEvents.Updated, this.onChangeStore);
     }
   };
 }

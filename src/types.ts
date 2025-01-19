@@ -20,10 +20,17 @@ export interface UserInterface {
   avatar: string;
   phone: string;
 }
+export interface ErrorInterface {
+  authError: string | null;
+  [key: string]: unknown;
+}
+export interface ModalInterface {
+  error: string | null;
+}
 
 export type TStore = {
   user: UserInterface | null;
-  [key: string]: unknown;
+  error: ErrorInterface;
 };
 
 export type HTTPMethod = <R = unknown>(

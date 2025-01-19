@@ -127,7 +127,7 @@ export function addError(
   if (!errorChild) {
     const errorEl = document.createElement('div');
     errorEl.setAttribute('data-error', `error-${name}`);
-    errorEl.classList.add('error');
+    errorEl.classList.add('inputError');
     errorEl.textContent = validation;
     parent.appendChild(errorEl);
   } else {

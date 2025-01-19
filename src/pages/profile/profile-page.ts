@@ -9,22 +9,9 @@ import { connect } from '../../services/connect';
 import { TStore, TProps } from '../../types';
 import logoutController from '../../api/auth/logoutInterface';
 import buttonBack from '../../components/button/button-back/button-back';
+import changeProfile from '../../api/user/changeProfile';
+import ErrorComponent from '../../components/error/error';
 
-class ProfilePage extends Block {
-  constructor(tagName: string, propsAndChilds: TProps) {
-    super(tagName, {
-      ...propsAndChilds,
-      attr: {
-        class: 'container rel',
-        id: 'settings-page',
-        isEdited: false
-      }
-    });
-  }
-  render(): DocumentFragment {
-    return this.compile(template);
-  }
-}
 const profileEditLines = [
   new ProfileEdit('tr', {
     caption: 'Изменить данные',
@@ -57,14 +44,39 @@ const profileEditLines = [
     }
   })
 ];
+class ProfilePage extends Block {
+  constructor(tagName: string, propsAndChilds: TProps) {
+    super(tagName, {
+      ...propsAndChilds,
+      attr: {
+        class: 'container rel',
+        id: 'settings-page',
+        isEdited: false
+      },
+      buttonBack: buttonBack,
+      profileEdit: profileEditLines
+    });
+  }
+  render(): DocumentFragment {
+    return this.compile(template);
+  }
+}
 
 function mapUserToProps(state: TStore): TProps {
   if (state.user) {
     const user = state.user;
+    const img = user.avatar;
+    const finalImg = img
+      ? `https://ya-praktikum.tech/api/v2/resources/${img}`
+      : '/profile.png';
     return {
-      buttonBack: buttonBack,
+      attr: {
+        class: 'container rel',
+        id: 'settings-page',
+        isEdited: false
+      },
       avatar: new Avatar('div', {
-        src: user.avatar || '/profile.png',
+        src: finalImg,
         name: user.display_name || user.first_name
       }),
       profileLine: [
@@ -111,7 +123,9 @@ function mapUserToProps(state: TStore): TProps {
           name: 'phone'
         })
       ],
-      profileEdit: profileEditLines
+      error: new ErrorComponent('div', {
+        error: state.error.profileError || null
+      })
     };
   } else {
     return {
@@ -140,15 +154,17 @@ function toggleToEdit() {
 function renderToEdit() {
   profilePage.setProps({
     attr: {
-      class: 'container',
-      id: 'settings-page',
       isEdited: true
     },
     profileEdit: [
       new Button('tr', {
         text: 'Сохранить',
+        type: 'sumbit',
         events: {
-          click: () => {
+          click: (e: Event) => {
+            e.preventDefault();
+            validateProfile();
+            changeProfile.changeUser('profile-form');
             toggleToProfile();
           }
         }
@@ -158,7 +174,6 @@ function renderToEdit() {
 }
 
 function toggleToProfile() {
-  validateProfile();
   const inputElements = document.querySelectorAll('input');
   inputElements.forEach((input) => {
     input.setAttribute('readonly', '');
@@ -173,8 +188,6 @@ function toggleToProfile() {
 function renderToProfile() {
   profilePage.setProps({
     attr: {
-      class: 'container',
-      id: 'settings-page',
       isEdited: false
     },
     profileEdit: profileEditLines

@@ -18,24 +18,20 @@ class LoginController {
         result[key as keyof LoginUserModel] = value.toString();
       });
       const completeFormObject = result as LoginUserModel;
-      // if (!validateProfile()) {
-      //   throw new Error('Поля заполнены неверно');
-      // }
-      const obj = {
-        login: 'Noizzer',
-        password: 'Qwerty123'
-      };
-      const response = await authApi.login(obj);
-      console.log('Авторизация успешна:', response);
+      if (!validateProfile()) {
+        throw new Error('Поля заполнены неверно');
+      }
+      await authApi.login(completeFormObject);
+      // console.log('Авторизация успешна:', response);
       await LoginUser();
       router.go(ROUTES.CHAT);
     } catch (error) {
       await LoginUser();
       if (error instanceof Error) {
-        store.set({ error: error.message });
+        store.set({ error: { authError: error.message } });
         console.error('Ошибка авторизации:', error.message);
       } else {
-        store.set({ error: error });
+        store.set({ error: { authError: error } });
         console.error('Произошла неизвестная ошибка:', error);
       }
     }

@@ -24,7 +24,7 @@ abstract class Block {
 
   constructor(tagName = 'div', propsAndChilds = {}) {
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    // console.log('constructor', propsAndChilds, props);
+    // console.log('constructor', this, events);
     this._eventBus = new EventBus();
     this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();
@@ -36,6 +36,7 @@ abstract class Block {
     this._events = events;
     this._lists = this._makePropsProxy(lists) as TLists;
     this._props = this._makePropsProxy({ ...props }) as TProps;
+    // console.log('this._props', this._props);
     this._setUpdate = false;
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);
@@ -143,7 +144,9 @@ abstract class Block {
 
   _render() {
     const block = this.render();
+    // console.log(block, this);
     this.removeEvents();
+    // console.log(this._element);
     this._element!.innerHTML = '';
     this._element!.appendChild(block!);
     this.addAttribute();
@@ -151,6 +154,7 @@ abstract class Block {
   }
   addAttribute() {
     const { attr = {} } = this._props as TProps;
+    // console.log('attr', attr);
     Object.entries(attr).forEach(([key, value]) => {
       this._element!.setAttribute(key, value);
     });
@@ -209,6 +213,7 @@ abstract class Block {
     // console.log('oldvalue', oldValue);
     const { children, props, lists } = this.getChildren(newProps);
     // console.log('ch, pr, li', children, props, lists);
+    // console.log('value before', this._children, this._props, this._lists);
     if (Object.values(children).length) {
       Object.assign(this._children, children);
     }
@@ -219,8 +224,10 @@ abstract class Block {
     if (Object.values(lists).length) {
       Object.assign(this._lists, lists);
     }
-    // console.log('value after', children, props, lists);
+    // console.log('value after', children, props, lists, this);
+    // console.log('value after', this._children, this._props, this._lists);
     if (this._setUpdate) {
+      // console.log('setupdate', oldValue, this._props);
       this._eventBus.emit(Block.EVENTS.FLOW_CDU, oldValue, this._props);
       this._setUpdate = false;
     }
@@ -257,6 +264,7 @@ abstract class Block {
   }
 
   public hide(): void {
+    console.log('hiding in block');
     const componentHtml = this.getContent();
     if (!componentHtml) {
       return;

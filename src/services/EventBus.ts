@@ -1,4 +1,4 @@
-import { TCallback, TEventsInner } from '@/types';
+import { TCallback, TEventsInner } from '../types';
 
 export default class EventBus {
   private listeners: TEventsInner;

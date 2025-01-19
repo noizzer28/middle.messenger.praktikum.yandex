@@ -1,35 +1,53 @@
 import Block from '../../services/Block';
 import template from './template';
 import './modal.scss';
-import { TProps } from '@/types';
+import { TProps, TEvents, TStore } from '../../types';
+import { connect } from '../../services/connect';
+import ErrorComponent from '../error/error';
+import store from '../../services/Store';
 
 class Modal extends Block {
-  props: TProps;
-  constructor(props: TProps) {
-    super('div', {
-      ...props,
+  constructor(tagName: string, propsAndChilds: TProps) {
+    super(tagName, {
+      ...propsAndChilds,
       attr: {
-        class: 'modal-overlay',
-        'data-action': 'close'
+        class: `modal-overlay visible`,
+        'data-action': 'close',
+        id: 'open-modal'
       },
-      events: {
-        click: (e: Event) => {
-          this.handleClick(e);
-        }
-      }
+      error: null
     });
-    this.props = props;
+    // this.addButtonEvents(propsAndChilds);
+    this.handleClick();
   }
-  handleClick(event: Event) {
-    const target = event.target as HTMLElement;
+  // addButtonEvents(props: TProps) {
+  //   const btn = this.getContent().querySelector('button');
+  //   console.log(props);
+  //   if (btn) {
+  //     if (props.events) {
+  //       const events = props.events as TEvents;
+  //       console.log(events);
+  //       Object.entries(events).forEach(([key, handler]) => {
+  //         if (handler) {
+  //           btn.addEventListener(key, handler as EventListener);
+  //         }
+  //       });
+  //     }
+  //   }
+  // }
+  handleClick() {
+    this.getContent().addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
 
-    if (target.dataset.action === 'close') {
-      this.hide();
-    }
+      if (target.dataset.action === 'close') {
+        // store.set({ modal: { visible: false } });
+        this.hide();
+      }
 
-    if (target.dataset.action === 'confirm') {
-      this.hide();
-    }
+      // if (target.dataset.action === 'confirm') {
+      //   console.log(props.events);
+      // }
+    });
   }
 
   show() {
@@ -49,4 +67,13 @@ class Modal extends Block {
   }
 }
 
-export default Modal;
+function mapModalProps(state: TStore) {
+  return {
+    error: new ErrorComponent('div', {
+      error: state.error?.modalError || null
+    })
+  };
+}
+
+const ModalComponent = connect(Modal, mapModalProps);
+export default ModalComponent;

@@ -1,0 +1,9 @@
+.error {
+  color: red;
+  font-size: 14px;
+  opacity: 0;
+  text-align: center;
+  &.visible {
+    opacity: 100%;
+  }
+}

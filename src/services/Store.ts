@@ -7,7 +7,15 @@ export enum StoreEvents {
 
 class Store extends EventBus {
   private static __instance: Store;
-  private state: TStore = { user: null };
+  private state: TStore = {
+    user: null,
+    error: {
+      authError: null,
+      regError: null,
+      modalError: null
+    }
+  };
+  private initialState: TStore = { ...this.state };
   constructor() {
     if (Store.__instance) {
       return Store.__instance;
@@ -23,9 +31,15 @@ class Store extends EventBus {
     const prevState = { ...this.state };
 
     this.state = { ...this.state, ...nextState };
-    console.log(this.state);
+    console.log('setting state', this.state);
 
     this.emit(StoreEvents.Updated, prevState, nextState);
+  }
+  public reset() {
+    const prevState = { ...this.state };
+    this.state = { ...this.initialState };
+    this.emit(StoreEvents.Updated, prevState, this.state);
+    console.log('State has been reset:', this.state);
   }
 }
 export default new Store();

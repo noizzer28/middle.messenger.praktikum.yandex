@@ -62,13 +62,13 @@ function hideNav(dropdownContainer: HTMLElement) {
 }
 export default chatDropdown;
 
-const modalAddUser = new Modal({
+const modalAddUser = new Modal('div', {
   title: 'Добавить пользователя',
   text: `<label>Логин</label>
   <input class="input" type='text'/>`,
   buttontext: 'Добавить'
 });
-const modalDeleteUser = new Modal({
+const modalDeleteUser = new Modal('div', {
   title: 'Удалить пользователя',
   text: `<label>Логин</label>
   <input class="input" type='text'/>`,

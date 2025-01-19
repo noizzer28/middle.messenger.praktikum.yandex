@@ -7,8 +7,9 @@ const template = `
             </div>
             <h2>{{{title}}}</h2>
             <div class="modal-body">
-              {{{text}}}
-            </div>
+              {{{body}}}
+              </div>
+              {{{error}}}
             <div class="modal-footer">
               <button class="button" data-action="confirm">{{{buttontext}}}</button>
             </div>

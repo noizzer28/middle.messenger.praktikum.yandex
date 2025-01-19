@@ -1,8 +1,9 @@
 import authApi from './authApi';
 import { validateProfile } from '../../utils/validators';
 import { CreateUserModel } from '../types';
-import getUserInfo from './getUserInfo';
 import { router } from '../../index';
+import { LoginUser } from '../../utils/useLogin';
+import Store from '../../services/Store';
 
 class CreateUserController {
   public async login(id: string) {
@@ -24,10 +25,12 @@ class CreateUserController {
       }
       const response = await authApi.createUser(completeFormObject);
       console.log('Регистрация  успешна:', response);
-      getUserInfo.getInfo();
+      await LoginUser();
       router.go('/messenger');
     } catch (error) {
+      await LoginUser();
       if (error instanceof Error) {
+        Store.set({ error: { regError: error.message } });
         console.error('Ошибка авторизации:', error.message || error);
       }
     }

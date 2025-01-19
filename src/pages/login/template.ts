@@ -4,9 +4,10 @@ const template = `
 <form class="flex-column-form" id="login-form">
   <div class="headers-text">Вход</div>
   <div class="flex-column">
-{{#each items}}
-  {{{this}}}  
-{{/each}}
+  {{#each items}}
+    {{{this}}}  
+  {{/each}}
+  {{{error}}}
   </div>
   <div class="flex-column mt-30">
     {{{button}}}

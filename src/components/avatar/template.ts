@@ -1,5 +1,5 @@
 const template = `
-  <div class="rel">
+  <div class="rel avatar-container">
     <img class="avatar" src="{{ src }}" alt="avatar" />
     <div class='avatar-shadow'>Поменять аватар</div>
   </div>

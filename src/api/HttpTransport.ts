@@ -43,18 +43,42 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, value);
       });
 
+      // xhr.onload = () => {
+      //   let response;
+      //   if (xhr.responseText === 'OK') {
+      //     resolve(xhr.responseText as R);
+      //   } else {
+      //     response = JSON.parse(xhr.responseText);
+      //   }
+
+      //   if (xhr.status >= 200 && xhr.status < 300) {
+      //     resolve(response as R);
+      //   } else {
+      //     reject(new Error(`Ошибка: ${xhr.status} ${response.reason}`));
+      //   }
+      // };
       xhr.onload = () => {
         let response;
-        if (xhr.responseText === 'OK') {
-          resolve(xhr.responseText as R);
-        } else {
-          response = JSON.parse(xhr.responseText);
+        try {
+          response =
+            xhr.responseText === 'OK'
+              ? xhr.responseText
+              : JSON.parse(xhr.responseText);
+        } catch (error) {
+          if (error instanceof Error) {
+            reject(new Error('Ошибка разбора ответа: ' + error.message));
+            return;
+          }
         }
 
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(response as R);
         } else {
-          reject(new Error(`Ошибка: ${xhr.status} ${response.reason}`));
+          reject(
+            new Error(
+              `Ошибка: ${xhr.status} ${response?.reason || 'Неизвестная ошибка'}`
+            )
+          );
         }
       };
 
@@ -65,7 +89,9 @@ export class HTTPTransport {
       if (method === METHODS.GET || !body) {
         xhr.send();
       } else if (body instanceof FormData) {
+        // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
         xhr.send(body);
+        // console.log(xhr.send(body));
       } else {
         xhr.setRequestHeader('Content-Type', 'application/Json');
         xhr.send(JSON.stringify(body));

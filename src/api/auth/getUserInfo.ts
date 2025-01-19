@@ -10,7 +10,7 @@ class GetUserInfoController {
       return response;
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Ошибка:', error.message);
+        // console.error('Ошибка:', error.message);
         throw new Error(error.message);
       }
     }
