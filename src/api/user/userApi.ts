@@ -17,7 +17,7 @@ export class UserApi {
   }
 
   changePassword(data: ChangeUserPassword) {
-    return userApi.put<ChangeUserPassword>('user/password', {
+    return userApi.put('user/password', {
       body: data
     });
   }

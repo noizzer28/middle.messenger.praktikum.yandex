@@ -4,37 +4,31 @@ import './modal.scss';
 import { TProps, TEvents, TStore } from '../../types';
 import { connect } from '../../services/connect';
 import ErrorComponent from '../error/error';
-import store from '../../services/Store';
 
-class Modal extends Block {
+export class Modal extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
     super(tagName, {
       ...propsAndChilds,
       attr: {
-        class: `modal-overlay visible`,
+        class: `modal-overlay`,
         'data-action': 'close',
         id: 'open-modal'
       },
-      error: null
+      error: null,
+      success: null
+      // events: {
+      //   click: (e: Event) => {
+      //     e.preventDefault();
+      //     const target = e.target as HTMLElement;
+
+      //     if (target.dataset.action === 'close') {
+      //       this.hide();
+      //     }
+      //   }
+      // }
     });
-    // this.addButtonEvents(propsAndChilds);
     this.handleClick();
   }
-  // addButtonEvents(props: TProps) {
-  //   const btn = this.getContent().querySelector('button');
-  //   console.log(props);
-  //   if (btn) {
-  //     if (props.events) {
-  //       const events = props.events as TEvents;
-  //       console.log(events);
-  //       Object.entries(events).forEach(([key, handler]) => {
-  //         if (handler) {
-  //           btn.addEventListener(key, handler as EventListener);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }
   handleClick() {
     this.getContent().addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
@@ -49,11 +43,12 @@ class Modal extends Block {
       // }
     });
   }
-
   show() {
+    // this.init(this.getProps());
     const mainEl = document.querySelector('main');
     mainEl?.appendChild(this.getContent());
     this.getContent().classList.add('visible');
+    // return this.compile(template);
   }
 
   hide() {
@@ -62,18 +57,34 @@ class Modal extends Block {
     this.getContent()?.classList.remove('visible');
   }
 
+  // destroy() {
+  //   // const mainEl = document.querySelector('main');
+  //   // if (mainEl?.contains(this.getContent())) {
+  //   //   mainEl.removeChild(this.getContent());
+  //   // }
+  //   this.componentDidUnmount();
+  // }
+
   render() {
     return this.compile(template);
   }
 }
 
-function mapModalProps(state: TStore) {
+function mapModalPasswordProps(state: TStore) {
   return {
     error: new ErrorComponent('div', {
-      error: state.error?.modalError || null
+      error: state.error?.modalPasswordError || null
+    }),
+    success: state.success?.modalSuccess || null
+  };
+}
+function mapModalAvatarProps(state: TStore) {
+  return {
+    error: new ErrorComponent('div', {
+      error: state.error?.modalAvatarError || null
     })
   };
 }
 
-const ModalComponent = connect(Modal, mapModalProps);
-export default ModalComponent;
+export const ModalPasswordComponent = connect(Modal, mapModalPasswordProps);
+export const ModalAvatarComponent = connect(Modal, mapModalAvatarProps);

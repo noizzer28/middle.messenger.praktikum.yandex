@@ -22,7 +22,7 @@ class LoginController {
         throw new Error('Поля заполнены неверно');
       }
       await authApi.login(completeFormObject);
-      // console.log('Авторизация успешна:', response);
+      store.set({ error: { authError: '' } });
       await LoginUser();
       router.go(ROUTES.CHAT);
     } catch (error) {

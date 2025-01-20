@@ -22,15 +22,22 @@ export interface UserInterface {
 }
 export interface ErrorInterface {
   authError: string | null;
+  modalAvatarError: string | null;
+  modalPasswordError: string | null;
   [key: string]: unknown;
 }
-export interface ModalInterface {
-  error: string | null;
+// export interface ModalErrorInterface {
+//   error: string | null;
+// }
+
+export interface ModalSuccessInterface {
+  modalSuccess: string | null;
 }
 
 export type TStore = {
   user: UserInterface | null;
   error: ErrorInterface;
+  success: ModalSuccessInterface;
 };
 
 export type HTTPMethod = <R = unknown>(

@@ -8,7 +8,8 @@ abstract class Block {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
+    FLOW_RENDER: 'flow:render',
+    FLOW_CDU_UNMOUNT: 'flow:component-did-unmount'
   };
 
   private _element: HTMLElement | undefined;
@@ -20,11 +21,12 @@ abstract class Block {
   private _setUpdate: boolean;
   private _eventBus;
   private _lists: TLists;
-  // public props: TProps;
+  private _initialProps: TProps;
 
   constructor(tagName = 'div', propsAndChilds = {}) {
+    this._initialProps = propsAndChilds;
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    // console.log('constructor', this, events);
+    // console.log('constructor', this, propsAndChilds);
     this._eventBus = new EventBus();
     this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();
@@ -36,13 +38,26 @@ abstract class Block {
     this._events = events;
     this._lists = this._makePropsProxy(lists) as TLists;
     this._props = this._makePropsProxy({ ...props }) as TProps;
-    // console.log('this._props', this._props);
     this._setUpdate = false;
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);
-    // this.props = this._props;
   }
-
+  // resetToInitialProps() {
+  //   // console.log(this.resetToInitialProps);
+  //   const { children, props, lists, events } = this.getChildren(
+  //     this._initialProps
+  //   );
+  //   console.log(this._initialProps);
+  //   console.log(children, props, lists, events);
+  //   this._children = this._makePropsProxy(children) as TChildren;
+  //   this._id = MakeID();
+  //   console.log(this._meta);
+  //   this._events = events;
+  //   this._lists = this._makePropsProxy(lists) as TLists;
+  //   this._props = this._makePropsProxy({ ...props }) as TProps;
+  //   this._setUpdate = false;
+  //   this._eventBus.emit(Block.EVENTS.INIT);
+  // }
   _registerEvents() {
     this._eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     this._eventBus.on(
@@ -54,8 +69,31 @@ abstract class Block {
       this._componentDidUpdate.bind(this)
     );
     this._eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    // this._eventBus.on(
+    //   Block.EVENTS.FLOW_CDU_UNMOUNT,
+    //   this._componentDidUnmount.bind(this)
+    // );
   }
-
+  // _componentDidUnmount() {
+  //   // this.componentDidUnmount();
+  //   // Очистка
+  //   this._element = undefined;
+  //   this._children = {};
+  //   this._lists = {};
+  //   this._events = {};
+  //   this._props = {} as TProps;
+  // }
+  // componentDidUnmount() {
+  //   console.log('cdunmount');
+  //   const element = this.getContent();
+  //   console.log(element);
+  //   if (element && element.parentNode) {
+  //     element.parentNode.removeChild(element);
+  //   }
+  //   this.removeEvents();
+  //   this._eventBus.emit(Block.EVENTS.FLOW_CDU_UNMOUNT);
+  //   // this._element = undefined;
+  // }
   init() {
     this._createResources();
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);

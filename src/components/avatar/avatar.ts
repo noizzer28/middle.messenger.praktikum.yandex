@@ -1,7 +1,7 @@
 import './avatar.scss';
 import template from './template';
 import Block from '../../services/Block';
-import ModalComponent from '../modal/modal';
+import { ModalAvatarComponent } from '../modal/modal';
 import changeAvatar from '../../api/user/changeAvatar';
 import ErrorComponent from '../error/error';
 import { connect } from '../../services/connect';
@@ -34,7 +34,7 @@ class Avatar extends Block {
 }
 export default Avatar;
 
-export const modalAddAvatar = new ModalComponent('div', {
+export const modalAddAvatar = new ModalAvatarComponent('div', {
   title: 'Загрузите файл',
   body: `<input type="file" accept="image/jpeg, image/png, image/gif, image/webp" id="avatar-input" />`,
   buttontext: 'Поменять',

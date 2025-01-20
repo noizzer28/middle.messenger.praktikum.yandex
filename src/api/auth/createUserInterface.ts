@@ -25,6 +25,7 @@ class CreateUserController {
       }
       const response = await authApi.createUser(completeFormObject);
       console.log('Регистрация  успешна:', response);
+      Store.set({ error: { regError: '' } });
       await LoginUser();
       router.go('/messenger');
     } catch (error) {

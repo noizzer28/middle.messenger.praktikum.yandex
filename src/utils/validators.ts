@@ -10,6 +10,7 @@ export type ValidatorMap = {
   message: Tvalid;
   rep_password: Tvalid;
   display_name: Tvalid;
+  not_required: Tvalid;
 };
 
 const validateName: Tvalid = (name) => {
@@ -73,27 +74,44 @@ const validateMessage: Tvalid = (message) => {
   if (!message.trim()) return 'Сообщение не должно быть пустым.';
   return null;
 };
-
+const noValidation: Tvalid = () => {
+  return null;
+};
+type StringObject = {
+  [key: string]: string;
+};
 export function validateSubmit(id: string) {
-  const form = document.getElementById(id) as HTMLFormElement;
-  const formData = new FormData(form);
-  const formObject: Record<string, string> = {};
-  formData.forEach((value, key) => {
-    formObject[key] = value.toString();
-  });
-  // console.log(formData, formObject);
-  const inputElements = document.querySelectorAll('input');
-  inputElements.forEach((input) => {
-    const result = validate(input);
-    if (!result) {
-      throw new Error('Поля заполнены неверно ');
-    }
-  });
+  // const form = document.getElementById(id) as HTMLFormElement;
+  // const formData = new FormData(form);
+  // const formObject: Record<string, string> = {};
+  // formData.forEach((value, key) => {
+  //   formObject[key] = value.toString();
+  // });
+  // // console.log(formData, formObject);
+  // const inputElements = document.querySelectorAll('input');
+  // inputElements.forEach((input) => {
+  //   const result = validate(input);
+  //   if (!result) {
+  //     throw new Error('Поля заполнены неверно ');
+  //   }
+  // });
   // return Array.from(inputElements).every((input) => validate(input));
+  const form = document.getElementById(id) as HTMLFormElement;
+  if (!form || !(form instanceof HTMLFormElement)) {
+    throw new Error('Форма не найдена или не является HTMLFormElement');
+  }
+  const inputs = form?.querySelectorAll('input');
+  // console.log(inputs);
+  inputs.forEach((input) => {
+    validate(input);
+    // console.log(result, input);
+  });
+  return Array.from(inputs).every((input) => validate(input));
 }
 
 export function validateProfile() {
   const inputElements = document.querySelectorAll('input');
+  // console.log('validated inputs', inputElements);
   inputElements.forEach((input) => {
     const result = validate(input);
     if (!result) {
@@ -109,6 +127,7 @@ export function validate(target: HTMLInputElement) {
   const value = target.value;
   if (name) {
     const validation = validators[name](value);
+    // console.log(validation, value);
     if (validation) {
       addError(name, parent!, validation);
       return false;
@@ -151,7 +170,8 @@ export const validators: ValidatorMap = {
   phone: validatePhone,
   message: validateMessage,
   rep_password: validateRepPassword,
-  display_name: validateName
+  display_name: validateName,
+  not_required: noValidation
 };
 
 const ValidatorsKeys = Object.keys(validators);

@@ -8,7 +8,7 @@ import loginController from '../../api/auth/loginUserInterface';
 import { TProps, TStore } from '../../types';
 import ErrorComponent from '../../components/error/error';
 import { connect } from '../../services/connect';
-import { error } from 'console';
+import { eyeInput } from '../../components/eye/eye';
 
 class LoginPage extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -38,8 +38,9 @@ class LoginPage extends Block {
           type: 'password',
           label: 'Пароль',
           name: 'password',
+          eye: eyeInput,
           attr: {
-            class: 'input-wrapper'
+            class: 'input-wrapper rel'
           },
           events: {
             blur: (event: Event) => {

@@ -18,11 +18,11 @@ export interface CreateUserResponse {
   id: number;
 }
 export interface SearchUser {
-  login: 'string';
+  login: string;
 }
 export interface ChangeUserPassword {
-  oldPassword: 'string';
-  newPassword: 'string';
+  oldPassword: string;
+  newPassword: string;
 }
 
 export interface LoginUserModel {

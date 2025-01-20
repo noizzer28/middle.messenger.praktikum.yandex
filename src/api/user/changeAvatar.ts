@@ -14,7 +14,7 @@ class ChangeAvatarController {
         store.set({ user: response });
       } else {
         console.log('no file');
-        store.set({ error: { modalError: 'Сначала выберите файл' } });
+        store.set({ error: { modalAvatarError: 'Сначала выберите файл' } });
         modalAddAvatar.show();
       }
     } catch (error) {
@@ -22,17 +22,18 @@ class ChangeAvatarController {
         if (error.message === 'Ошибка сети') {
           store.set({
             error: {
-              modalError: 'Ошибка, попробуйте загрузить файл меньшего размера'
+              modalAvatarError:
+                'Ошибка, попробуйте загрузить файл меньшего размера'
             }
           });
           modalAddAvatar.show();
           return;
         }
-        store.set({ error: { modalError: error.message } });
+        store.set({ error: { modalAvatarError: error.message } });
         modalAddAvatar.show();
         console.log('Ошибка обновления данных:', error.message);
       } else {
-        store.set({ error: { modalError: error } });
+        store.set({ error: { modalAvatarError: error } });
         modalAddAvatar.show();
         console.log('Произошла неизвестная ошибка:', error);
       }

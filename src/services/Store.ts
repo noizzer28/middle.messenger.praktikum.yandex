@@ -12,7 +12,11 @@ class Store extends EventBus {
     error: {
       authError: null,
       regError: null,
-      modalError: null
+      modalAvatarError: null,
+      modalPasswordError: null
+    },
+    success: {
+      modalSuccess: null
     }
   };
   private initialState: TStore = { ...this.state };

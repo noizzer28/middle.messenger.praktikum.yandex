@@ -1,6 +1,6 @@
 import Block from '../../services/Block';
 import template from './template';
-import { TProps } from '@/types';
+import { TProps } from '../../types';
 
 class Eye extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {

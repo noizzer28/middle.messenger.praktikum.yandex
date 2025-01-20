@@ -1,8 +1,9 @@
 import Block from '../../services/Block';
 import template from './template';
 import '../chat-header/chat-header.scss';
-import { TProps } from '@/types';
-import Modal from '../modal/modal';
+import { TProps } from '../../types';
+import { Modal } from '../modal/modal';
+import Input from '../input/input';
 
 class ChatDropDown extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -64,13 +65,22 @@ export default chatDropdown;
 
 const modalAddUser = new Modal('div', {
   title: 'Добавить пользователя',
-  text: `<label>Логин</label>
-  <input class="input" type='text'/>`,
+  // body: `<label>Логин</label>
+  // <input class="input" type='text'/>`,
+  body: new Input('div', {
+    type: 'text',
+    label: 'Старый пароль',
+    name: 'not_required',
+    autocomplete: 'password',
+    attr: {
+      class: 'input-wrapper'
+    }
+  }),
   buttontext: 'Добавить'
 });
 const modalDeleteUser = new Modal('div', {
   title: 'Удалить пользователя',
-  text: `<label>Логин</label>
+  body: `<label>Логин</label>
   <input class="input" type='text'/>`,
   buttontext: 'Удалить'
 });
