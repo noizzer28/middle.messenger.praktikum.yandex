@@ -135,6 +135,7 @@ abstract class Block {
       props = this._props;
     }
     const propsAndStubs = { ...props };
+    // console.log(this, propsAndStubs);
 
     Object.entries(this._children).forEach(([key, child]) => {
       // console.log('Key, CHILD', key, child);

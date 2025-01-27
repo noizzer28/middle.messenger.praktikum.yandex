@@ -4,7 +4,9 @@ import { TStore } from '../types';
 export enum StoreEvents {
   Updated = 'Updated'
 }
-
+type Indexed<T = unknown> = {
+  [key in string]: T;
+};
 class Store extends EventBus {
   private static __instance: Store;
   private state: TStore = {
@@ -17,7 +19,10 @@ class Store extends EventBus {
     },
     success: {
       modalSuccess: null
-    }
+    },
+    chatList: [],
+    activeChat: null,
+    activeMessages: []
   };
   private initialState: TStore = { ...this.state };
   constructor() {
@@ -30,7 +35,6 @@ class Store extends EventBus {
   public getState() {
     return this.state;
   }
-
   public set(nextState: object) {
     const prevState = { ...this.state };
 

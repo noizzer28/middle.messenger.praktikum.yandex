@@ -257,7 +257,6 @@ export const ModalEditPassword = new ModalPasswordComponent('div', {
     click: (e: Event) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
-      console.log('clicked');
       if (target.tagName.toLowerCase() === 'button') {
         const valid = validateSubmit('modal-password__form');
         if (valid) {

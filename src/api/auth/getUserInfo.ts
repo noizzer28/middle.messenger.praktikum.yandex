@@ -1,7 +1,4 @@
 import authApi from './authApi';
-import store from '../../services/Store';
-import { router } from '../../index';
-import { ROUTES } from '../../types';
 
 class GetUserInfoController {
   public async getInfo() {

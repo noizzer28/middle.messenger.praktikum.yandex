@@ -7,4 +7,11 @@ class Search extends Block {
     return this.compile(template);
   }
 }
-export default Search;
+
+const search = new Search('header', {
+  attr: {
+    class: 'chat-header'
+  },
+  page: '/settings'
+});
+export default search;

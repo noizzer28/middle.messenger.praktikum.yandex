@@ -5,15 +5,23 @@
   align-items: center;
   flex-direction: column;
   padding: 0 20px;
-  position: absolute;
+  // position: fixed;
   width: 100%;
-  bottom: 0;
+  // bottom: 20px;
   margin-bottom: 80px;
+  flex: 1; /* Занимает оставшееся пространство между хедером и футером */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &__messages {
     background-color: $soft-white;
     height: 100%;
     flex-grow: 6;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   &__avatar {
     width: 60px;
@@ -35,7 +43,9 @@
     font-size: 14px;
     color: $light-grey;
   }
-
+  &__wrapper {
+    height: 100%;
+  }
   &__block {
     color: $dark-grey;
     font-size: 14px;
@@ -70,7 +80,7 @@
 
   &__input-wrapper {
     width: 100%;
-    position: absolute;
+    // position: fixed;
     bottom: 0;
     padding: 20px;
     background-color: $background-color;

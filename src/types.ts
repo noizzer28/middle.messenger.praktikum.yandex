@@ -26,19 +26,9 @@ export interface ErrorInterface {
   modalPasswordError: string | null;
   [key: string]: unknown;
 }
-// export interface ModalErrorInterface {
-//   error: string | null;
-// }
-
 export interface ModalSuccessInterface {
   modalSuccess: string | null;
 }
-
-export type TStore = {
-  user: UserInterface | null;
-  error: ErrorInterface;
-  success: ModalSuccessInterface;
-};
 
 export type HTTPMethod = <R = unknown>(
   url: string,
@@ -118,3 +108,52 @@ export type TMeta = {
 };
 
 export type TLists = Record<string, Block[]>;
+
+interface User {
+  first_name: string;
+  second_name: string;
+  avatar: string;
+  email: string;
+  login: string;
+  phone: string;
+}
+
+interface LastMessage {
+  user: User;
+  time: string;
+  content: string;
+}
+
+interface TActiveChat {
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
+  created_by: number;
+  last_message: LastMessage | null;
+}
+interface TChatMessages {
+  chat_id: number;
+  content: string;
+  file: null;
+  id: number;
+  is_read: boolean;
+  time: string;
+  type: string;
+  user_id: number;
+}
+
+// export type TChats = {
+//   chatList: TChat[];
+//   activeChat: TChat | null;
+//   activeMessages: TChatMessages[] | null;
+// };
+
+export type TStore = {
+  user: UserInterface | null;
+  error: ErrorInterface;
+  success: ModalSuccessInterface;
+  chatList: TActiveChat[];
+  activeChat: TActiveChat | null;
+  activeMessages: TChatMessages[];
+};

@@ -1,9 +1,11 @@
-import Block from '../../services/Block';
+import Block from '../../../services/Block';
 import template from './template';
 import '../chat-header/chat-header.scss';
-import { TProps } from '../../types';
-import { Modal } from '../modal/modal';
-import Input from '../input/input';
+import { TProps } from '../../../types';
+import { Modal } from '../../modal/modal';
+import Input from '../../input/input';
+import searchUser from '../../../api/user/searchUser';
+import { validate } from '../../../utils/validators';
 
 class ChatDropDown extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -63,20 +65,40 @@ function hideNav(dropdownContainer: HTMLElement) {
 }
 export default chatDropdown;
 
-const modalAddUser = new Modal('div', {
+export const modalAddUser = new Modal('div', {
   title: 'Добавить пользователя',
   // body: `<label>Логин</label>
   // <input class="input" type='text'/>`,
   body: new Input('div', {
     type: 'text',
-    label: 'Старый пароль',
-    name: 'not_required',
-    autocomplete: 'password',
+    label: 'Логин пользователя',
+    name: 'login',
     attr: {
       class: 'input-wrapper'
+    },
+    events: {
+      blur: (event) => {
+        if (event.target instanceof HTMLInputElement) {
+          validate(event.target);
+        }
+      }
     }
   }),
-  buttontext: 'Добавить'
+  buttontext: 'Добавить',
+  events: {
+    click: (e: Event) => {
+      e.preventDefault();
+      const target = e.target as HTMLElement;
+      if (target.tagName.toLowerCase() === 'button') {
+        const input = document.getElementById('login') as HTMLInputElement;
+        console.log(input);
+        const value = input.value;
+        if (value) {
+          searchUser.searchUser(value);
+        }
+      }
+    }
+  }
 });
 const modalDeleteUser = new Modal('div', {
   title: 'Удалить пользователя',

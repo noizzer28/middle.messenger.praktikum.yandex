@@ -29,3 +29,10 @@ export interface LoginUserModel {
   login: string;
   password: string;
 }
+export interface CreateChatInterface {
+  title: string;
+}
+export interface ChangeChatUsersInterface {
+  users: [number];
+  chatId: number | undefined;
+}
