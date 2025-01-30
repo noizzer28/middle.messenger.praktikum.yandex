@@ -1,10 +1,7 @@
 import Block from '../../services/Block';
 import template from './template';
 import './modal.scss';
-import { TProps, TStore } from '../../types';
-import { connect } from '../../services/connect';
-import ErrorComponent from '../error/error';
-
+import { TProps } from '../../types';
 export class Modal extends Block {
   private _isMounted = false;
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -51,14 +48,3 @@ export class Modal extends Block {
     return this.compile(template);
   }
 }
-
-function mapModalPasswordProps(state: TStore) {
-  return {
-    error: new ErrorComponent('div', {
-      error: state.error?.modalPasswordError || null
-    }),
-    success: state.success?.modalSuccess || null
-  };
-}
-
-export const ModalPasswordComponent = connect(Modal, mapModalPasswordProps);

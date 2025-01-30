@@ -22,8 +22,6 @@ export interface UserInterface {
 }
 export interface ErrorInterface {
   authError: string | null;
-  modalAvatarError: string | null;
-  modalPasswordError: string | null;
   [key: string]: unknown;
 }
 export interface ModalSuccessInterface {
@@ -152,7 +150,6 @@ interface TChatMessages {
 export type TStore = {
   user: UserInterface | null;
   error: ErrorInterface;
-  success: ModalSuccessInterface;
   chatList: TActiveChat[];
   activeChat: TActiveChat | null;
   activeMessages: TChatMessages[];

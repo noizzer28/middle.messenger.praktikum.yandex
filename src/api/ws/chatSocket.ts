@@ -6,9 +6,6 @@ import getChats from '../chats/getChats';
 class WebSocketService {
   private static __instance: WebSocketService | null = null;
   private socket: WebSocket | null = null;
-  // private userID: string | null;
-  // private chatID: string | null;
-  // private token: string | null;
   public isReady: boolean = false;
   private pingInterval: NodeJS.Timeout | null = null;
   constructor() {
@@ -16,8 +13,6 @@ class WebSocketService {
       return WebSocketService.__instance;
     }
     WebSocketService.__instance = this;
-    // this.init();
-    // this.sendPing();
   }
 
   init(userID: string, chatID: string, token: string) {
@@ -26,19 +21,19 @@ class WebSocketService {
     );
 
     this.socket.addEventListener('open', () => {
-      console.log('Соединение установлено');
+      // console.log('Соединение установлено');
       this.isReady = true;
       this.getOlderMessages();
       this.sendPing();
     });
 
     this.socket.addEventListener('close', (event) => {
-      if (event.wasClean) {
-        console.log('Соединение закрыто чисто');
-      } else {
-        console.log('Обрыв соединения');
-      }
-      this.isReady = false;
+      // if (event.wasClean) {
+      //   console.log('Соединение закрыто чисто');
+      // } else {
+      //   console.log('Обрыв соединения');
+      // }
+      // this.isReady = false;
       if (this.pingInterval) {
         clearInterval(this.pingInterval);
       }
@@ -88,7 +83,6 @@ class WebSocketService {
   }
 
   sendMessage(message: string) {
-    console.log('message');
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(
         JSON.stringify({

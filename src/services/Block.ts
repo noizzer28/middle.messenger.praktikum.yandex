@@ -189,6 +189,7 @@ abstract class Block {
     this._element!.appendChild(block!);
     this.addAttribute();
     this.addEvents();
+    this.dispatchComponentDidMount();
   }
   addAttribute() {
     const { attr = {} } = this._props as TProps;
@@ -319,6 +320,7 @@ abstract class Block {
   }
 
   _componentDidMount() {
+    // console.log('mounted in block');
     this.componentDidMount();
   }
 

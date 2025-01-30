@@ -52,12 +52,12 @@ export class ModalAvatar extends Modal {
     }
   };
 
-  private handleError = (error: unknown) => {
-    if (error instanceof Error) {
-      this.setProps({
-        error: error?.message || error,
-        success: null
-      });
-    }
-  };
+  // private handleError = (error: unknown) => {
+  //   if (error instanceof Error) {
+  //     this.setProps({
+  //       error: error?.message || error,
+  //       success: null
+  //     });
+  //   }
+  // };
 }

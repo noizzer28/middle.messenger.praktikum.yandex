@@ -57,6 +57,10 @@
     padding: 5px;
     margin: 5px 0;
     position: relative;
+    word-break: break-word;
+    line-height: 1.3125;
+    text-align: initial;
+    overflow: clip;
     p::after {
       content: '';
       display: inline-block;
@@ -72,11 +76,12 @@
       align-self: flex-end;
     }
     span {
-      font-size: 10px;
+      font-size: 9px;
       color: $light-grey;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
+      // position: absolute;
+      float: right;
+      bottom: auto !important;
+      // right: 5px;
       // float: right;
     }
   }

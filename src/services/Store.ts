@@ -13,12 +13,7 @@ class Store extends EventBus {
     user: null,
     error: {
       authError: null,
-      regError: null,
-      modalAvatarError: null,
-      modalPasswordError: null
-    },
-    success: {
-      modalSuccess: null
+      regError: null
     },
     chatList: [],
     activeChat: null,
