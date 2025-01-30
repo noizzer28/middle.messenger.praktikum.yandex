@@ -1,7 +1,6 @@
 import Block from './Block';
-import { loginPage, notFoundPage } from '../pages/pages';
+import { notFoundPage } from '../pages/pages';
 import { render } from '../utils/render';
-import getUserInfo from '../api/auth/getUserInfo';
 import { ROUTES } from '../types';
 import { LoginUser } from '../utils/useLogin';
 

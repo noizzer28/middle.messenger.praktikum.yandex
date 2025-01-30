@@ -1,6 +1,4 @@
 import chatsApi from './chatsApi';
-import store from '../../services/Store';
-import WebSocketService from '../ws/chatSocket';
 
 type TResponse = {
   token: string;

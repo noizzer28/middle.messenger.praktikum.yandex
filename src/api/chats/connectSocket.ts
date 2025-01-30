@@ -1,4 +1,3 @@
-import chatsApi from './chatsApi';
 import store from '../../services/Store';
 import socket from '../ws/chatSocket';
 

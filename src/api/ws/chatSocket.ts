@@ -1,5 +1,3 @@
-import { json } from 'stream/consumers';
-import ChatList from '../../components/chat-aside/chat-list';
 import store from '../../services/Store';
 import getChats from '../chats/getChats';
 

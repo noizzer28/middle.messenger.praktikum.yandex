@@ -4,9 +4,6 @@ import { TStore } from '../types';
 export enum StoreEvents {
   Updated = 'Updated'
 }
-type Indexed<T = unknown> = {
-  [key in string]: T;
-};
 class Store extends EventBus {
   private static __instance: Store;
   private state: TStore = {

@@ -41,7 +41,7 @@ class ChatMain extends Block {
 
   private addBtnListener() {
     const btn = this.getContent().querySelector('#chat-input__btn');
-    btn?.addEventListener('click', (e) => this.handleSend());
+    btn?.addEventListener('click', () => this.handleSend());
   }
   render() {
     return this.compile(template);

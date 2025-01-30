@@ -77,25 +77,8 @@ const validateMessage: Tvalid = (message) => {
 const noValidation: Tvalid = () => {
   return null;
 };
-type StringObject = {
-  [key: string]: string;
-};
+
 export function validateSubmit(id: string) {
-  // const form = document.getElementById(id) as HTMLFormElement;
-  // const formData = new FormData(form);
-  // const formObject: Record<string, string> = {};
-  // formData.forEach((value, key) => {
-  //   formObject[key] = value.toString();
-  // });
-  // // console.log(formData, formObject);
-  // const inputElements = document.querySelectorAll('input');
-  // inputElements.forEach((input) => {
-  //   const result = validate(input);
-  //   if (!result) {
-  //     throw new Error('Поля заполнены неверно ');
-  //   }
-  // });
-  // return Array.from(inputElements).every((input) => validate(input));
   const form = document.getElementById(id) as HTMLFormElement;
   if (!form || !(form instanceof HTMLFormElement)) {
     throw new Error('Форма не найдена или не является HTMLFormElement');
@@ -174,4 +157,4 @@ export const validators: ValidatorMap = {
   not_required: noValidation
 };
 
-const ValidatorsKeys = Object.keys(validators);
+// const ValidatorsKeys = Object.keys(validators);

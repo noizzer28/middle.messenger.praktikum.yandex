@@ -1,6 +1,5 @@
 import { Modal } from './modal';
 import { TProps } from '../../types';
-import changeAvatar from '../../api/user/changeAvatar';
 import Input from '../input/input';
 import { validate, validateSubmit } from '../../utils/validators';
 import changePassword from '../../api/user/changePassword';

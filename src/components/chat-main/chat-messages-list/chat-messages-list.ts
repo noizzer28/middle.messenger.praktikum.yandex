@@ -1,8 +1,6 @@
 import template from './template';
 import Block from '../../../services/Block';
-import { TProps, TStore } from '../../../types';
-import { formatDate } from '../../../utils/formatDate';
-import { connect } from '../../../services/connect';
+import { TProps } from '../../../types';
 
 class ChatMessagesList extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {

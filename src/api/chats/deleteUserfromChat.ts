@@ -1,7 +1,6 @@
 import chatsApi from './chatsApi';
 import { ChangeChatUsersInterface } from '../types';
 import store from '../../services/Store';
-import searchUser from '../user/searchUser';
 
 class DeleteUser {
   public async deleteUser(id: number) {

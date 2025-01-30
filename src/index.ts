@@ -15,37 +15,38 @@ const pages: Record<PageKeys, Block | undefined> = {
   error: Pages.errorPage
 };
 
-// declare global {
-//   interface Window {
-//     store: Store;
-//   }
-// }
-export const router = new Router('.app');
-await LoginUser();
-router
-  .use(ROUTES.LOGIN, pages.login)
-  .use(ROUTES.REGISTER, pages.registration)
-  .use(ROUTES.SETTINGS, pages.profile)
-  .use(ROUTES.CHAT, pages.chat)
-  .use(ROUTES.ERROR, pages.error)
-  .start();
+let router: Router;
+(async function initApp() {
+  try {
+    router = new Router('.app');
+    await LoginUser();
 
-// window.store = new Store({
-//   isLoading: false,
-//   user: null
-// });
-// console.log(window.store.getState());
-window.addEventListener('popstate', () => {
-  console.log('onpopstate');
-  router.init();
-  router.start();
-});
+    router
+      .use(ROUTES.LOGIN, pages.login)
+      .use(ROUTES.REGISTER, pages.registration)
+      .use(ROUTES.SETTINGS, pages.profile)
+      .use(ROUTES.CHAT, pages.chat)
+      .use(ROUTES.ERROR, pages.error)
+      .start();
 
-document.addEventListener('click', (e: MouseEvent) => {
-  const page = (e.target as HTMLElement).getAttribute('page') as PageKeys;
-  if (page) {
-    router.go(page);
-    e.preventDefault();
-    e.stopImmediatePropagation();
+    window.addEventListener('popstate', () => {
+      console.log('onpopstate');
+      router.init();
+      router.start();
+    });
+
+    document.addEventListener('click', (e: MouseEvent) => {
+      const page = (e.target as HTMLElement).getAttribute('page') as PageKeys;
+      if (page) {
+        router.go(page);
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    });
+  } catch (error) {
+    console.error('Ошибка инициализации приложения:', error);
+    const errorRouter = new Router('.app');
+    errorRouter.use(ROUTES.ERROR, pages.error).start();
   }
-});
+})();
+export { router };

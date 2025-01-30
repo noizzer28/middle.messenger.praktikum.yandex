@@ -1,5 +1,4 @@
 import userApi from './userApi';
-import store from '../../services/Store';
 import { ChangeUserPassword } from '../types';
 
 class ChangePasswordController {

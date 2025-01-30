@@ -1,7 +1,5 @@
 import userApi from './userApi';
 import store from '../../services/Store';
-import { router } from '../..';
-import { ROUTES } from '../../types';
 import { ChangeUserData } from '../types';
 import { validateProfile } from '../../utils/validators';
 

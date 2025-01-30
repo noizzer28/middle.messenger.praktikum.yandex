@@ -1,8 +1,6 @@
 import './search.scss';
 import template from './template';
 import Block from '../../services/Block';
-import Button from '../button/button/button';
-import { Modal } from '../modal/modal';
 import createChat from '../../api/chats/createChat';
 import { TProps } from '../../types';
 
