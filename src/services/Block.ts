@@ -42,22 +42,18 @@ abstract class Block {
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);
   }
-  // resetToInitialProps() {
-  //   // console.log(this.resetToInitialProps);
-  //   const { children, props, lists, events } = this.getChildren(
-  //     this._initialProps
-  //   );
-  //   console.log(this._initialProps);
-  //   console.log(children, props, lists, events);
-  //   this._children = this._makePropsProxy(children) as TChildren;
-  //   this._id = MakeID();
-  //   console.log(this._meta);
-  //   this._events = events;
-  //   this._lists = this._makePropsProxy(lists) as TLists;
-  //   this._props = this._makePropsProxy({ ...props }) as TProps;
-  //   this._setUpdate = false;
-  //   this._eventBus.emit(Block.EVENTS.INIT);
-  // }
+  resetToInitialProps() {
+    const { children, props, lists, events } = this.getChildren(
+      this._initialProps
+    );
+    this._children = this._makePropsProxy(children) as TChildren;
+    this._id = MakeID();
+    this._events = events;
+    this._lists = this._makePropsProxy(lists) as TLists;
+    this._props = this._makePropsProxy({ ...props }) as TProps;
+    this._setUpdate = false;
+    this._eventBus.emit(Block.EVENTS.INIT);
+  }
   _registerEvents() {
     this._eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     this._eventBus.on(
@@ -69,31 +65,34 @@ abstract class Block {
       this._componentDidUpdate.bind(this)
     );
     this._eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-    // this._eventBus.on(
-    //   Block.EVENTS.FLOW_CDU_UNMOUNT,
-    //   this._componentDidUnmount.bind(this)
-    // );
+    this._eventBus.on(
+      Block.EVENTS.FLOW_CDU_UNMOUNT,
+      this._componentDidUnmount.bind(this)
+    );
   }
-  // _componentDidUnmount() {
-  //   // this.componentDidUnmount();
-  //   // Очистка
-  //   this._element = undefined;
-  //   this._children = {};
-  //   this._lists = {};
-  //   this._events = {};
-  //   this._props = {} as TProps;
-  // }
-  // componentDidUnmount() {
-  //   console.log('cdunmount');
-  //   const element = this.getContent();
-  //   console.log(element);
-  //   if (element && element.parentNode) {
-  //     element.parentNode.removeChild(element);
-  //   }
-  //   this.removeEvents();
-  //   this._eventBus.emit(Block.EVENTS.FLOW_CDU_UNMOUNT);
-  //   // this._element = undefined;
-  // }
+  _componentDidUnmount() {
+    // this.componentDidUnmount();
+
+    this._element = undefined;
+    this._children = {};
+    this._lists = {};
+    this._events = {};
+    this._props = {} as TProps;
+    this.resetToInitialProps();
+  }
+  componentDidUnmount() {
+    // console.log('cdunmount');
+    const element = this.getContent();
+    // console.log(element);
+    if (element && element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+    this.removeEvents();
+    this._eventBus.emit(Block.EVENTS.FLOW_CDU_UNMOUNT);
+    this._element?.remove();
+    this._element = undefined;
+  }
+
   init() {
     this._createResources();
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);

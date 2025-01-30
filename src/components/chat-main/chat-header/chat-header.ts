@@ -22,18 +22,11 @@ class ChatHeader extends Block {
 
 function mapStateToHeader(state: TStore) {
   const activeChat = state.activeChat;
-  if (activeChat) {
-    console.log('active chat header', activeChat);
-    return {
-      avatar: getAvatarLink(activeChat.avatar),
-      title: activeChat.title,
-      chatNav: chatDropdown
-    };
-  } else {
-    return {
-      avatar: null
-    };
-  }
+  return {
+    avatar: getAvatarLink(activeChat?.avatar) || null,
+    title: activeChat?.title || null,
+    chatNav: chatDropdown
+  };
 }
 
 const Connect = connect(ChatHeader, mapStateToHeader);

@@ -155,17 +155,11 @@ class RegPage extends Block {
 }
 
 function mapRegisterPageProps(store: TStore): TProps {
-  if (store.error?.regError) {
-    return {
-      error: new ErrorComponent('div', {
-        error: store.error.regError
-      })
-    };
-  } else {
-    return {
-      error: null
-    };
-  }
+  return {
+    error: new ErrorComponent('div', {
+      error: store.error.regError || null
+    })
+  };
 }
 
 const Connect = connect(RegPage, mapRegisterPageProps);

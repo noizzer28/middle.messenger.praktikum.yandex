@@ -1,6 +1,7 @@
 import { json } from 'stream/consumers';
 import ChatList from '../../components/chat-aside/chat-list';
 import store from '../../services/Store';
+import getChats from '../chats/getChats';
 
 class WebSocketService {
   private static __instance: WebSocketService | null = null;
@@ -49,7 +50,7 @@ class WebSocketService {
     this.socket.addEventListener('message', (event) => {
       // console.log('message', event);
       const data = JSON.parse(event.data);
-      console.log(data);
+      // console.log(data);
       if (data.type === 'message') {
         this.getOlderMessages();
       }
@@ -64,6 +65,7 @@ class WebSocketService {
   }
 
   getOlderMessages() {
+    getChats.getInfo();
     this.socket?.send(
       JSON.stringify({
         content: '0',

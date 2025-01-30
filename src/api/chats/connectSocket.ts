@@ -11,8 +11,9 @@ class SocketController {
         return chat.id === Number(chatID);
       });
       console.log('setting chat here', chatID, activeChat);
-      store.set({ activeChat: activeChat[0] });
+      store.set({ activeChat: activeChat[0], activeMessages: [] });
       socket.init(userId, String(chatID), token);
+      // socket.getOlderMessages();
       // socket.sendMessage('second message');
       //   return response;
     } catch (error) {

@@ -74,17 +74,11 @@ class LoginPage extends Block {
 }
 
 function mapLoginPageProps(store: TStore): TProps {
-  if (store.error?.authError) {
-    return {
-      error: new ErrorComponent('div', {
-        error: store.error.authError
-      })
-    };
-  } else {
-    return {
-      error: null
-    };
-  }
+  return {
+    error: new ErrorComponent('div', {
+      error: store.error.authError || null
+    })
+  };
 }
 
 const Connect = connect(LoginPage, mapLoginPageProps);

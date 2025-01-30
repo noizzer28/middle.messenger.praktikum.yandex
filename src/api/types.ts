@@ -36,3 +36,12 @@ export interface ChangeChatUsersInterface {
   users: [number];
   chatId: number | undefined;
 }
+
+export type SearchResponse = {
+  avatar: string | null;
+  display_name: string | null;
+  first_name: string;
+  id: number;
+  login: string;
+  second_name: string;
+};

@@ -3,11 +3,7 @@ import Block from '../../services/Block';
 import Avatar from '../../components/avatar/avatar';
 import ProfileLine from '../../components/profile-line/profile-line';
 import ProfileEdit from '../../components/profile-edit/profile-edit';
-import {
-  validate,
-  validateProfile,
-  validateSubmit
-} from '../../utils/validators';
+import { validate, validateProfile } from '../../utils/validators';
 import Button from '../../components/button/button/button';
 import { connect } from '../../services/connect';
 import { TStore, TProps } from '../../types';
@@ -15,9 +11,8 @@ import logoutController from '../../api/auth/logoutInterface';
 import buttonBack from '../../components/button/button-back/button-back';
 import changeProfile from '../../api/user/changeProfile';
 import ErrorComponent from '../../components/error/error';
-import { ModalPasswordComponent } from '../../components/modal/modal';
-import Input from '../../components/input/input';
-import changePassword from '../../api/user/changePassword';
+
+import { ModalPassword } from '../../components/modal/modalChangePassword';
 
 const profileEditLines = [
   new ProfileEdit('tr', {
@@ -41,7 +36,8 @@ const profileEditLines = [
       click: (e: Event) => {
         const target = e.target as HTMLElement;
         if ((target as HTMLElement).tagName.toLowerCase() === 'a') {
-          ModalEditPassword.show();
+          const modalPassword = new ModalPassword('div', {});
+          modalPassword.show();
         }
       }
     }
@@ -209,68 +205,68 @@ function renderToProfile() {
   });
 }
 
-export const ModalEditPassword = new ModalPasswordComponent('div', {
-  title: 'Изменить пароль',
-  form_id: 'modal-password__form',
-  success: null,
-  body: new Input('div', {
-    type: 'text',
-    label: 'Старый пароль',
-    name: 'not_required',
-    autocomplete: 'password',
-    attr: {
-      class: 'input-wrapper'
-    }
-  }),
-  body_2: new Input('div', {
-    type: 'text',
-    label: 'Новый пароль',
-    name: 'password',
-    attr: {
-      class: 'input-wrapper'
-    },
-    events: {
-      blur: (event) => {
-        if (event.target instanceof HTMLInputElement) {
-          validate(event.target);
-        }
-      }
-    }
-  }),
-  body_3: new Input('div', {
-    type: 'text',
-    label: 'Повторите пароль',
-    name: 'rep_password',
-    attr: {
-      class: 'input-wrapper'
-    },
-    events: {
-      blur: (event) => {
-        if (event.target instanceof HTMLInputElement) {
-          validate(event.target);
-        }
-      }
-    }
-  }),
-  buttontext: 'Поменять',
-  events: {
-    click: (e: Event) => {
-      e.preventDefault();
-      const target = e.target as HTMLElement;
-      if (target.tagName.toLowerCase() === 'button') {
-        const valid = validateSubmit('modal-password__form');
-        if (valid) {
-          changePassword.changePassword('modal-password__form');
-        }
-        // validateSubmit('modal-password__form');
+// export const ModalEditPassword = new ModalPasswordComponent('div', {
+//   title: 'Изменить пароль',
+//   form_id: 'modal-password__form',
+//   success: null,
+//   body: new Input('div', {
+//     type: 'text',
+//     label: 'Старый пароль',
+//     name: 'not_required',
+//     autocomplete: 'password',
+//     attr: {
+//       class: 'input-wrapper'
+//     }
+//   }),
+//   body_2: new Input('div', {
+//     type: 'text',
+//     label: 'Новый пароль',
+//     name: 'password',
+//     attr: {
+//       class: 'input-wrapper'
+//     },
+//     events: {
+//       blur: (event) => {
+//         if (event.target instanceof HTMLInputElement) {
+//           validate(event.target);
+//         }
+//       }
+//     }
+//   }),
+//   body_3: new Input('div', {
+//     type: 'text',
+//     label: 'Повторите пароль',
+//     name: 'rep_password',
+//     attr: {
+//       class: 'input-wrapper'
+//     },
+//     events: {
+//       blur: (event) => {
+//         if (event.target instanceof HTMLInputElement) {
+//           validate(event.target);
+//         }
+//       }
+//     }
+//   }),
+//   buttontext: 'Поменять',
+//   events: {
+//     click: (e: Event) => {
+//       e.preventDefault();
+//       const target = e.target as HTMLElement;
+//       if (target.tagName.toLowerCase() === 'button') {
+//         const valid = validateSubmit('modal-password__form');
+//         if (valid) {
+//           changePassword.changePassword('modal-password__form');
+//         }
+//         // validateSubmit('modal-password__form');
 
-        // if (validateProfile()) {
-        //   console.log('did  validate');
-        //   // store.set({
-        //   //   error: { modalPasswordError: 'Поля заполнены неверно' }
-        //   // });
-        // }
-      }
-    }
-  }
-});
+//         // if (validateProfile()) {
+//         //   console.log('did  validate');
+//         //   // store.set({
+//         //   //   error: { modalPasswordError: 'Поля заполнены неверно' }
+//         //   // });
+//         // }
+//       }
+//     }
+//   }
+// });

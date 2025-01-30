@@ -1,6 +1,16 @@
 @import '../../styles/var';
 
 .modal {
+  &-success {
+    font-size: 13px;
+    text-align: center;
+    color: rgb(58, 162, 128);
+  }
+  &-error {
+    text-align: center;
+    font-size: 13px;
+    color: red;
+  }
   &-overlay {
     &.visible {
       opacity: 1;
@@ -79,6 +89,16 @@
     justify-content: center;
     flex-direction: column;
     gap: 10px;
+    li {
+      cursor: pointer;
+      margin-bottom: 5px;
+      &:hover {
+        background-color: $light-shadow;
+      }
+      &.selected {
+        background-color: $shadow;
+      }
+    }
     label {
       font-size: 14px;
       align-self: start;

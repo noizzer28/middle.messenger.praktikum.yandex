@@ -1,41 +1,23 @@
 import userApi from './userApi';
 import store from '../../services/Store';
-import { modalAddAvatar } from '../../components/avatar/avatar';
 
 class ChangeAvatarController {
   public async changeAvatar(file: File) {
     try {
-      if (file) {
-        console.log(file);
-        const formData = new FormData();
-        formData.append('avatar', file);
-        const response = await userApi.changeAvatar(formData);
-        console.log('Изменения успешны:', response);
-        store.set({ user: response });
-      } else {
-        console.log('no file');
-        store.set({ error: { modalAvatarError: 'Сначала выберите файл' } });
-        modalAddAvatar.show();
-      }
+      // console.log(file);
+      const formData = new FormData();
+      formData.append('avatar', file);
+      const response = await userApi.changeAvatar(formData);
+      console.log('Изменения успешны:', response);
+      store.set({ user: response });
+      return response;
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === 'Ошибка сети') {
-          store.set({
-            error: {
-              modalAvatarError:
-                'Ошибка, попробуйте загрузить файл меньшего размера'
-            }
-          });
-          modalAddAvatar.show();
-          return;
-        }
-        store.set({ error: { modalAvatarError: error.message } });
-        modalAddAvatar.show();
-        console.log('Ошибка обновления данных:', error.message);
+        throw new Error(error.message);
       } else {
-        store.set({ error: { modalAvatarError: error } });
-        modalAddAvatar.show();
-        console.log('Произошла неизвестная ошибка:', error);
+        throw new Error(
+          'Неизвестная ошибка, попробуйте загрузить файл меньшего размера'
+        );
       }
     }
   }

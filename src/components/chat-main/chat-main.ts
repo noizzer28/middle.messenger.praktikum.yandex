@@ -55,20 +55,21 @@ function mapChoosenChat(state: TStore) {
   const activeMessages = state.activeMessages;
   const userId = state.user?.id;
   if (activeChat) {
-    console.log('chat main', activeMessages);
+    // console.log('chat main', activeMessages);
+    const messArr = activeMessages.map((message) => {
+      const isCurrentUser = message.user_id === userId ? true : false;
+      return new ChatMessagesList('div', {
+        attr: {
+          class: `chat-main__block  ${isCurrentUser ? 'sender' : 'receiver'}`
+        },
+        text: message.content,
+        time: formatDate(message.time)
+      });
+    });
     return {
       asideMessage: null,
       header: chatHeader,
-      message: activeMessages.reverse().map((message) => {
-        const isCurrentUser = message.user_id === userId ? true : false;
-        return new ChatMessagesList('div', {
-          attr: {
-            class: `chat-main__block  ${isCurrentUser ? 'sender' : 'receiver'}`
-          },
-          text: message.content,
-          time: formatDate(message.time)
-        });
-      })
+      message: messArr
     };
   } else {
     return {

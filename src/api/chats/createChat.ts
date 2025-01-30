@@ -2,14 +2,17 @@ import chatsApi from './chatsApi';
 import getChats from './getChats';
 
 class createChatController {
-  public async create(title: string) {
+  public async create(input: HTMLInputElement) {
     try {
-      const body = {
-        title: title
-      };
-      const response = await chatsApi.createChat(body);
-      console.log(response);
-      getChats.getInfo();
+      if (input.value) {
+        const body = {
+          title: input.value
+        };
+        const response = await chatsApi.createChat(body);
+        console.log(response);
+        input.value = '';
+        getChats.getInfo();
+      }
     } catch (error) {
       if (error instanceof Error) {
         // console.error('Ошибка:', error.message);

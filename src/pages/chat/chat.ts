@@ -6,8 +6,6 @@ import getChats from '../../api/chats/getChats';
 import { connect } from '../../services/connect';
 import { TStore, TProps } from '../../types';
 import { formatDate } from '../../utils/formatDate';
-import Button from '../../components/button/button/button';
-import createChat from '../../api/chats/createChat';
 import getChatToken from '../../api/chats/getChatToken';
 import { getAvatarLink } from '../../utils/avatarLink';
 import connectSocket from '../../api/chats/connectSocket';
@@ -19,15 +17,7 @@ class ChatPage extends Block {
       attr: {
         class: 'chat rel'
       },
-      search: search,
-      btn: new Button('div', {
-        text: 'Создать чат',
-        events: {
-          click: () => {
-            createChat.create('Chat');
-          }
-        }
-      })
+      search: search
     });
     this.getChatsInfo();
   }
@@ -74,7 +64,6 @@ function mapChatsToProps(state: TStore): TProps {
                   const dataId = parentWithDataIndex.getAttribute('dataId');
                   if (dataId !== null) {
                     removeSelected();
-                    parentWithDataIndex.classList.add('selected');
                     render(Number(dataId));
                   } else {
                     console.log('Атрибут dataindex не найден');
@@ -91,10 +80,8 @@ function mapChatsToProps(state: TStore): TProps {
       chatMain: chatMain
     };
   } else {
-    console.log('empty chats');
     return {
-      chatList: null,
-      asideMessage: 'Здесь еще нет ни одного сообщения'
+      chatMain: `<section class="chat-main__messages flex">Здесь еще нет ни одного сообщения</section>`
     };
   }
 }

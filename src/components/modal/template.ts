@@ -12,12 +12,12 @@ const template = `
                   {{{body}}}
                   {{{body_2}}}
                   {{{body_3}}}
-                  {{{success}}}
+                  <div class="modal-success">{{{success}}}</div>
                 </div>
-                  {{{error}}}
+                  <div class="modal-error">{{{error}}}</div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="button" data-action="confirm">{{{buttontext}}}</button>
+                <button class="button" data-action="confirm">{{{buttontext}}}</button>
               </div>
 
         </form>
