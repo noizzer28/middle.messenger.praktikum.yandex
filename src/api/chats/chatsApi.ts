@@ -1,5 +1,9 @@
 import HTTPTransport from '../HttpTransport';
-import { CreateChatInterface, ChangeChatUsersInterface } from '../types';
+import {
+  CreateChatInterface,
+  ChangeChatUsersInterface,
+  DeleteChatInterface
+} from '../types';
 
 const chatsApi = new HTTPTransport();
 
@@ -21,13 +25,29 @@ export class ChatsApi {
   }
 
   deleteUserFromChat(data: ChangeChatUsersInterface) {
-    return chatsApi.post('chats/users', {
+    return chatsApi.delete('chats/users', {
       body: data
     });
   }
 
   getChatToken(id: number) {
     return chatsApi.post(`chats/token/${id}`);
+  }
+
+  getChatUsers(id: number) {
+    return chatsApi.get(`chats/${id}/users`);
+  }
+
+  deleteChat(data: DeleteChatInterface) {
+    return chatsApi.delete(`chats`, {
+      body: data
+    });
+  }
+
+  changeAvatar(data: FormData) {
+    return chatsApi.put('chats/avatar', {
+      body: data
+    });
   }
 }
 export default new ChatsApi();

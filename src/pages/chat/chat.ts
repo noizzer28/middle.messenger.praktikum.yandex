@@ -76,7 +76,6 @@ function mapChatsToProps(state: TStore): TProps {
           }
         });
       }),
-      asideMessage: 'Выберите чат чтобы начать',
       chatMain: chatMain
     };
   } else {

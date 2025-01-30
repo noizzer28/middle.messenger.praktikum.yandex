@@ -5,6 +5,7 @@ import { TProps, TStore } from '../../../types';
 import { connect } from '../../../services/connect';
 import { getAvatarLink } from '../../../utils/avatarLink';
 import chatDropdown from '../chat-dropdown/chat-dropdown';
+import { ModalChatAvatar } from '../../modal/modalChatAvatar';
 
 class ChatHeader extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -13,6 +14,16 @@ class ChatHeader extends Block {
       attr: {
         class: 'chat-main__header'
       }
+    });
+  }
+  componentDidMount() {
+    this.addAvatarListener();
+  }
+  addAvatarListener() {
+    const btn = this.getContent().querySelector('#chat-avatar');
+    btn?.addEventListener('click', () => {
+      const modalChatAvatar = new ModalChatAvatar('div', {});
+      modalChatAvatar.show();
     });
   }
   render() {

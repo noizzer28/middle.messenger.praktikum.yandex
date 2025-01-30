@@ -91,25 +91,6 @@ export class ModalAddUser extends Modal {
     this.hide();
     modalSearchedUsers.show();
     modalSearchedUsers.addListener();
-    // try {
-    //   const response = await addUsertoChat.addUser(id);
-    //   console.log(response);
-    //   if (response === 'OK') {
-    //     this.setProps({
-    //       success: 'Пользователь успешно добавлен',
-    //       error: null
-    //     });
-    //     setTimeout(() => this.hide(), 3000);
-    //   }
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     this.setProps({
-    //       error: `Ошибка: ${error.message}`,
-    //       success: null
-    //     });
-    //     throw new Error(`Ошибка: ${error.message}`);
-    //   }
-    // }
   };
 
   private handleError = (error: unknown) => {

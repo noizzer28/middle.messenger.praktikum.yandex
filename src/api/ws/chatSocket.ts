@@ -42,13 +42,18 @@ class WebSocketService {
 
     this.socket.addEventListener('message', (event) => {
       // console.log('message', event);
-      const data = JSON.parse(event.data);
-      // console.log(data);
-      if (data.type === 'message') {
-        this.getOlderMessages();
-      }
-      if (Array.isArray(data)) {
-        store.set({ activeMessages: data });
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'message') {
+          this.getOlderMessages();
+        }
+        if (Array.isArray(data)) {
+          store.set({ activeMessages: data });
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        }
       }
     });
 

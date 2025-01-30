@@ -2,13 +2,9 @@ import './avatar.scss';
 import template from './template';
 import Block from '../../services/Block';
 import { ModalAvatar } from '../modal/modalAvatar';
-interface AvatarProps {
-  src: string;
-  name: string;
-}
-
+import { TProps } from '../../types';
 class Avatar extends Block {
-  constructor(tagName: string = 'div', propsAndChilds: AvatarProps) {
+  constructor(tagName: string = 'div', propsAndChilds: TProps) {
     super(tagName, {
       ...propsAndChilds,
       attr: {

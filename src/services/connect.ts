@@ -8,7 +8,6 @@ export function connect(
   mapStateToProps: (state: TStore) => TProps
 ) {
   return class extends Component {
-    // private onChangeStore: () => void;
     constructor(tag: string, props: TProps) {
       const mappedProps = mapStateToProps(store.getState());
       super(tag, { ...props, ...mappedProps });
@@ -17,6 +16,7 @@ export function connect(
         const newMappedProps = mapStateToProps(store.getState());
 
         if (!isEqual(mappedProps, newMappedProps)) {
+          // console.log(this, mappedProps, newMappedProps);
           this.setProps({ ...newMappedProps });
         }
       });

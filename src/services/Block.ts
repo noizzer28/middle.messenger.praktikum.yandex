@@ -225,8 +225,9 @@ abstract class Block {
   }
 
   _componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    // console.log('_CDU', oldProps, newProps);
+    // console.log('_CDU', this, oldProps, newProps);
     const response = this.componentDidUpdate(oldProps, newProps);
+    // console.log(response);
     if (!response) {
       return;
     }
