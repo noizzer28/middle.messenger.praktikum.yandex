@@ -1,14 +1,15 @@
 import { v4 as MakeID } from 'uuid';
 import EventBus from './EventBus';
 import Handlebars from 'handlebars';
-import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '@/types';
+import { TChildren, TEvents, TMeta, TProps, TLists, EventKeys } from '../types';
 
 abstract class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
+    FLOW_RENDER: 'flow:render',
+    FLOW_CDU_UNMOUNT: 'flow:component-did-unmount'
   };
 
   private _element: HTMLElement | undefined;
@@ -20,10 +21,12 @@ abstract class Block {
   private _setUpdate: boolean;
   private _eventBus;
   private _lists: TLists;
+  private _initialProps: TProps;
 
   constructor(tagName = 'div', propsAndChilds = {}) {
+    this._initialProps = propsAndChilds;
     const { children, props, lists, events } = this.getChildren(propsAndChilds);
-    // console.log('constructor', children, props, lists, events);
+    // console.log('constructor', this, propsAndChilds);
     this._eventBus = new EventBus();
     this._children = this._makePropsProxy(children) as TChildren;
     this._id = MakeID();
@@ -39,7 +42,18 @@ abstract class Block {
     this._registerEvents();
     this._eventBus.emit(Block.EVENTS.INIT);
   }
-
+  resetToInitialProps() {
+    const { children, props, lists, events } = this.getChildren(
+      this._initialProps
+    );
+    this._children = this._makePropsProxy(children) as TChildren;
+    this._id = MakeID();
+    this._events = events;
+    this._lists = this._makePropsProxy(lists) as TLists;
+    this._props = this._makePropsProxy({ ...props }) as TProps;
+    this._setUpdate = false;
+    this._eventBus.emit(Block.EVENTS.INIT);
+  }
   _registerEvents() {
     this._eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     this._eventBus.on(
@@ -51,6 +65,32 @@ abstract class Block {
       this._componentDidUpdate.bind(this)
     );
     this._eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    this._eventBus.on(
+      Block.EVENTS.FLOW_CDU_UNMOUNT,
+      this._componentDidUnmount.bind(this)
+    );
+  }
+  _componentDidUnmount() {
+    // this.componentDidUnmount();
+
+    this._element = undefined;
+    this._children = {};
+    this._lists = {};
+    this._events = {};
+    this._props = {} as TProps;
+    this.resetToInitialProps();
+  }
+  componentDidUnmount() {
+    // console.log('cdunmount');
+    const element = this.getContent();
+    // console.log(element);
+    if (element && element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+    this.removeEvents();
+    this._eventBus.emit(Block.EVENTS.FLOW_CDU_UNMOUNT);
+    this._element?.remove();
+    this._element = undefined;
   }
 
   init() {
@@ -94,6 +134,7 @@ abstract class Block {
       props = this._props;
     }
     const propsAndStubs = { ...props };
+    // console.log(this, propsAndStubs);
 
     Object.entries(this._children).forEach(([key, child]) => {
       // console.log('Key, CHILD', key, child);
@@ -141,14 +182,18 @@ abstract class Block {
 
   _render() {
     const block = this.render();
+    // console.log(block, this);
     this.removeEvents();
+    // console.log(this._element);
     this._element!.innerHTML = '';
     this._element!.appendChild(block!);
     this.addAttribute();
     this.addEvents();
+    this.dispatchComponentDidMount();
   }
   addAttribute() {
     const { attr = {} } = this._props as TProps;
+    // console.log('attr', attr);
     Object.entries(attr).forEach(([key, value]) => {
       this._element!.setAttribute(key, value);
     });
@@ -207,6 +252,7 @@ abstract class Block {
     // console.log('oldvalue', oldValue);
     const { children, props, lists } = this.getChildren(newProps);
     // console.log('ch, pr, li', children, props, lists);
+    // console.log('value before', this._children, this._props, this._lists);
     if (Object.values(children).length) {
       Object.assign(this._children, children);
     }
@@ -217,8 +263,10 @@ abstract class Block {
     if (Object.values(lists).length) {
       Object.assign(this._lists, lists);
     }
-    // console.log('value after', children, props, lists);
+    // console.log('value after', children, props, lists, this);
+    // console.log('value after', this._children, this._props, this._lists);
     if (this._setUpdate) {
+      // console.log('setupdate', oldValue, this._props);
       this._eventBus.emit(Block.EVENTS.FLOW_CDU, oldValue, this._props);
       this._setUpdate = false;
     }
@@ -227,7 +275,9 @@ abstract class Block {
   get element() {
     return this._element;
   }
-
+  getProps() {
+    return this._props;
+  }
   _makePropsProxy(props: TChildren | TLists | TProps) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
@@ -252,15 +302,25 @@ abstract class Block {
     });
   }
 
-  show() {
-    this.getContent().style.display = 'block';
+  public hide(): void {
+    console.log('hiding in block');
+    const componentHtml = this.getContent();
+    if (!componentHtml) {
+      return;
+    }
+    componentHtml.style.display = 'none';
   }
 
-  hide() {
-    this.getContent().style.display = 'none';
+  public show(): void {
+    const componentHtml = this.getContent();
+    if (!componentHtml) {
+      return;
+    }
+    componentHtml.style.display = 'flex';
   }
 
   _componentDidMount() {
+    // console.log('mounted in block');
     this.componentDidMount();
   }
 

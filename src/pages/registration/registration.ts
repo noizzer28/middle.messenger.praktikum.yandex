@@ -3,195 +3,165 @@ import template from './template';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button/button';
 import SecondaryButton from '../../components/button/secondary-button/secondary-button';
-import { validators, ValidatorMap } from '../../utils/validators';
+import { validate, validateProfile } from '../../utils/validators';
 import { eyeInput } from '../../components/eye/eye';
-
+import сreateUserController from '../../api/auth/createUserInterface';
+import { TProps, TStore } from '../../types';
+import ErrorComponent from '../../components/error/error';
+import { connect } from '../../services/connect';
 class RegPage extends Block {
+  constructor(tagName: string, propsAndChilds: TProps) {
+    super(tagName, {
+      ...propsAndChilds,
+      attr: {
+        class: 'container'
+      },
+      inputs: [
+        new Input('div', {
+          type: 'email',
+          label: 'Почта',
+          name: 'email',
+          autocomplete: 'email',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'input',
+          label: 'Логин',
+          name: 'login',
+          autocomplete: 'off',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'text',
+          label: 'Имя',
+          name: 'first_name',
+          autocomplete: 'first_name',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'text',
+          label: 'Фамилия',
+          name: 'second_name',
+          autocomplete: 'second_name',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'number',
+          label: 'Телефон',
+          name: 'phone',
+          autocomplete: 'phone',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'password',
+          label: 'Пароль',
+          name: 'password',
+          autocomplete: 'off',
+          eye: eyeInput,
+          attr: {
+            class: 'input-wrapper rel'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        }),
+        new Input('div', {
+          type: 'password',
+          label: 'Повторите пароль',
+          name: 'rep_password',
+          autocomplete: 'off',
+          attr: {
+            class: 'input-wrapper'
+          },
+          events: {
+            blur: (event) => {
+              if (event.target instanceof HTMLInputElement) {
+                validate(event.target);
+              }
+            }
+          }
+        })
+      ],
+      button: new Button('div', {
+        text: 'Зарегистрироваться',
+        events: {
+          click: (event: Event) => {
+            event.preventDefault();
+            validateProfile();
+            сreateUserController.login(`regForm`);
+          }
+        }
+      }),
+      secondaryButton: new SecondaryButton('div', {
+        text: 'Уже есть аккаунт?',
+        page: '/'
+      }),
+      error: null
+    });
+  }
   render() {
+    // console.log('render registration');
     return this.compile(template);
   }
 }
 
-export const registerPage = new RegPage('main', {
-  attr: {
-    class: 'container'
-  },
-  inputs: [
-    new Input('div', {
-      type: 'email',
-      label: 'Почта',
-      name: 'email',
-      autocomplete: 'email',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'input',
-      label: 'Логин',
-      name: 'login',
-      autocomplete: 'off',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'text',
-      label: 'Имя',
-      name: 'first-name',
-      autocomplete: 'first-name',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'text',
-      label: 'Фамилия',
-      name: 'second-name',
-      autocomplete: 'second-name',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'number',
-      label: 'Телефон',
-      name: 'phone',
-      autocomplete: 'phone',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'password',
-      label: 'Пароль',
-      name: 'password',
-      autocomplete: 'off',
-      eye: eyeInput,
-      attr: {
-        class: 'input-wrapper rel'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
-    }),
-    new Input('div', {
-      type: 'password',
-      label: 'Повторите пароль',
-      name: 'rep-password',
-      autocomplete: 'off',
-      attr: {
-        class: 'input-wrapper'
-      },
-      events: {
-        blur: (event) => {
-          if (event.target instanceof HTMLInputElement) {
-            validate(event.target);
-          }
-        }
-      }
+function mapRegisterPageProps(store: TStore): TProps {
+  return {
+    error: new ErrorComponent('div', {
+      error: store.error.regError || null
     })
-  ],
-  button: new Button('div', {
-    text: 'Зарегистрироваться',
-    events: {
-      click: (event: Event) => {
-        event.preventDefault();
-        validateSubmit();
-      }
-    }
-  }),
-  secondaryButton: new SecondaryButton('div', {
-    text: 'Уже есть аккаунт?',
-    page: 'login'
-  })
-});
-
-function validateSubmit() {
-  const form = document.getElementById('regForm') as HTMLFormElement;
-  const formData = new FormData(form);
-  const formObject: Record<string, string> = {};
-  formData.forEach((value, key) => {
-    formObject[key] = value.toString();
-  });
-  const inputElements = document.querySelectorAll('input');
-
-  inputElements.forEach((input) => {
-    validate(input);
-  });
-
-  console.log(formObject);
+  };
 }
 
-function validate(target: HTMLInputElement) {
-  const name = target.getAttribute('name') as keyof ValidatorMap;
-  const parent = target.parentElement;
-  const value = target.value;
-  if (name) {
-    const validation = validators[name](value);
-    if (validation) {
-      addError(name, parent!, validation);
-    } else {
-      removeError(parent!);
-    }
-  }
-}
+const Connect = connect(RegPage, mapRegisterPageProps);
 
-function addError(name: string, parent: HTMLElement, validation: string) {
-  const errorChild = parent.querySelector('[data-error]');
-  if (!errorChild) {
-    const errorEl = document.createElement('div');
-    errorEl.setAttribute('data-error', `error-${name}`);
-    errorEl.classList.add('error');
-    errorEl.textContent = validation;
-    parent.appendChild(errorEl);
-  } else {
-    errorChild.textContent = validation;
-  }
-}
-
-function removeError(parent: HTMLElement) {
-  const errorChild = parent.querySelector('[data-error]');
-  if (errorChild) {
-    parent.removeChild(errorChild);
-  }
-}
+export const registerPage = new Connect('main', {});

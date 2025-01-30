@@ -1,14 +1,16 @@
 type Tvalid = (value: string) => string | null;
 
 export type ValidatorMap = {
-  'first-name': Tvalid;
-  'second-name': Tvalid;
+  first_name: Tvalid;
+  second_name: Tvalid;
   login: Tvalid;
   email: Tvalid;
   password: Tvalid;
   phone: Tvalid;
   message: Tvalid;
-  'rep-password': Tvalid;
+  rep_password: Tvalid;
+  display_name: Tvalid;
+  not_required: Tvalid;
 };
 
 const validateName: Tvalid = (name) => {
@@ -72,14 +74,87 @@ const validateMessage: Tvalid = (message) => {
   if (!message.trim()) return 'Сообщение не должно быть пустым.';
   return null;
 };
+const noValidation: Tvalid = () => {
+  return null;
+};
+
+export function validateSubmit(id: string) {
+  const form = document.getElementById(id) as HTMLFormElement;
+  if (!form || !(form instanceof HTMLFormElement)) {
+    throw new Error('Форма не найдена или не является HTMLFormElement');
+  }
+  const inputs = form?.querySelectorAll('input');
+  // console.log(inputs);
+  inputs.forEach((input) => {
+    validate(input);
+    // console.log(result, input);
+  });
+  return Array.from(inputs).every((input) => validate(input));
+}
+
+export function validateProfile() {
+  const inputElements = document.querySelectorAll('input');
+  // console.log('validated inputs', inputElements);
+  inputElements.forEach((input) => {
+    const result = validate(input);
+    if (!result) {
+      throw new Error('Поля заполнены неверно ');
+    }
+  });
+  return Array.from(inputElements).every((input) => validate(input));
+}
+
+export function validate(target: HTMLInputElement) {
+  const name = target.getAttribute('name') as keyof ValidatorMap;
+  const parent = target.parentElement;
+  const value = target.value;
+  if (name) {
+    const validation = validators[name](value);
+    // console.log(validation, value);
+    if (validation) {
+      addError(name, parent!, validation);
+      return false;
+    } else {
+      removeError(parent!);
+      return true;
+    }
+  }
+}
+export function addError(
+  name: string,
+  parent: HTMLElement,
+  validation: string
+) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (!errorChild) {
+    const errorEl = document.createElement('div');
+    errorEl.setAttribute('data-error', `error-${name}`);
+    errorEl.classList.add('inputError');
+    errorEl.textContent = validation;
+    parent.appendChild(errorEl);
+  } else {
+    errorChild.textContent = validation;
+  }
+}
+
+export function removeError(parent: HTMLElement) {
+  const errorChild = parent.querySelector('[data-error]');
+  if (errorChild) {
+    parent.removeChild(errorChild);
+  }
+}
 
 export const validators: ValidatorMap = {
-  'first-name': validateName,
-  'second-name': validateName,
+  first_name: validateName,
+  second_name: validateName,
   login: validateLogin,
   email: validateEmail,
   password: validatePassword,
   phone: validatePhone,
   message: validateMessage,
-  'rep-password': validateRepPassword
+  rep_password: validateRepPassword,
+  display_name: validateName,
+  not_required: noValidation
 };
+
+// const ValidatorsKeys = Object.keys(validators);

@@ -8,6 +8,7 @@ const template = `
     value="{{ value }}"
     placeholder="{{ placeholder }}"
     autocomplete="{{ autocomplete }}"
+    accept="{{accept}}"
   />
   {{#if eye}}{{{eye}}}{{/if}}
 `;

@@ -1,15 +1,18 @@
 const template = `
-<div class="profile-container {{class}}">
+<div class="profile-container {{class}} ">
 {{{buttonBack}}}
 {{{avatar}}}
+<form id="profile-form">
+  <table>
+    <tbody>
+      {{#each profileLine}}
+        {{{this}}}
+      {{/each}}
+    </tbody>
+  </table>
+</form>
 <table>
-  <tbody>
-    {{#each profileLine}}
-      {{{this}}}  
-    {{/each}}
-  </tbody>
-</table>
-<table>
+{{{error}}}
 <tbody>
 {{#each profileEdit}}
       {{{this}}}

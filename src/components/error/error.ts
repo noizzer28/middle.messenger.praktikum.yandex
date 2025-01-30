@@ -1,11 +1,11 @@
 import template from './template';
 import Block from '../../services/Block';
-import './chat-header.scss';
+import './error.scss';
 
-class ChatHeader extends Block {
+class ErrorComponent extends Block {
   render() {
     return this.compile(template);
   }
 }
 
-export default ChatHeader;
+export default ErrorComponent;
