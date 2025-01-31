@@ -9,6 +9,7 @@ const template = `
                 <ul>
                     <li data-add="adduser">Добавить пользователя</li>
                     <li data-add="deleteuser">Удалить пользователя</li>
+                    <li data-add="deletechat">Удалить чат</li>
                 </ul>
              </nav>
 

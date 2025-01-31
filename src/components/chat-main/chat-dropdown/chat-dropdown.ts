@@ -2,8 +2,11 @@ import Block from '../../../services/Block';
 import template from './template';
 import '../chat-header/chat-header.scss';
 import { TProps } from '../../../types';
-import { ModalDeleteUser } from '../../modal/modalDeleteUser';
+import { SearchDeleteResponse } from '../../../api/types';
 import { ModalAddUser } from '../../modal/modalAddUser';
+import { ModalDeleteChat } from '../../modal/modalDeleteChat';
+import getChatUsers from '../../../api/chats/getChatUsers';
+import { ModalDeletedSearch } from '../../modal/modalDeletedSearch';
 class ChatDropDown extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
     super(tagName, propsAndChilds);
@@ -12,24 +15,56 @@ class ChatDropDown extends Block {
   render() {
     return this.compile(template);
   }
-  addModalEvents() {
+  async addModalEvents() {
     const liList = this.getContent().querySelectorAll('li');
     if (liList) {
       liList.forEach((li) => {
         if (li.dataset.add == 'adduser') {
+          console.log('open add');
           li.addEventListener('click', () => {
             const modalAddUser = new ModalAddUser('div', {});
             modalAddUser.show();
           });
         }
         if (li.dataset.add == 'deleteuser') {
+          li.addEventListener('click', async () => {
+            console.log('open');
+            try {
+              const data =
+                (await this.getUsersInfo()) as SearchDeleteResponse[];
+              const searched = data.map((user) => {
+                return `<li id=${user.id}><strong>Логин:</strong> ${user.login}, <strong>Имя:</strong> ${user.first_name}</li>`;
+              });
+              console.log(searched);
+              const modalDeletedSearch = new ModalDeletedSearch('div', {
+                body: `<ul id="searched-list">${searched.join('')}<ul>`
+              });
+              modalDeletedSearch.show();
+              modalDeletedSearch.addListener();
+            } catch (error) {
+              console.error('Ошибка при получении данных:', error);
+            }
+          });
+        }
+        if (li.dataset.add == 'deletechat') {
           li.addEventListener('click', () => {
             // modalDeleteUser.show();
-            const modalDelete = new ModalDeleteUser('div', {});
-            modalDelete.show();
+            const modalDeleteChat = new ModalDeleteChat('div', {});
+            modalDeleteChat.show();
           });
         }
       });
+    }
+  }
+
+  async getUsersInfo() {
+    try {
+      const resp = await getChatUsers.getUsers();
+      return resp;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 }

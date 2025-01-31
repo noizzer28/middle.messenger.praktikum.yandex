@@ -52,6 +52,7 @@ function mapChoosenChat(state: TStore) {
   const activeChat = state.activeChat;
   const activeMessages = state.activeMessages;
   const userId = state.user?.id;
+  // console.log('chat main active chat messages', activeChat, activeMessages);
   if (activeChat) {
     const messArr = activeMessages.map((message) => {
       const isCurrentUser = message.user_id === userId ? true : false;
@@ -69,8 +70,10 @@ function mapChoosenChat(state: TStore) {
       message: messArr
     };
   } else {
+    // console.log('should not be messages');
     return {
-      asideMessage: 'Выберите чат чтобы начать'
+      asideMessage: 'Выберите чат чтобы начать',
+      message: null
     };
   }
 }

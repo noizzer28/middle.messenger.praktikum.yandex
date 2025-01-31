@@ -43,6 +43,9 @@
       flex-direction: column;
       gap: 10px;
       li {
+        &:last-child {
+          color: red;
+        }
         font-size: 14px;
         white-space: nowrap;
         &:hover {

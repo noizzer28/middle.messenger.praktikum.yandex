@@ -1,9 +1,9 @@
 import { Modal } from './modal';
 import { TProps } from '../../types';
-import changeAvatar from '../../api/user/changeAvatar';
+import changeAvatar from '../../api/chats/changeAvatar';
 import Input from '../input/input';
 
-export class ModalAvatar extends Modal {
+export class ModalChatAvatar extends Modal {
   constructor(tagName: string, propsAndChilds: TProps) {
     super(tagName, {
       ...propsAndChilds,
@@ -11,7 +11,7 @@ export class ModalAvatar extends Modal {
       body: new Input('div', {
         type: 'file',
         accept: 'image/jpeg, image/png, image/gif, image/webp',
-        name: 'avatar-input'
+        name: 'chat-avatar-input'
       }),
       buttontext: 'Поменять',
       events: {
@@ -24,7 +24,9 @@ export class ModalAvatar extends Modal {
     const target = e.target as HTMLElement;
     if (target.tagName.toLowerCase() === 'button') {
       e.preventDefault();
-      const input = document.getElementById('avatar-input') as HTMLInputElement;
+      const input = document.getElementById(
+        'chat-avatar-input'
+      ) as HTMLInputElement;
       const file = input?.files?.[0] as File;
       if (file) {
         this.handleChangeAvatar(file);
@@ -36,7 +38,7 @@ export class ModalAvatar extends Modal {
 
   private handleChangeAvatar = async (file: File) => {
     try {
-      await changeAvatar.changeAvatar(file);
+      await changeAvatar.changeChatAvatar(file);
       this.setProps({ error: null, success: 'Аватар успешно загружен' });
       setTimeout(() => {
         this.hide();

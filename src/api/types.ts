@@ -36,6 +36,9 @@ export interface ChangeChatUsersInterface {
   users: [number];
   chatId: number | undefined;
 }
+export interface DeleteChatInterface {
+  chatId: number;
+}
 
 export type SearchResponse = {
   avatar: string | null;
@@ -43,5 +46,14 @@ export type SearchResponse = {
   first_name: string;
   id: number;
   login: string;
+  second_name: string;
+};
+export type SearchDeleteResponse = {
+  avatar: string | null;
+  display_name: string | null;
+  first_name: string;
+  id: number;
+  login: string;
+  role: string;
   second_name: string;
 };
