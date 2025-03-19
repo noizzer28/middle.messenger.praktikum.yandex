@@ -3,23 +3,68 @@
 .chat-main {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   padding: 0 20px;
-  position: absolute;
+  // position: fixed;
   width: 100%;
-  bottom: 0;
-  margin-bottom: 80px;
+  // bottom: 20px;
+  margin-bottom: 10px;
+  flex: 1; /* Занимает оставшееся пространство между хедером и футером */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &__messages {
     background-color: $soft-white;
     height: 100%;
     flex-grow: 6;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    // max-width: 60%;
   }
   &__avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
+    &-container {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    &-shadow {
+      margin: auto;
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      // width: 100%;
+      // height: 100%;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $soft-white;
+      line-height: 10px;
+      font-size: 12px;
+      p {
+        margin: auto;
+      }
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
     &-wrapper {
       span {
         font-size: 20px;
@@ -35,15 +80,21 @@
     font-size: 14px;
     color: $light-grey;
   }
-
+  &__wrapper {
+    height: 100%;
+  }
   &__block {
     color: $dark-grey;
     font-size: 14px;
     border-radius: 8px;
-    width: 60%;
+    max-width: 60%;
     padding: 5px;
     margin: 5px 0;
     position: relative;
+    word-break: break-word;
+    line-height: 1.3125;
+    text-align: initial;
+    overflow: clip;
     p::after {
       content: '';
       display: inline-block;
@@ -59,18 +110,19 @@
       align-self: flex-end;
     }
     span {
-      font-size: 10px;
+      font-size: 9px;
       color: $light-grey;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
+      // position: absolute;
+      float: right;
+      bottom: auto !important;
+      // right: 5px;
       // float: right;
     }
   }
 
   &__input-wrapper {
     width: 100%;
-    position: absolute;
+    // position: fixed;
     bottom: 0;
     padding: 20px;
     background-color: $background-color;

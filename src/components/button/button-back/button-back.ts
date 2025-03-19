@@ -7,4 +7,12 @@ class ButtonBack extends Block {
     return this.compile(template);
   }
 }
-export default ButtonBack;
+
+const buttonBack = new ButtonBack('div', {
+  attr: {
+    class: 'button-back',
+    page: '/messenger'
+  },
+  page: '/messenger'
+});
+export default buttonBack;

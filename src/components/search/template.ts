@@ -12,9 +12,10 @@ const template = `<header class="chat-header">
     </svg>
   </div>
   <div class="chat-header__input">
-    <input type="text" placeholder="Поиск" />
+  <input type="text" placeholder="Введите имя чата" id="create-chat-input"/>
+  <button data-action="create-chat">Создать чат</button>
   </div>
-</header>
-`;
+  </header>
+  `;
 
 export default template;

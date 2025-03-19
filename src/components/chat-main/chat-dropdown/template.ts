@@ -7,8 +7,9 @@ const template = `
             </svg> 
             <nav class="chat-main__header-nav" id='chat-nav'>           
                 <ul>
-                    <li>Добавить пользователя</li>
-                    <li>Удалить пользователя</li>
+                    <li data-add="adduser">Добавить пользователя</li>
+                    <li data-add="deleteuser">Удалить пользователя</li>
+                    <li data-add="deletechat">Удалить чат</li>
                 </ul>
              </nav>
 

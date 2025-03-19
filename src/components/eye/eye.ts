@@ -1,6 +1,6 @@
 import Block from '../../services/Block';
 import template from './template';
-import { TProps } from '@/types';
+import { TProps } from '../../types';
 
 class Eye extends Block {
   constructor(tagName: string, propsAndChilds: TProps) {
@@ -14,9 +14,9 @@ class Eye extends Block {
 export const eyeInput = new Eye('div', {
   attr: {
     class: 'input-eye',
-    opened: true
+    opened: false
   },
-  opened: true,
+  opened: false,
   events: {
     click: (e: Event) => {
       const target = e.target as HTMLElement;
