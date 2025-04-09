@@ -13,7 +13,8 @@
     "lint": "eslint . --ext .js,.ts,.vue,.hbs --fix",
     "format": "prettier --write .",
     "start": "npm run build && npm run preview",
-    "test": "mocha"
+    "test": "mocha",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
