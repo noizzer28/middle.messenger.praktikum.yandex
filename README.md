@@ -23,12 +23,12 @@
 ![SCSS](https://img.shields.io/badge/-SCSS-CC6699?logo=sass&logoColor=white)
 ![Handlebars](https://img.shields.io/badge/-Handlebars-000000?logo=handlebars.js&logoColor=white)
 
-Стартовой страницей является страница логина: [Login](https://yandex-talk-noizzer.netlify.app/login)
-Страница регистрации: [Register](https://yandex-talk-noizzer.netlify.app/register)
-Страница профиля: [Profile](https://yandex-talk-noizzer.netlify.app/profile)
-Страница чатов: [Chats](https://yandex-talk-noizzer.netlify.app/chat)
-404: [404](https://yandex-talk-noizzer.netlify.app/404)
-500:[500](https://yandex-talk-noizzer.netlify.app/500)
+- Стартовой страницей является страница логина: [Login](https://yandex-talk-noizzer.netlify.app/login)
+- Страница регистрации: [Register](https://yandex-talk-noizzer.netlify.app/register)
+- Страница профиля: [Profile](https://yandex-talk-noizzer.netlify.app/profile)
+- Страница чатов: [Chats](https://yandex-talk-noizzer.netlify.app/chat)
+- 404: [404](https://yandex-talk-noizzer.netlify.app/404)
+- 500: [500](https://yandex-talk-noizzer.netlify.app/500)
 
 ## 🧪 Тесты
 
