@@ -321,8 +321,6 @@ abstract class Block {
   }
 
   _componentDidMount() {
-    // console.log('mounted in block');
-    // console.log('mounted in block');
     this.componentDidMount();
   }
 

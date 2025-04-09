@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect } from 'chai';
 import sinon from 'sinon';
 import HTTPTransport from './HttpTransport';
@@ -12,7 +13,7 @@ describe('HTTPTransport', () => {
   beforeEach(() => {
     http = new HTTPTransport();
     requestStub = sandbox
-      .stub(http, 'request')
+      .stub(http, 'request' as keyof typeof http)
       .callsFake(() => Promise.resolve({}));
   });
 

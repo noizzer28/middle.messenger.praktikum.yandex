@@ -5,7 +5,7 @@ import { TProps } from '../types';
 import sinon from 'sinon';
 
 describe('Block', () => {
-  let PageComponent;
+  let PageComponent: new (props: TProps) => Block;
 
   before(() => {
     class Page extends Block {
@@ -76,7 +76,7 @@ describe('Block', () => {
     expect(stubHandler.called).to.be.false;
   });
   it('should check if the element is hidden', () => {
-    const pageComp = new PageComponent();
+    const pageComp = new PageComponent({});
 
     pageComp.hide();
 

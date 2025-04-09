@@ -5,7 +5,7 @@ import sinon from 'sinon';
 
 describe('Event Bus', () => {
   const FLOW = 'test-flow';
-  let eventsBus;
+  let eventsBus: EventBus;
 
   beforeEach(() => {
     eventsBus = new EventBus();
