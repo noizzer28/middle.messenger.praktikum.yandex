@@ -30,7 +30,7 @@ let router: Router;
       .start();
 
     window.addEventListener('popstate', () => {
-      console.log('onpopstate');
+      // console.log('onpopstate');
       router.init();
       router.start();
     });
