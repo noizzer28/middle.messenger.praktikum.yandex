@@ -2,13 +2,9 @@ import { METHODS, HTTPMethod, RequestOptions } from '../types';
 
 export class HTTPTransport {
   private readonly baseUrl: string;
-  // private defaultHeaders: Record<string, string>;
 
   constructor() {
     this.baseUrl = 'https://ya-praktikum.tech/api/v2/';
-    // this.defaultHeaders = {
-    //   'Content-Type': 'application/json'
-    // };
   }
 
   get: HTTPMethod = (url, options = {}) =>
@@ -32,7 +28,6 @@ export class HTTPTransport {
     // console.log('options in HTTPTRANSPORT', options);
     const queryString = this._buildQueryString(query);
     const fullUrl = `${this.baseUrl}${url}${queryString}`;
-    // const finalHeaders = { ...this.defaultHeaders, ...headers };
 
     return new Promise<R>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -43,20 +38,6 @@ export class HTTPTransport {
         xhr.setRequestHeader(key, value);
       });
 
-      // xhr.onload = () => {
-      //   let response;
-      //   if (xhr.responseText === 'OK') {
-      //     resolve(xhr.responseText as R);
-      //   } else {
-      //     response = JSON.parse(xhr.responseText);
-      //   }
-
-      //   if (xhr.status >= 200 && xhr.status < 300) {
-      //     resolve(response as R);
-      //   } else {
-      //     reject(new Error(`Ошибка: ${xhr.status} ${response.reason}`));
-      //   }
-      // };
       xhr.onload = () => {
         let response;
         try {

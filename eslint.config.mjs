@@ -29,11 +29,13 @@ export default [
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
-        ...globals.browser
+        ...globals.browser,
+        ...globals.node
       },
       parser: typescriptParser,
       parserOptions: {
-        project: './tsconfig.json'
+        project: './tsconfig.json',
+        excludeFiles: ['mochaSetup.js']
       }
     },
     plugins: {

@@ -304,7 +304,7 @@ abstract class Block {
   }
 
   public hide(): void {
-    console.log('hiding in block');
+    // console.log('hiding in block');
     const componentHtml = this.getContent();
     if (!componentHtml) {
       return;
