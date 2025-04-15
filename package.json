@@ -60,13 +60,6 @@
     "yandex-talk": "file:",
     "yangramm": "file:"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo 'Running pre-commit hook' && npx lint-staged && npm run test",
-      "pre-push": "npm run other command",
-      "...": "..."
-    }
-  },
   "lint-staged": {
     "*.{js,ts}": [
       "eslint --fix",
