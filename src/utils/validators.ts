@@ -15,9 +15,9 @@ export type ValidatorMap = {
 
 const validateName: Tvalid = (name) => {
   if (!name) return 'Имя не может быть пустым.';
-  if (!/^[А-ЯA-Z]/.test(name))
+  if (!/^[А-ЯЁA-Z]/.test(name))
     return 'Имя должно начинаться с заглавной буквы.';
-  if (!/^[А-ЯA-Zа-яa-z-]+$/.test(name))
+  if (!/^[А-ЯЁA-Zа-яёa-z-]+$/.test(name))
     return 'Имя может содержать только буквы и дефис.';
   if (/\d/.test(name)) return 'Имя не должно содержать цифры.';
   if (/\s/.test(name)) return 'Имя не должно содержать пробелы.';

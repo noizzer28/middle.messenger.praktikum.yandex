@@ -1,10 +1,11 @@
 import { METHODS, HTTPMethod, RequestOptions } from '../types';
+import { BASEURL } from '../baseUrl';
 
 export class HTTPTransport {
   private readonly baseUrl: string;
 
   constructor() {
-    this.baseUrl = 'https://ya-praktikum.tech/api/v2/';
+    this.baseUrl = BASEURL;
   }
 
   get: HTTPMethod = (url, options = {}) =>

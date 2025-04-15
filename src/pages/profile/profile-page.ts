@@ -13,6 +13,7 @@ import changeProfile from '../../api/user/changeProfile';
 import ErrorComponent from '../../components/error/error';
 
 import { ModalPassword } from '../../components/modal/modalChangePassword';
+import { BASEURL } from '../../baseUrl';
 
 const profileEditLines = [
   new ProfileEdit('tr', {
@@ -77,9 +78,7 @@ function mapUserToProps(state: TStore): TProps {
   if (state.user) {
     const user = state.user;
     const img = user.avatar;
-    const finalImg = img
-      ? `https://ya-praktikum.tech/api/v2/resources/${img}`
-      : '/profile.png';
+    const finalImg = img ? `${BASEURL}resources/${img}` : '/profile.png';
     return {
       attr: {
         class: 'container rel',
