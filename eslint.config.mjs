@@ -17,6 +17,10 @@ const compat = new FlatCompat({
 });
 
 export default [
+  {
+    ignores: ['dist/**', 'node_modules/**', 'loader-scss.js', 'mochaSetup.js']
+  },
+
   ...compat.extends(
     'eslint:recommended',
     'plugin:prettier/recommended',
@@ -24,7 +28,7 @@ export default [
   ),
 
   {
-    files: ['**/*.js', '**/*.ts'],
+    files: ['**/*.ts', '**/*.js'],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -35,7 +39,7 @@ export default [
       parser: typescriptParser,
       parserOptions: {
         project: './tsconfig.json',
-        excludeFiles: ['mochaSetup.js']
+        tsconfigRootDir: __dirname
       }
     },
     plugins: {
@@ -44,7 +48,7 @@ export default [
     },
     rules: {
       'prettier/prettier': 'error',
-      'no-console': 'warn',
+      'no-console': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { args: 'none', varsIgnorePattern: '^_' }

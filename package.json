@@ -10,11 +10,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .js,.ts,.vue,.hbs --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "start": "npm run build && npm run preview",
     "test": "mocha",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
@@ -33,10 +34,16 @@
     "handlebars-loader": "^1.7.3",
     "husky": "^9.1.7",
     "ignore-styles": "^5.0.1",
+    "lint-staged": "^15.5.1",
     "mocha": "^11.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.3.3",
     "sass-embedded": "^1.79.4",
     "sinon": "^20.0.0",
+    "stylelint": "^16.18.0",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.11.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
     "vite": "^5.4.1",
@@ -59,5 +66,17 @@
       "pre-push": "npm run other command",
       "...": "..."
     }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "*.test.{ts,js}": [
+      "mocha --require ts-node/register"
+    ]
   }
 }
