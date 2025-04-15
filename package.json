@@ -62,7 +62,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all test lint:all",
+      "pre-commit": "npm-run-all test lint",
       "pre-push": "npm run other command",
       "...": "..."
     }
@@ -75,7 +75,7 @@
     "*.{json,css,scss,md}": [
       "prettier --write"
     ],
-    "*.test.{ts,js}": [
+    "*.spec.{ts,js}": [
       "mocha --require ts-node/register"
     ]
   }
