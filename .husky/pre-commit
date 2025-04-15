@@ -1,4 +1,18 @@
+
 #!/bin/sh
-echo 'Running pre-commit hook'
-npm run test
+
+# . "$(dirname "$0")/_/husky.sh"
+
+set -e
+
+echo "🚀 Running pre-commit hook..."
+
+echo "🔍 Linting staged files..."
+
 npx lint-staged
+
+echo "🧪 Running tests..."
+
+npm test
+
+echo "✅ Pre-commit checks passed!"
