@@ -11,6 +11,10 @@ echo "🔍 Linting staged files..."
 
 npx lint-staged
 
+echo "🔍 Stylelinting SCSS files..."
+
+npm run lint:css:fix
+
 echo "🧪 Running tests..."
 
 npm test

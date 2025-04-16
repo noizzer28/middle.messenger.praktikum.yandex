@@ -1,4 +1,5 @@
 @import '../../styles/_var';
+
 .input {
   background-color: $soft-white;
   border-bottom: 1px solid $secondary;
@@ -6,6 +7,7 @@
   line-height: 1.8;
   outline: none;
   width: 280px;
+
   &.invalid {
     // outline: groove red;
     // border-bottom: none;
@@ -13,11 +15,14 @@
     // background-color: #f5c1c5;
     color: red;
   }
+
   &::placeholder {
     color: $light-grey;
   }
+
   &-wrapper {
     width: 280px;
+
     &__label {
       color: $primary-darken;
       font-size: 12px;

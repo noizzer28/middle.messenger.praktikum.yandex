@@ -15,7 +15,9 @@
     "format": "prettier --write .",
     "start": "npm run build && npm run preview",
     "test": "mocha",
-    "prepare": "cd .. && husky middle.messenger.praktikum.yandex/.husky"
+    "prepare": "cd .. && husky middle.messenger.praktikum.yandex/.husky",
+    "lint:css": "stylelint '**/*.{css,scss}'",
+    "lint:css:fix": "stylelint '**/*.{css,scss}' --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
@@ -40,8 +42,9 @@
     "prettier": "^3.3.3",
     "sass-embedded": "^1.79.4",
     "sinon": "^20.0.0",
-    "stylelint": "^16.18.0",
-    "stylelint-config-standard": "^38.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^9.0.0",
+    "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^6.0.4",
     "stylelint-scss": "^6.11.1",
     "ts-node": "^10.9.2",

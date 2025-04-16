@@ -7,6 +7,7 @@
   height: 100px;
   position: relative;
   border-radius: 7px;
+
   &::after {
     content: '';
     position: absolute;
@@ -20,14 +21,18 @@
     width: 98%;
     margin: auto;
   }
+
   &:hover {
     background-color: $light-shadow;
   }
+
   &.selected {
     background-color: $shadow;
   }
+
   &__avatar {
     width: 80px;
+
     img {
       width: 80px;
       height: 80px;
@@ -35,15 +40,17 @@
       border-radius: 50%;
     }
   }
+
   &__data {
     padding: 0 10px 0 20px;
-
     height: 100%;
+
     &__chat-name {
       cursor: default;
       color: $text-color;
       font-size: 18px;
     }
+
     &__chat-message {
       color: $light-grey;
       font-size: 14px;
@@ -54,12 +61,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     &__span {
       font-size: 14px;
       color: $text-color;
       margin-right: 5px;
     }
   }
+
   &__time {
     flex-grow: 1;
     cursor: default;
@@ -83,11 +92,13 @@
     min-width: 400px;
     max-width: 400px;
     height: 100%;
-    box-shadow: 0px 0px 6px 1px $shadow;
+    box-shadow: 0 0 6px 1px $shadow;
     z-index: 2;
+
     ul {
       padding: 0 10px 0 10px;
     }
+
     &::-webkit-scrollbar {
       display: none;
     }
