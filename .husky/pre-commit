@@ -1,0 +1,22 @@
+
+#!/bin/sh
+
+# . "$(dirname "$0")/_/husky.sh"
+
+set -e
+
+echo "🚀 Running pre-commit hook..."
+
+echo "🔍 Linting staged files..."
+
+npx lint-staged
+
+echo "🔍 Stylelinting SCSS files..."
+
+npm run lint:css:fix
+
+echo "🧪 Running tests..."
+
+npm test
+
+echo "✅ Pre-commit checks passed!"

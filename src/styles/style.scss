@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import './_var';
+
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+
+    &-form {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 30px;
+      height: 100%;
+
+      > :first-child {
+        flex-grow: 1;
+      }
+
+      > :nth-child(2) {
+        flex-grow: 2;
+      }
+
+      > :nth-child(3) {
+        flex-grow: 2;
+      }
+    }
+  }
+}
+
+.headers-text {
+  color: $text-color;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.pb-30 {
+  padding-bottom: 30px;
+}
+
+.color-red {
+  color: #f00 !important;
+}
+
+.nf-image {
+  width: 50%;
+
+  @media (max-width: 576px) {
+    width: 70%;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  min-height: 500px;
+  box-shadow: 0 0 6px 1px $shadow;
+  z-index: 2;
+  background-color: $soft-white;
+  border-radius: 12px;
+  gap: 25px;
+
+  > :first-child {
+    margin-top: 50px;
+  }
+}
+
+.profile-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 0 5px 1px $shadow;
+  z-index: 2;
+  background-color: $soft-white;
+  height: 100vh;
+  padding: 40px;
+
+  & > :last-child {
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+
+  img {
+    padding-left: 20px;
+    max-width: 300px;
+  }
+}
+
+.inputError {
+  color: red;
+  font-size: 10px;
+}
+
+.rel {
+  position: relative;
+}
+
+.input-eye {
+  width: 17px;
+  position: absolute;
+  top: 23px;
+  right: 10px;
+  cursor: pointer;
+
+  svg {
+    fill: $dark-grey;
+  }
+}

@@ -1,0 +1,65 @@
+@import '../../../styles/var';
+
+.chat-main__header {
+  padding: 10px 20px;
+  width: 100%;
+
+  &-wrapper {
+    border-bottom: 0.7px solid #64b5f6;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-svg {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      background-color: $light-shadow;
+    }
+  }
+
+  &-nav {
+    box-shadow: 0 0 14px 0 rgba(34, 60, 80, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: $soft-white;
+    display: none;
+    z-index: 10;
+
+    &.visible {
+      display: block;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      li {
+        &:last-child {
+          color: red;
+        }
+
+        font-size: 14px;
+        white-space: nowrap;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

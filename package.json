@@ -1,20 +1,75 @@
 {
-  "name": "yangramm",
+  "name": "yandex-talk",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=12"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "start": "npm run build && npm run preview",
+    "test": "mocha",
+    "prepare": "cd .. && husky middle.messenger.praktikum.yandex/.husky",
+    "lint:css": "stylelint '**/*.{css,scss}'",
+    "lint:css:fix": "stylelint '**/*.{css,scss}' --fix"
   },
   "devDependencies": {
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+    "@babel/core": "^7.26.10",
+    "@babel/register": "^7.25.9",
+    "@types/chai": "^5.2.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.9.0",
+    "@types/sinon": "^17.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "chai": "^5.2.0",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-hbs": "^1.0.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "handlebars-loader": "^1.7.3",
+    "husky": "^9.1.7",
+    "ignore-styles": "^5.0.1",
+    "lint-staged": "^15.5.1",
+    "mocha": "^11.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.3.3",
+    "sass-embedded": "^1.79.4",
+    "sinon": "^20.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^9.0.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.11.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-eslint2": "^5.0.0",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "dependencies": {
+    "@formatjs/intl-datetimeformat": "^6.17.2",
+    "jsdom": "^26.0.0",
     "lodash-es": "^4.17.21",
+    "uuid": "^11.0.2",
     "vite-plugin-handlebars": "^2.0.0",
+    "yandex-talk": "file:",
     "yangramm": "file:"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }
